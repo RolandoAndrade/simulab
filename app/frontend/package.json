@@ -9,6 +9,7 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "core-js": "^3.6.5",
+    "mxgraph": "^4.2.2",
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",
     "vue": "^3.0.0",
@@ -18,6 +19,7 @@
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
+    "@types/mxgraph": "github:lgleim/mxgraph-typings",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-pwa": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
