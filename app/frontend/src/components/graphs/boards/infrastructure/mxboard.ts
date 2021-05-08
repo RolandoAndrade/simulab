@@ -2,7 +2,7 @@ import {Board} from "@/components/graphs/boards/domain/board";
 import {mxgraph} from 'mxgraph';
 import {mx} from "@/components/graphs/shared/config/infrastructure/mxgraph";
 
-export class Mxboard extends Board{
+export class MXBoard extends Board{
     constructor(container: HTMLElement) {
         super(container);
         let model = new mx.mxGraphModel();
