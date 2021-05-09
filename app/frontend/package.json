@@ -9,6 +9,7 @@
   "dependencies": {
     "@mdi/font": "5.9.55",
     "core-js": "^3.6.5",
+    "diagram-js": "^7.3.0",
     "mxgraph": "^4.2.2",
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",

@@ -5,7 +5,11 @@ import {mx} from "@/components/graphs/shared/config/infrastructure/mxgraph";
 export class MXBoard extends Board{
     constructor(container: HTMLElement) {
         super(container);
-        let model = new mx.mxGraphModel();
+        let editor = new mx.mxEditor({
+            container
+        });
+        editor.createDiagramLayout()
+        /*let model = new mx.mxGraphModel();
         const mxGraph = new mx.mxGraph(container, model);
         new mx.mxRubberband(mxGraph);
         let parent = mxGraph.getDefaultParent();
@@ -34,6 +38,6 @@ export class MXBoard extends Board{
         } finally {
             // Updates the display
             mxGraph.getModel().endUpdate();
-        }
+        }*/
     }
 }
