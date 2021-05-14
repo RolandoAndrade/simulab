@@ -8,9 +8,7 @@
 
 <script lang="ts">
 import {Options, Vue} from "vue-class-component";
-import {GraphFactoryMXGraph} from "@/components/graphs/shared/factories/infrastructure/graph-factory.mxgraph";
-import {GraphFactoryDiagramsJs} from "@/components/graphs/shared/factories/infrastructure/graph-factory.diagrams-js";
-import {GraphFactoryGoJS} from "@/components/graphs/shared/factories/infrastructure/graph-factory.gojs";
+import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 
 @Options({
   name: "board",
@@ -19,7 +17,7 @@ import {GraphFactoryGoJS} from "@/components/graphs/shared/factories/infrastruct
 export default class Board extends Vue {
   mounted(){
     const container = document.getElementById("graph-container");
-    const board = new GraphFactoryGoJS().createBoard(container!);
+    const board = graphFactory.createBoard(container!);
   }
 }
 

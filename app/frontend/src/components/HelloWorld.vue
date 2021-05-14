@@ -1,7 +1,7 @@
 <template>
-  <v-container style="height: 100%" class="pa-0">
+  <div style="height: 100%" class="pa-0">
     <board></board>
-  </v-container>
+  </div>
 </template>
 
 <script lang='ts'>
