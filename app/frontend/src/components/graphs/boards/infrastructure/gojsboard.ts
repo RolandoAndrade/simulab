@@ -1,5 +1,5 @@
 import {Board} from "@/components/graphs/boards/domain/board";
-import {Diagram, GraphObject, Model} from "gojs";
+import {Diagram, GraphObject, Model, Size} from "gojs";
 
 export class GoJSBoard extends Board{
 
@@ -8,13 +8,31 @@ export class GoJSBoard extends Board{
     constructor(container: HTMLElement) {
         super(container);
         this.diagram = GraphObject.make(Diagram, container.id, {
-            "undoManager.isEnabled": true
+            initialAutoScale: Diagram.Uniform,
+            ChangedSelection: this.onSelectionChanged.bind(this),
+            "draggingTool.gridSnapCellSize": new Size(10, 1),
+            "draggingTool.isGridSnapEnabled": true,
+            "undoManager.isEnabled": true,
+            ModelChanged: function(e) {     // just for demonstration purposes,
+                if (e.isTransactionFinished) {  // show the model data in the page's TextArea
+                    
+                }
+            }
         });
+
         const model = GraphObject.make(Model);
         model.nodeDataArray = [  { key: "Alpha" },
             { key: "Beta" },
             { key: "Gamma" }];
         this.diagram.model = model;
         console.log(this)
+    }
+
+    onSelectionChanged(){
+
+    }
+
+    onModelChanged() {
+
     }
 }
