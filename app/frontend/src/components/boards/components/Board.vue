@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div id="graph-container" style="width: 100%; height: 100vh">
+  <div style="height: 100%">
+    <div id="graph-container" style="width: 100%; height: 100%">
     </div>
   </div>
 
@@ -10,6 +10,7 @@
 import {Options, Vue} from "vue-class-component";
 import {GraphFactoryMXGraph} from "@/components/graphs/shared/factories/infrastructure/graph-factory.mxgraph";
 import {GraphFactoryDiagramsJs} from "@/components/graphs/shared/factories/infrastructure/graph-factory.diagrams-js";
+import {GraphFactoryGoJS} from "@/components/graphs/shared/factories/infrastructure/graph-factory.gojs";
 
 @Options({
   name: "board",
@@ -18,38 +19,12 @@ import {GraphFactoryDiagramsJs} from "@/components/graphs/shared/factories/infra
 export default class Board extends Vue {
   mounted(){
     const container = document.getElementById("graph-container");
-    const board = new GraphFactoryDiagramsJs().createBoard(container!);
+    const board = new GraphFactoryGoJS().createBoard(container!);
   }
 }
 
 </script>
 
-<style>
-html,
-body,
-#graph-container > div {
-  height: 100%;
-  margin: 0;
-}
-
-.palette-icon-lasso-tool {
-  background: url('data:image/svg+xml,%3Csvg%0A%20%20%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%0A%20%20%20%20%20fill%3D%22none%22%0A%20%20%20%20%20stroke%3D%22%23000%22%0A%20%20%20%20%20stroke-width%3D%221.5%22%0A%20%20%20%20%20width%3D%2246%22%0A%20%20%20%20%20height%3D%2246%22%3E%0A%20%20%3Crect%20x%3D%2210%22%20y%3D%2210%22%20width%3D%2216%22%20height%3D%2216%22%20stroke-dasharray%3D%225%2C%205%22%20%2F%3E%0A%20%20%3Cline%20x1%3D%2216%22%20y1%3D%2226%22%20x2%3D%2236%22%20y2%3D%2226%22%20stroke%3D%22black%22%20%2F%3E%0A%20%20%3Cline%20x1%3D%2226%22%20y1%3D%2216%22%20x2%3D%2226%22%20y2%3D%2236%22%20stroke%3D%22black%22%20%2F%3E%0A%3C%2Fsvg%3E');
-}
-
-.palette-icon-create-shape {
-  background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.5%22%20width%3D%2246%22%20height%3D%2246%22%3E%3Crect%20x%3D%2210%22%20y%3D%2213%22%20width%3D%2226%22%20height%3D%2220%22%2F%3E%3C%2Fsvg%3E');
-}
-
-.palette-icon-create-frame {
-  background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.5%22%20stroke-dasharray%3D%224%22%20width%3D%2246%22%20height%3D%2246%22%3E%3Crect%20x%3D%2210%22%20y%3D%2213%22%20width%3D%2226%22%20height%3D%2220%22%2F%3E%3C%2Fsvg%3E');
-}
-
-.context-pad-icon-remove {
-  background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.5%22%20width%3D%2246%22%20height%3D%2246%22%3E%3Cline%20x1%3D%225%22%20y1%3D%225%22%20x2%3D%2215%22%20y2%3D%2215%22%2F%3E%3Cline%20x1%3D%2215%22%20y1%3D%225%22%20x2%3D%225%22%20y2%3D%2215%22%2F%3E%3C%2Fsvg%3E') !important;
-}
-
-.context-pad-icon-connect {
-  background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%221.5%22%20width%3D%2246%22%20height%3D%2246%22%3E%3Cline%20x1%3D%2215%22%20y1%3D%225%22%20x2%3D%225%22%20y2%3D%2215%22%2F%3E%3C%2Fsvg%3E') !important;
-}
+<style scoped>
 </style>
 
