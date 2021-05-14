@@ -13,9 +13,9 @@ export class GoJSBoard extends Board{
             "draggingTool.gridSnapCellSize": new Size(10, 1),
             "draggingTool.isGridSnapEnabled": true,
             "undoManager.isEnabled": true,
-            ModelChanged: function(e) {     // just for demonstration purposes,
+            ModelChanged: (e) => {     // just for demonstration purposes,
                 if (e.isTransactionFinished) {  // show the model data in the page's TextArea
-                    
+                    this.onModelChanged(e)
                 }
             }
         });
@@ -28,11 +28,6 @@ export class GoJSBoard extends Board{
         console.log(this)
     }
 
-    onSelectionChanged(){
-
-    }
-
-    onModelChanged() {
-
+    importModel(model: object) {
     }
 }
