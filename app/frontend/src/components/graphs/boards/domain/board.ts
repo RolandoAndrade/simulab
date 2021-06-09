@@ -1,5 +1,5 @@
 export abstract class Board {
-    protected constructor(protected readonly container: HTMLElement) {
+    protected constructor(protected container: HTMLElement) {
     }
 
     /**
