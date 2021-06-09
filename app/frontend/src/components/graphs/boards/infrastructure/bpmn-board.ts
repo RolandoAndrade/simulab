@@ -1,5 +1,5 @@
-// @ts-nocheck
 import {Board} from "@/components/graphs/boards/domain/board";
+// @ts-ignore
 import pizzaDiagram from './example.bpmn';
 
 import BpmnViewer from 'bpmn-js';
@@ -13,18 +13,10 @@ export class BPMNBoard extends Board {
         var viewer = new BpmnViewer({
             container: `#${container.id}`
         });
-        viewer.importXML(pizzaDiagram).then(function(result) {
-
-            const { warnings } = result;
-
-            console.log('success !', warnings);
+        viewer.importXML(pizzaDiagram, (err, warn)=>{
+            console.log('success !', warn);
 
             viewer.get('canvas').zoom('fit-viewport');
-        }).catch(function(err) {
-
-            const { warnings, message } = err;
-
-            console.log('something went wrong:', warnings, message);
         });
     }
 
