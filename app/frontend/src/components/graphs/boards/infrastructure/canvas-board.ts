@@ -81,13 +81,19 @@ export class CanvasBoard extends Board {
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
             if (node.contains(this.dragStartPoint.x, this.dragStartPoint.y)) {
+                if(this.selectedNode) {
+                    this.selectedNode.unselect();
+                }
                 this.selectedNode = node.select() as CanvasNode;
+                this.draw();
                 return;
             }
         }
         if (this.selectedNode) {
             this.selectedNode.unselect();
+            this.draw();
             this.selectedNode = undefined;
+
         }
     }
 
