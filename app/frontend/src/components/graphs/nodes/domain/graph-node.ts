@@ -1,43 +1,97 @@
 import {NodeProperties} from "@/components/graphs/nodes/domain/node-properties";
+import {Point} from "@/components/graphs/shared/types/point";
 
 export abstract class GraphNode {
     protected constructor(protected readonly properties: NodeProperties) {
 
     }
 
+    /**
+     * @description Sets the ID of the model
+     * @param id ID of the model
+     * */
     public setID(id: string) {
         this.properties.id = id;
     }
 
+    /**
+     * @description Sets the color of the element
+     * @param color New color
+     * */
     public setColor(color: string) {
         this.properties.color = color;
     }
 
+    /**
+     * @description Sets the position of the node
+     * @param x Coordinate x inside the container
+     * @param y Coordinate y inside the container
+     * */
     public setPosition(x: number, y: number) {
         this.properties.x = x;
         this.properties.y = y;
     }
 
+    /**
+     * @description Sets the dimensions of the node
+     * @param width Width of the component
+     * @param height Height of the component
+     * */
     public setDimensions(width: number, height: number) {
         this.properties.width = width;
         this.properties.height = height;
     }
 
-    get position(): {
-        x: number,
-        y: number
-    }{
+    /**
+     * @description Returns true if the given point is contained by the node
+     * @param x Coordinate x inside the container
+     * @param y Coordinate y inside the container
+     * */
+    public contains(x: number, y: number): boolean {
+        return this.position.x <= x && x <= this.position.x + this.dimensions.width && this.position.y <= y && y <= this.position.y + this.dimensions.height;
+    }
 
+    /**
+     * @description Moves the node
+     * @param dx Movement in x
+     * @param dy Movement in y
+     * */
+    public move(dx: number, dy: number) {
+        this.setPosition(this.position.x + dx - this.dimensions.width / 2, this.position.y + dy - this.dimensions.height / 2);
+    }
+
+    /**
+     * @description Selects the node
+     * */
+    public select(): GraphNode {
+        this.properties.selected = true
+        return this
+    };
+
+    /**
+     * @description Unselects the node
+     * */
+    public unselect() {
+        this.properties.selected = false
+    };
+
+    /**
+     * @description Gets the position of the node
+     * */
+    public get position(): Point {
         return {
             x: this.properties.x,
             y: this.properties.y
         }
     }
 
-    get dimensions(): {
+    /**
+     * @description Gets the dimensions of the node
+     * */
+    public get dimensions(): {
         width: number,
         height: number
-    }{
+    } {
 
         return {
             width: this.properties.width,
@@ -45,28 +99,16 @@ export abstract class GraphNode {
         }
     }
 
-    contains(x: number, y: number){
-        return this.position.x<=x&&x<=this.position.x+this.dimensions.width&&this.position.y<=y&&y<=this.position.y+this.dimensions.height;
-    }
 
-    move(dx: number, dy: number)
-    {
-        this.setPosition(this.position.x + dx - this.dimensions.width/2, this.position.y + dy - this.dimensions.height/2);
-    }
-
-    select(): GraphNode {
-        this.properties.selected = true
-        return this
-    };
-
-    unselect() {
-        this.properties.selected = false
-    };
-
-    get isSelected(): boolean {
+    /**
+     * @description Returns the state of selection
+     * */
+    public get isSelected(): boolean {
         return !!this.properties.selected
     }
 
-
+    /**
+     * @description Renders the node
+     * */
     abstract draw(): any;
 }

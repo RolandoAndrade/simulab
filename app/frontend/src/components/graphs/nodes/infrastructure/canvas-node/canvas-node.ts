@@ -13,8 +13,8 @@ export abstract class CanvasNode extends GraphNode {
         }
     }
 
-    draw() {
+    public draw() {
         const ctx = (this.properties as CanvasNodeProperties).ctx;
-        ctx.drawImage(this.image, this.properties.x, this.properties.y, this.properties.width, this.properties.height);
+        ctx.drawImage(this.image, this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
     }
 }

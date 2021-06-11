@@ -70,9 +70,8 @@ export class CanvasBoard extends Board {
     }
 
     private onResize(event: UIEvent) {
-        let PIXEL_RATIO = window.devicePixelRatio;
-        this.setSize(window.innerWidth * PIXEL_RATIO, window.innerHeight * PIXEL_RATIO)
-        this.ctx.setTransform(PIXEL_RATIO, 0, 0, PIXEL_RATIO, 0, 0);
+        this.setSize(this.container.offsetWidth, this.container.offsetHeight)
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.draw();
     }
 
@@ -82,7 +81,6 @@ export class CanvasBoard extends Board {
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
             if (node.contains(this.dragStartPoint.x, this.dragStartPoint.y)) {
-                console.log(node)
                 this.selectedNode = node.select() as CanvasNode;
                 return;
             }

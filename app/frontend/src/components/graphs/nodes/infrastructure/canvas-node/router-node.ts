@@ -11,4 +11,15 @@ export class RouterNode extends CanvasNode {
             image
         });
     }
+
+    private drawPorts(){
+
+    }
+
+    public draw() {
+        if(this.isSelected){
+            this.drawPorts()
+        }
+        super.draw();
+    }
 }
