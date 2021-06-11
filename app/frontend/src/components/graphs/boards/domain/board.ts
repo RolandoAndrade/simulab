@@ -1,5 +1,9 @@
+import {GraphNode} from "@/components/graphs/nodes/domain/graph-node";
+
 export abstract class Board {
+    protected nodes: GraphNode[];
     protected constructor(protected container: HTMLElement) {
+        this.nodes = []
     }
 
     /**

@@ -59,6 +59,10 @@ export abstract class GraphNode {
         return this
     };
 
+    unselect() {
+        this.properties.selected = false
+    };
+
     get isSelected(): boolean {
         return !!this.properties.selected
     }
