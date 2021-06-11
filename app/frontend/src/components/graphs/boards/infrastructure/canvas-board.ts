@@ -100,6 +100,7 @@ export class CanvasBoard extends Board {
     private onMouseMove(event: MouseEvent) {
         if (this.isMouseDown) {
             if (!!this.selectedNode) {
+                this.selectedNode.hover(event.clientX + this.origin.x, event.clientY + this.origin.y);
                 this.selectedNode.move(event.clientX + this.origin.x - this.selectedNode.position.x, event.clientY + this.origin.y - this.selectedNode.position.y);
                 this.container.style.cursor = "grab";
             }
@@ -110,6 +111,10 @@ export class CanvasBoard extends Board {
                 this.container.style.cursor = "move";
             }
 
+            this.draw();
+        }
+        else if (!!this.selectedNode) {
+            this.selectedNode.hover(event.clientX + this.origin.x, event.clientY + this.origin.y);
             this.draw();
         }
     }

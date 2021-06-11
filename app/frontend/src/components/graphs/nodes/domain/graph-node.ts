@@ -3,7 +3,6 @@ import {Point} from "@/components/graphs/shared/types/point";
 
 export abstract class GraphNode {
     protected constructor(protected readonly properties: NodeProperties) {
-
     }
 
     /**
@@ -48,7 +47,8 @@ export abstract class GraphNode {
      * @param y Coordinate y inside the container
      * */
     public contains(x: number, y: number): boolean {
-        return this.position.x <= x && x <= this.position.x + this.dimensions.width && this.position.y <= y && y <= this.position.y + this.dimensions.height;
+        return this.position.x - this.properties.padding <= x && x <= this.position.x + this.properties.padding +
+            this.dimensions.width && this.position.y - this.properties.padding <= y && y <= this.position.y + this.dimensions.height + this.properties.padding;
     }
 
     /**
