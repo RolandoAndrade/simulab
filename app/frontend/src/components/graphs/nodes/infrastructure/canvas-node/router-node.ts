@@ -11,7 +11,4 @@ export class RouterNode extends CanvasNode {
             image
         });
     }
-
-    select(): void {
-    }
 }

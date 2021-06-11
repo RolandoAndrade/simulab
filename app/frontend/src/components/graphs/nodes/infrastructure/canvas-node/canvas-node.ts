@@ -1,6 +1,5 @@
 import {GraphNode} from "@/components/graphs/nodes/domain/graph-node";
 import {CanvasNodeProperties} from "@/components/graphs/nodes/infrastructure/canvas-node/canvas-node-properties";
-import {QueueCanvasComponentProperties} from "@/components/graphs/nodes/infrastructure/canvas-node/queue-canvas-component-properties";
 
 export abstract class CanvasNode extends GraphNode {
     protected image: HTMLImageElement;
@@ -15,7 +14,7 @@ export abstract class CanvasNode extends GraphNode {
     }
 
     draw() {
-        const ctx = (this.properties as any).ctx;
+        const ctx = (this.properties as CanvasNodeProperties).ctx;
         ctx.drawImage(this.image, this.properties.x, this.properties.y, this.properties.width, this.properties.height);
     }
 }

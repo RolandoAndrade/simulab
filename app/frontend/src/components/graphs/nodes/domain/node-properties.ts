@@ -5,4 +5,5 @@ export interface NodeProperties {
     width: number;
     height: number;
     color?: string;
+    selected?: boolean;
 }

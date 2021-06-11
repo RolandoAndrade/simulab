@@ -3,4 +3,4 @@ import {GraphFactoryCanvas} from "@/components/graphs/shared/factories/infrastru
 import {GraphFactorySVG} from "@/components/graphs/shared/factories/infrastructure/graph-factory.svg";
 import {GraphFactoryMx} from "@/components/graphs/shared/factories/infrastructure/graph-factory.mx";
 
-export const graphFactory: GraphFactory = new GraphFactorySVG();
+export const graphFactory: GraphFactory = new GraphFactoryCanvas();
