@@ -29,10 +29,7 @@ export abstract class CanvasNode extends GraphNode {
 
     public abstract get portCreator(): CanvasPort;
 
-    public hover(x: number, y: number) {
-        if(this.contains(x, y)){
-            return this.portCreator.hover(x, y);
-        }
-        return false;
+    public isOverPort(x: number, y: number) {
+        return this.portCreator.contains(x, y);
     }
 }

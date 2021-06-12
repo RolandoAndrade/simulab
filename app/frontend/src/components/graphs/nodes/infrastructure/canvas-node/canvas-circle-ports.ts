@@ -10,7 +10,7 @@ export class CanvasCirclePorts extends CanvasPort {
         super();
     }
 
-    public hover(x: number, y: number): boolean {
+    public contains(x: number, y: number): boolean {
         const cxr = this.cx + this.r, cxl = this.cx - this.r;
         const right =  (x - cxr)**2 + (y - this.cy)**2 <= (RADIUS * 2) ** 2 ;
         const left =  (x - cxl)**2 + (y - this.cy)**2 <= (RADIUS * 2 )**2;
@@ -22,7 +22,6 @@ export class CanvasCirclePorts extends CanvasPort {
     public draw(ctx: CanvasRenderingContext2D): void {
         // x = cx + r * cos(a)
         // y = cy + r * sin(a)
-        console.log(this.hoverRight, this.hoverLeft)
         ctx.beginPath();
         ctx.fillStyle = CanvasPort.COLOR;
         ctx.arc(this.cx + this.r, this.cy, this.hoverRight ? RADIUS * 2 : RADIUS, 0, 2 * Math.PI, false);

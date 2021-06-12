@@ -82,7 +82,13 @@ export class CanvasBoard extends Board {
         for (const node of rNodes) {
             if (node.contains(this.dragStartPoint.x, this.dragStartPoint.y)) {
                 if(this.selectedNode) {
-                    this.selectedNode.unselect();
+                    if (this.selectedNode == node) {
+                        if (this.selectedNode.isOverPort(this.dragStartPoint.x, this.dragStartPoint.y)) {
+                            console.log("Creating link")
+                        }
+                    } else {
+                        this.selectedNode.unselect();
+                    }
                 }
                 this.selectedNode = node.select() as CanvasNode;
                 this.draw();
@@ -100,7 +106,7 @@ export class CanvasBoard extends Board {
     private onMouseMove(event: MouseEvent) {
         if (this.isMouseDown) {
             if (!!this.selectedNode) {
-                this.selectedNode.hover(event.clientX + this.origin.x, event.clientY + this.origin.y);
+                this.selectedNode.isOverPort(event.clientX + this.origin.x, event.clientY + this.origin.y);
                 this.selectedNode.move(event.clientX + this.origin.x - this.selectedNode.position.x, event.clientY + this.origin.y - this.selectedNode.position.y);
                 this.container.style.cursor = "grab";
             }
@@ -114,7 +120,7 @@ export class CanvasBoard extends Board {
             this.draw();
         }
         else if (!!this.selectedNode) {
-            this.selectedNode.hover(event.clientX + this.origin.x, event.clientY + this.origin.y);
+            this.selectedNode.isOverPort(event.clientX + this.origin.x, event.clientY + this.origin.y);
             this.draw();
         }
     }
