@@ -3,26 +3,24 @@
     <canvas id="graph-container" style="width: 100%; height: 100%">
     </canvas>
   </div>
-
 </template>
 
 <script lang="ts">
-import {Options, Vue} from "vue-class-component";
+import Vue from 'vue';
+import Component from 'vue-class-component';
 import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 
-@Options({
-  name: "board",
+@Component({
+  name: 'board',
 })
-
 export default class Board extends Vue {
   mounted(){
     const container = document.getElementById("graph-container");
     const board = graphFactory.createBoard(container!);
   }
 }
-
 </script>
 
 <style scoped>
-</style>
 
+</style>

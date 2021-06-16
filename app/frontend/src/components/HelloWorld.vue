@@ -1,18 +1,22 @@
 <template>
-  <div style="height: 100%" class="pa-0">
-    <board></board>
+  <div class="pa-0">
+    <v-app-bar app></v-app-bar>
+    <v-content>
+      <div style="height: 100%">
+        <board></board>
+      </div>
+    </v-content>
   </div>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue'
-import Board from "@/components/boards/components/Board.vue";
+<script lang="ts">
+  import Vue from 'vue'
+  import Board from "@/components/boards/components/Board.vue";
 
-export default defineComponent({
-  name: 'HelloWorld',
-  components: {Board},
-  data () {
-    return {
+  export default Vue.extend({
+    name: 'HelloWorld',
+    components: {Board},
+    data: () => ({
       ecosystem: [
         {
           text: 'vuetify-loader',
@@ -28,6 +32,10 @@ export default defineComponent({
         },
       ],
       importantLinks: [
+        {
+          text: 'Documentation',
+          href: 'https://vuetifyjs.com',
+        },
         {
           text: 'Chat',
           href: 'https://community.vuetifyjs.com',
@@ -48,18 +56,17 @@ export default defineComponent({
       whatsNext: [
         {
           text: 'Explore components',
-          href: 'https://vuetifyjs.com',
+          href: 'https://vuetifyjs.com/components/api-explorer',
         },
         {
-          text: 'Roadmap',
-          href: 'https://vuetifyjs.com/en/introduction/roadmap/',
+          text: 'Select a layout',
+          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
         },
         {
           text: 'Frequently Asked Questions',
           href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
         },
       ],
-    }
-  },
-})
+    }),
+  })
 </script>

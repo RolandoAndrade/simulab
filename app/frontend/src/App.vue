@@ -7,21 +7,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import Vue from 'vue';
 
-export default defineComponent({
+export default Vue.extend({
   name: 'App',
 
-  data () {
-    return {
-      //
-    }
-  },
-})
+  data: () => ({
+    //
+  }),
+});
 </script>
-
-<style>
-html, body, #app{
-  height: 100%;
-}
-</style>
