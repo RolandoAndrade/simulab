@@ -1,8 +1,6 @@
 <template>
   <v-app>
-    <v-main>
-      <router-view/>
-    </v-main>
+    <router-view/>
   </v-app>
 </template>
 
@@ -17,3 +15,7 @@ export default Vue.extend({
   }),
 });
 </script>
+
+<style>
+
+</style>

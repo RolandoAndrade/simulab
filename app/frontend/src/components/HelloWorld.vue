@@ -1,7 +1,21 @@
 <template>
-  <div style="height: 100%">
-    <v-app-bar app></v-app-bar>
-    <board></board>
+  <div class="fill-height">
+    <div>
+      <v-app-bar app clipped-left></v-app-bar>
+    </div>
+
+    <v-navigation-drawer app mini-variant mobile-breakpoint="0" clipped>
+      <v-list dense>
+
+      </v-list>
+    </v-navigation-drawer>
+    <v-main id="main-content" class="fill-height">
+      <div class="main-content fill-height">
+        <v-fade-transition mode="out-in">
+          <board></board>
+        </v-fade-transition>
+      </div>
+    </v-main>
   </div>
 </template>
 
@@ -13,56 +27,7 @@
     name: 'HelloWorld',
     components: {Board},
     data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
-      ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
-    }),
+      opened: true
+    })
   })
 </script>
