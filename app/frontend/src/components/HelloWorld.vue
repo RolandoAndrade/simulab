@@ -1,11 +1,7 @@
 <template>
-  <div class="pa-0">
+  <div style="height: 100%">
     <v-app-bar app></v-app-bar>
-    <v-content>
-      <div style="height: 100%">
-        <board></board>
-      </div>
-    </v-content>
+    <board></board>
   </div>
 </template>
 

@@ -21,10 +21,10 @@ export class CanvasBoard extends Board {
         this.origin = new Point(0,0);
         this.dragStartPoint = new Point(0,0);
         this.isMouseDown = false;
-        window.addEventListener("resize", this.onResize.bind(this));
-        window.addEventListener("mousedown", this.onClick.bind(this));
-        window.addEventListener("mouseup", this.onMouseUp.bind(this));
-        window.addEventListener("mousemove", this.onMouseMove.bind(this));
+        this.container.addEventListener("resize", this.onResize.bind(this));
+        this.container.addEventListener("mousedown", this.onClick.bind(this));
+        this.container.addEventListener("mouseup", this.onMouseUp.bind(this));
+        this.container.addEventListener("mousemove", this.onMouseMove.bind(this));
 
         const c1 = new RouterNode({
             x: 10,
@@ -77,7 +77,7 @@ export class CanvasBoard extends Board {
 
     private onClick(event: MouseEvent) {
         this.isMouseDown = true;
-        this.dragStartPoint = new Point(event.clientX + this.origin.x, event.clientY + this.origin.y);
+        this.dragStartPoint = new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
             if (node.contains(this.dragStartPoint.x, this.dragStartPoint.y)) {
@@ -106,13 +106,13 @@ export class CanvasBoard extends Board {
     private onMouseMove(event: MouseEvent) {
         if (this.isMouseDown) {
             if (!!this.selectedNode) {
-                this.selectedNode.isOverPort(event.clientX + this.origin.x, event.clientY + this.origin.y);
-                this.selectedNode.move(event.clientX + this.origin.x - this.selectedNode.position.x, event.clientY + this.origin.y - this.selectedNode.position.y);
+                this.selectedNode.isOverPort(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
+                this.selectedNode.move(event.offsetX + this.origin.x - this.selectedNode.position.x, event.offsetY + this.origin.y - this.selectedNode.position.y);
                 this.container.style.cursor = "grab";
             }
             else {
-                const dx = this.origin.x + event.clientX - this.dragStartPoint.x;
-                const dy = this.origin.y + event.clientY - this.dragStartPoint.y;
+                const dx = this.origin.x + event.offsetX - this.dragStartPoint.x;
+                const dy = this.origin.y + event.offsetY - this.dragStartPoint.y;
                 this.moveContext(dx, dy);
                 this.container.style.cursor = "move";
             }
@@ -120,7 +120,7 @@ export class CanvasBoard extends Board {
             this.draw();
         }
         else if (!!this.selectedNode) {
-            this.selectedNode.isOverPort(event.clientX + this.origin.x, event.clientY + this.origin.y);
+            this.selectedNode.isOverPort(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
             this.draw();
         }
     }
