@@ -3,14 +3,15 @@
     <template v-slot:activator="{ on }">
       <v-btn
           :disabled="disabled"
-          :outlined="!filled"
+          :outlined="outlined"
           fab
+          :plain="!outlined && !filled"
+          :color="color"
           v-on="on"
           @click="click"
           x-small
           elevation="0"
-          :color="color"
-          class="mx-1"
+          class="mx-2"
           :dark="dark"
           :loading="loading"
       >
@@ -50,6 +51,9 @@ export default class TooltipButton extends Vue {
 
   @Prop({ type: Boolean, required: false, default: false })
   public filled!: boolean;
+
+  @Prop({ type: Boolean, required: false, default: false })
+  public outlined!: boolean;
 
   @Prop({ type: Boolean, required: false, default: false })
   public loading!: boolean;
