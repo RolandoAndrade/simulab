@@ -1,4 +1,4 @@
-import {GraphNode} from "../../nodes/domain/graph-node";
+import {GraphNode} from "@/nodes/domain/graph-node";
 
 
 export abstract class Board {

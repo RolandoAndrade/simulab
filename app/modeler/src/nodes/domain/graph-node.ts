@@ -1,5 +1,5 @@
 import {NodeProperties} from "./node-properties";
-import {Point} from "../../shared/types/point";
+import {Point} from "@/shared/types/point";
 
 
 export abstract class GraphNode {
