@@ -12,12 +12,4 @@ export abstract class Board {
      * @param model Model to be imported.
      * */
     public abstract importModel(model: any): void;
-
-    onSelectionChanged(...args: any[]){
-
-    }
-
-    onModelChanged(...args: any[]) {
-
-    }
 }
