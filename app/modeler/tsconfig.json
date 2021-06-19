@@ -15,11 +15,11 @@
     "types": [
       "webpack-env"
     ],
-    /*"paths": {
+    "paths": {
       "@/*": [
         "src/*"
       ]
-    },*/
+    }
   },
   "include": [
     "src/**/*.ts",
