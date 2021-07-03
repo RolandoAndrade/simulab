@@ -1,13 +1,13 @@
-import {CanvasNode} from "./canvas-node";
-import {CanvasCirclePorts} from "./canvas-circle-ports";
-import {QueueCanvasComponentProperties} from "./queue-canvas-component-properties";
-import {CanvasPort} from "./canvas-port";
+import {CanvasNode} from "@/nodes";
+import {CanvasCirclePorts} from "@/nodes";
+import {QueueCanvasComponentProperties} from "@/nodes";
+import {CanvasPort} from "@/nodes";
 
 
 export class RouterNode extends CanvasNode {
     protected ports: CanvasCirclePorts;
     constructor(properties: QueueCanvasComponentProperties) {
-        const image = require("../../../../assets/queue-components/router.png");
+        const image = require("@/assets/queue-components/router.png");
         super({
             ...properties,
             width: 80,

@@ -1,6 +1,6 @@
-import {GraphNode} from "../../domain/graph-node";
-import {CanvasNodeProperties} from "./canvas-node-properties";
-import {CanvasPort} from "./canvas-port";
+import {CanvasPort, GraphNode} from "@/nodes";
+import {CanvasNodeProperties} from "@/nodes";
+
 
 
 export abstract class CanvasNode extends GraphNode {
@@ -10,7 +10,7 @@ export abstract class CanvasNode extends GraphNode {
     protected constructor(properties: CanvasNodeProperties) {
         super(properties);
         this.image = new Image();
-        this.image.src = require("../../../../assets/queue-components/router.png")
+        this.image.src = properties.image;
         this.image.onload = () => {
             this.draw()
         }

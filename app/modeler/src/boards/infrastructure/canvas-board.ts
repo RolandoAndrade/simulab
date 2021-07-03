@@ -1,7 +1,7 @@
 import {Board} from "@/boards";
 import {CanvasNode} from "@/nodes/infrastructure/canvas-node/canvas-node";
 import {Point} from "@/shared/types/point";
-import {RouterNode} from "@/nodes/infrastructure/canvas-node/router-node";
+import {CanvasSourceNode} from "@/nodes";
 
 export class CanvasBoard extends Board {
     private readonly ctx: CanvasRenderingContext2D;
@@ -26,14 +26,14 @@ export class CanvasBoard extends Board {
         this.container.addEventListener("mouseup", this.onMouseUp.bind(this));
         this.container.addEventListener("mousemove", this.onMouseMove.bind(this));
 
-        const c1 = new RouterNode({
+        const c1 = new CanvasSourceNode({
             x: 10,
             y: 10,
             id: "1111",
             ctx: this.ctx
         })
 
-        const c2 = new RouterNode({
+        const c2 = new CanvasSourceNode({
             x: 100,
             y: 10,
             id: "1111",
@@ -41,7 +41,7 @@ export class CanvasBoard extends Board {
         })
 
         const c3 =
-            new RouterNode({
+            new CanvasSourceNode({
                 x: 120,
                 y: 100,
                 id: "1111",

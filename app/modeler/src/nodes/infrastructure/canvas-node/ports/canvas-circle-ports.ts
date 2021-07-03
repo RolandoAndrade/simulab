@@ -1,4 +1,4 @@
-import {CanvasPort} from "./canvas-port";
+import {CanvasPort} from "@/nodes/infrastructure/canvas-node/ports/canvas-port";
 
 const RADIUS = 5;
 export class CanvasCirclePorts extends CanvasPort {
@@ -8,7 +8,7 @@ export class CanvasCirclePorts extends CanvasPort {
     constructor(public cx: number,
                 public cy: number,
                 public r: number) {
-        super();
+        super(undefined);
     }
 
     public contains(x: number, y: number): boolean {
@@ -28,5 +28,9 @@ export class CanvasCirclePorts extends CanvasPort {
         ctx.arc(this.cx + this.r, this.cy, this.hoverRight ? RADIUS * 2 : RADIUS, 0, 2 * Math.PI, false);
         ctx.arc(this.cx - this.r, this.cy, this.hoverLeft ? RADIUS * 2 : RADIUS, 0, 2 * Math.PI, false);
         ctx.fill();
+    }
+
+    hover(x: number, y: number): boolean {
+        return false;
     }
 }
