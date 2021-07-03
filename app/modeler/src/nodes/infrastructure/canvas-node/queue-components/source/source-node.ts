@@ -10,8 +10,8 @@ export class CanvasSourceNode extends CanvasNode {
         super({
             ...properties,
             width: 100,
-            height: 60,
-            padding: 5,
+            height: 65,
+            padding: 0,
             image
         });
         this.port = new CanvasSourcePort(this);

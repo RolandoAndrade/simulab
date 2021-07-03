@@ -18,9 +18,7 @@ export abstract class CanvasNode extends GraphNode {
 
     public draw() {
         this.ctx.drawImage(this.image, this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
-        if(this.isSelected){
-            this.portCreator.draw(this.ctx);
-        }
+        this.portCreator.draw(this.ctx);
     }
 
     public get ctx(): CanvasRenderingContext2D {

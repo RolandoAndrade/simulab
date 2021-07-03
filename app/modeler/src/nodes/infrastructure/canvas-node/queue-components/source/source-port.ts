@@ -24,8 +24,9 @@ export class CanvasSourcePort extends CanvasPort {
 
     public draw(ctx: CanvasRenderingContext2D): void {
         ctx.save();
-        ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2);
+        ctx.translate(this.positionPoint.x, this.positionPoint.y);
         ctx.rotate(Math.PI / 4);
+        ctx.fillStyle = CanvasPort.OUT_COLOR;
         ctx.translate(-CanvasPort.RADIUS, -CanvasPort.RADIUS);
         ctx.fillRect(0,0, 2 * CanvasPort.RADIUS, 2 * CanvasPort.RADIUS);
         ctx.restore();
