@@ -1,5 +1,5 @@
-import {GraphFactory} from "../domain/graph-factory";
-import {CanvasBoard} from "../../../boards/infrastructure/canvas-board";
+import {GraphFactory} from "../domain";
+import {CanvasBoard} from "../../../boards/infrastructure";
 
 
 export class GraphFactoryCanvas implements GraphFactory {

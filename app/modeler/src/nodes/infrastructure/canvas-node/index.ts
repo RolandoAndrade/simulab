@@ -1,7 +1,11 @@
-import { CanvasSourceNode } from "./queue-components/source/source-node";
-import { CanvasSourcePort } from "./queue-components/source/source-port";
+import { CanvasNode } from "./canvas-node"
+import { CanvasNodeProperties } from "./canvas-node-properties"
+import { QueueCanvasComponentProperties } from "./queue-canvas-component-properties"
 
+export * from "./ports"
+export * from "./queue-components"
 export {
-    CanvasSourcePort,
-    CanvasSourceNode
+    CanvasNode,
+    CanvasNodeProperties,
+    QueueCanvasComponentProperties
 }

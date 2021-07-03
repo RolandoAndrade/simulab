@@ -1,6 +1,6 @@
-import {CanvasPort, GraphNode} from "@/nodes";
-import {CanvasNodeProperties} from "@/nodes";
-
+import {GraphNode} from "../../domain";
+import {CanvasNodeProperties} from "./canvas-node-properties";
+import {CanvasPort} from "./ports";
 
 
 export abstract class CanvasNode extends GraphNode {

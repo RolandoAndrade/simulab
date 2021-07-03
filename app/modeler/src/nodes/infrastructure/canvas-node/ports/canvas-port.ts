@@ -1,4 +1,5 @@
-import {CanvasNode} from "@/nodes";
+import { CanvasNode } from "../canvas-node";
+
 
 export abstract class CanvasPort {
     protected static readonly COLOR = "#000000";

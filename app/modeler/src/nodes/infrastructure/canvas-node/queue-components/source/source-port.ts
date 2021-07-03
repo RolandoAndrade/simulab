@@ -1,6 +1,7 @@
-import {CanvasPort} from "@/nodes/infrastructure/canvas-node/ports/canvas-port";
-import {CanvasNode} from "@/nodes";
-import {Point} from "@/shared";
+import {CanvasPort} from "../../ports";
+import {CanvasNode} from "../../canvas-node";
+import {Point} from "../../../../../shared/types";
+
 
 export class CanvasSourcePort extends CanvasPort {
     private hoverRight: boolean = false;

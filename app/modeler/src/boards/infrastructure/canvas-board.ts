@@ -1,7 +1,7 @@
-import {Board} from "@/boards";
-import {CanvasNode} from "@/nodes/infrastructure/canvas-node/canvas-node";
-import {Point} from "@/shared/types/point";
-import {CanvasSourceNode} from "@/nodes";
+import {Board} from "../domain";
+import {CanvasNode, CanvasSourceNode} from "../../nodes/infrastructure/canvas-node";
+import {Point} from "../../shared/types";
+
 
 export class CanvasBoard extends Board {
     private readonly ctx: CanvasRenderingContext2D;

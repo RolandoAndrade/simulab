@@ -1,4 +1,4 @@
-import {CanvasPort} from "@/nodes/infrastructure/canvas-node/ports/canvas-port";
+import {CanvasPort} from "./canvas-port";
 
 const RADIUS = 5;
 export class CanvasCirclePorts extends CanvasPort {

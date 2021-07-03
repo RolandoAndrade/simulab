@@ -1,7 +1,5 @@
-import {CanvasNode} from "@/nodes";
-import {CanvasCirclePorts} from "@/nodes";
-import {QueueCanvasComponentProperties} from "@/nodes";
-import {CanvasPort} from "@/nodes";
+import {CanvasCirclePorts, CanvasPort} from "../ports";
+import {CanvasNode, QueueCanvasComponentProperties} from "../index";
 
 
 export class RouterNode extends CanvasNode {
