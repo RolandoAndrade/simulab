@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app clipped-left clipped-right color="primary" outlined>
+    <v-app-bar app clipped-left clipped-right color="white" outlined>
       <v-spacer></v-spacer>
       <tooltip-button title="Save Model" tip-color="grey">
         <v-icon color="grey">mdi-floppy</v-icon>
