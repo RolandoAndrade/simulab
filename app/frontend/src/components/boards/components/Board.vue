@@ -16,7 +16,10 @@ import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 export default class Board extends Vue {
   mounted(){
     const container = document.getElementById("graph-container");
-    const board = graphFactory.createBoard(container!);
+    this.$nextTick(()=>{
+      const board = graphFactory.createBoard(container!);
+    })
+
   }
 }
 </script>

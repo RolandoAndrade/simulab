@@ -15,17 +15,18 @@ export class CanvasBoard extends Board {
 
     constructor(protected readonly container: HTMLCanvasElement) {
         super(container);
-        this.setSize(container.offsetWidth, container.offsetHeight);
-        this.ctx = container.getContext("2d")!;
+        this.ctx = this.container.getContext("2d")!;
         this.nodes = [];
         this.origin = new Point(0, 0);
         this.dragStartPoint = new Point(0, 0);
         this.isMouseDown = false;
         this.isCreatingPath = true;
-        this.container.addEventListener("resize", this.onResize.bind(this));
+        this.onResize({} as UIEvent);
+        window.addEventListener("resize", this.onResize.bind(this));
         this.container.addEventListener("mousedown", this.onClick.bind(this));
         this.container.addEventListener("mouseup", this.onMouseUp.bind(this));
         this.container.addEventListener("mousemove", this.onMouseMove.bind(this));
+
 
         const c1 = new CanvasSourceNode({
             x: 10,
@@ -70,7 +71,6 @@ export class CanvasBoard extends Board {
 
     private onResize(event: UIEvent) {
         this.setSize(this.container.offsetWidth, this.container.offsetHeight);
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.draw();
     }
 
