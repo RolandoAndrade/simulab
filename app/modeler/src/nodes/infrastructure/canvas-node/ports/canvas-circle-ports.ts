@@ -1,20 +1,19 @@
-import {CanvasPort} from "./canvas-port";
+import { CanvasPort } from "./canvas-port";
 
 const RADIUS = 5;
 export class CanvasCirclePorts extends CanvasPort {
     private hoverRight: boolean = false;
     private hoverLeft: boolean = false;
 
-    constructor(public cx: number,
-                public cy: number,
-                public r: number) {
-        super(undefined);
+    constructor(public cx: number, public cy: number, public r: number) {
+        super(undefined!);
     }
 
     public contains(x: number, y: number): boolean {
-        const cxr = this.cx + this.r, cxl = this.cx - this.r;
-        const right =  (x - cxr)**2 + (y - this.cy)**2 <= (RADIUS * 2) ** 2 ;
-        const left =  (x - cxl)**2 + (y - this.cy)**2 <= (RADIUS * 2 )**2;
+        const cxr = this.cx + this.r,
+            cxl = this.cx - this.r;
+        const right = (x - cxr) ** 2 + (y - this.cy) ** 2 <= (RADIUS * 2) ** 2;
+        const left = (x - cxl) ** 2 + (y - this.cy) ** 2 <= (RADIUS * 2) ** 2;
         this.hoverRight = right;
         this.hoverLeft = left;
         return right || left;

@@ -1,6 +1,5 @@
-import {CanvasCirclePorts, CanvasPort} from "../ports";
-import {CanvasNode, QueueCanvasComponentProperties} from "../index";
-
+import { CanvasCirclePorts, CanvasPort } from "../ports";
+import { CanvasNode, QueueCanvasComponentProperties } from "../index";
 
 export class RouterNode extends CanvasNode {
     protected ports: CanvasCirclePorts;
@@ -11,10 +10,13 @@ export class RouterNode extends CanvasNode {
             width: 80,
             height: 80,
             padding: 5,
-            image
+            image,
         });
-        this.ports = new CanvasCirclePorts(this.position.x + this.dimensions.width / 2, this.position.y + this.dimensions.height / 2 , 40);
-
+        this.ports = new CanvasCirclePorts(
+            this.position.x + this.dimensions.width / 2,
+            this.position.y + this.dimensions.height / 2,
+            40
+        );
     }
 
     get portCreator(): CanvasPort {

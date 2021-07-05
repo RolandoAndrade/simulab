@@ -1,6 +1,4 @@
-import { RouterNode } from "./router-node"
+import { RouterNode } from "./router-node";
 
-export * from "./source"
-export {
-    RouterNode
-}
+export * from "./source";
+export { RouterNode };

@@ -1,7 +1,6 @@
-import {GraphNode} from "../../domain";
-import {CanvasNodeProperties} from "./canvas-node-properties";
-import {CanvasPort} from "./ports";
-
+import { GraphNode } from "../../domain";
+import { CanvasNodeProperties } from "./canvas-node-properties";
+import { CanvasPort } from "./ports";
 
 export abstract class CanvasNode extends GraphNode {
     protected image: HTMLImageElement;
@@ -12,8 +11,8 @@ export abstract class CanvasNode extends GraphNode {
         this.image = new Image();
         this.image.src = properties.image;
         this.image.onload = () => {
-            this.draw()
-        }
+            this.draw();
+        };
     }
 
     public draw() {
@@ -22,9 +21,8 @@ export abstract class CanvasNode extends GraphNode {
     }
 
     public get ctx(): CanvasRenderingContext2D {
-        return (this.properties as CanvasNodeProperties).ctx
+        return (this.properties as CanvasNodeProperties).ctx;
     }
-
 
     public abstract get portCreator(): CanvasPort;
 

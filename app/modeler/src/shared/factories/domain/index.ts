@@ -1,5 +1,3 @@
 import { GraphFactory } from "./graph-factory";
 
-export {
-    GraphFactory
-}
+export { GraphFactory };

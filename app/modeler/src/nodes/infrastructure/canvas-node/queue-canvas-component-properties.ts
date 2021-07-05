@@ -1,4 +1,4 @@
-export interface QueueCanvasComponentProperties{
+export interface QueueCanvasComponentProperties {
     id: string;
     ctx: CanvasRenderingContext2D;
     x: number;

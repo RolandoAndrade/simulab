@@ -1,5 +1,3 @@
 import { CanvasBoard } from "./canvas-board";
 
-export {
-    CanvasBoard
-}
+export { CanvasBoard };

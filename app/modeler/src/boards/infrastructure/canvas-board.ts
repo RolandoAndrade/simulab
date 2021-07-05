@@ -1,7 +1,6 @@
-import {Board} from "../domain";
-import {CanvasNode, CanvasSourceNode} from "../../nodes/infrastructure/canvas-node";
-import {Point} from "../../shared/types";
-
+import { Board } from "../domain";
+import { CanvasNode, CanvasSourceNode } from "../../nodes/infrastructure/canvas-node";
+import { Point } from "../../shared/types";
 
 export class CanvasBoard extends Board {
     private readonly ctx: CanvasRenderingContext2D;
@@ -10,16 +9,16 @@ export class CanvasBoard extends Board {
     private isMouseDown: boolean;
 
     private selectedNode: CanvasNode | undefined;
-    private origin: Point
-    private dragStartPoint: Point
+    private origin: Point;
+    private dragStartPoint: Point;
 
     constructor(protected readonly container: HTMLCanvasElement) {
         super(container);
         this.setSize(container.offsetWidth, container.offsetHeight);
         this.ctx = container.getContext("2d")!;
         this.nodes = [];
-        this.origin = new Point(0,0);
-        this.dragStartPoint = new Point(0,0);
+        this.origin = new Point(0, 0);
+        this.dragStartPoint = new Point(0, 0);
         this.isMouseDown = false;
         this.container.addEventListener("resize", this.onResize.bind(this));
         this.container.addEventListener("mousedown", this.onClick.bind(this));
@@ -30,25 +29,24 @@ export class CanvasBoard extends Board {
             x: 10,
             y: 10,
             id: "1111",
-            ctx: this.ctx
-        })
+            ctx: this.ctx,
+        });
 
         const c2 = new CanvasSourceNode({
             x: 100,
             y: 10,
             id: "1111",
-            ctx: this.ctx
-        })
+            ctx: this.ctx,
+        });
 
-        const c3 =
-            new CanvasSourceNode({
-                x: 120,
-                y: 100,
-                id: "1111",
-                ctx: this.ctx
-            })
+        const c3 = new CanvasSourceNode({
+            x: 120,
+            y: 100,
+            id: "1111",
+            ctx: this.ctx,
+        });
 
-        this.nodes = [c1, c2, c3]
+        this.nodes = [c1, c2, c3];
     }
 
     private setSize(width: number, height: number) {
@@ -62,15 +60,14 @@ export class CanvasBoard extends Board {
             node.draw();
         }
         if (!!this.selectedNode) {
-            this.selectedNode.draw()
+            this.selectedNode.draw();
         }
     }
 
-    importModel(model: object) {
-    }
+    importModel(model: object) {}
 
     private onResize(event: UIEvent) {
-        this.setSize(this.container.offsetWidth, this.container.offsetHeight)
+        this.setSize(this.container.offsetWidth, this.container.offsetHeight);
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.draw();
     }
@@ -81,10 +78,10 @@ export class CanvasBoard extends Board {
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
             if (node.contains(this.dragStartPoint.x, this.dragStartPoint.y)) {
-                if(this.selectedNode) {
+                if (this.selectedNode) {
                     if (this.selectedNode == node) {
                         if (this.selectedNode.isOverPort(this.dragStartPoint.x, this.dragStartPoint.y)) {
-                            console.log("Creating link")
+                            console.log("Creating link");
                         }
                     } else {
                         this.selectedNode.unselect();
@@ -99,7 +96,6 @@ export class CanvasBoard extends Board {
             this.selectedNode.unselect();
             this.draw();
             this.selectedNode = undefined;
-
         }
     }
 
@@ -107,10 +103,12 @@ export class CanvasBoard extends Board {
         if (this.isMouseDown) {
             if (!!this.selectedNode) {
                 this.selectedNode.isOverPort(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
-                this.selectedNode.move(event.offsetX + this.origin.x - this.selectedNode.position.x, event.offsetY + this.origin.y - this.selectedNode.position.y);
+                this.selectedNode.move(
+                    event.offsetX + this.origin.x - this.selectedNode.position.x,
+                    event.offsetY + this.origin.y - this.selectedNode.position.y
+                );
                 this.container.style.cursor = "grab";
-            }
-            else {
+            } else {
                 const dx = this.origin.x + event.offsetX - this.dragStartPoint.x;
                 const dy = this.origin.y + event.offsetY - this.dragStartPoint.y;
                 this.moveContext(dx, dy);
@@ -118,8 +116,7 @@ export class CanvasBoard extends Board {
             }
 
             this.draw();
-        }
-        else if (!!this.selectedNode) {
+        } else if (!!this.selectedNode) {
             this.selectedNode.isOverPort(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
             this.draw();
         }
@@ -127,7 +124,8 @@ export class CanvasBoard extends Board {
 
     private onMouseUp(event: MouseEvent) {
         this.isMouseDown = false;
-        this.container.style.cursor = "default"
+        this.selectedNode.unselect();
+        this.container.style.cursor = "default";
     }
 
     private moveContext(dx: number, dy: number) {
@@ -136,14 +134,11 @@ export class CanvasBoard extends Board {
         this.origin.y -= dy;
     }
 
-    public clear(color = "#fff")
-    {
+    public clear(color = "#fff") {
         this.ctx.save();
-        this.ctx.setTransform(1,0,0,1,0,0);
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.fillStyle = color;
-        this.ctx.fillRect(0,0,this.container.width,this.container.height);
+        this.ctx.fillRect(0, 0, this.container.width, this.container.height);
         this.ctx.restore();
     }
 }
-
-

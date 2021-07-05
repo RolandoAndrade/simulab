@@ -1,10 +1,9 @@
-import {GraphNode} from "../../nodes/domain";
-
+import { GraphNode } from "../../nodes/domain";
 
 export abstract class Board {
     protected nodes: GraphNode[];
     protected constructor(protected container: HTMLElement) {
-        this.nodes = []
+        this.nodes = [];
     }
 
     /**

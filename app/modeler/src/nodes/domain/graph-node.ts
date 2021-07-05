@@ -1,11 +1,8 @@
-import {NodeProperties} from "./node-properties";
-import {Point} from "../../shared/types";
-
-
+import { NodeProperties } from "./node-properties";
+import { Point } from "../../shared/types";
 
 export abstract class GraphNode {
-    protected constructor(protected readonly properties: NodeProperties) {
-    }
+    protected constructor(protected readonly properties: NodeProperties) {}
 
     /**
      * @description Sets the ID of the model
@@ -49,8 +46,12 @@ export abstract class GraphNode {
      * @param y Coordinate y inside the container
      * */
     public contains(x: number, y: number): boolean {
-        return this.position.x - this.properties.padding <= x && x <= this.position.x + this.properties.padding +
-            this.dimensions.width && this.position.y - this.properties.padding <= y && y <= this.position.y + this.dimensions.height + this.properties.padding;
+        return (
+            this.position.x - this.properties.padding <= x &&
+            x <= this.position.x + this.properties.padding + this.dimensions.width &&
+            this.position.y - this.properties.padding <= y &&
+            y <= this.position.y + this.dimensions.height + this.properties.padding
+        );
     }
 
     /**
@@ -59,23 +60,26 @@ export abstract class GraphNode {
      * @param dy Movement in y
      * */
     public move(dx: number, dy: number) {
-        this.setPosition(this.position.x + dx - this.dimensions.width / 2, this.position.y + dy - this.dimensions.height / 2);
+        this.setPosition(
+            this.position.x + dx - this.dimensions.width / 2,
+            this.position.y + dy - this.dimensions.height / 2
+        );
     }
 
     /**
      * @description Selects the node
      * */
     public select(): GraphNode {
-        this.properties.selected = true
-        return this
-    };
+        this.properties.selected = true;
+        return this;
+    }
 
     /**
      * @description Unselects the node
      * */
     public unselect() {
-        this.properties.selected = false
-    };
+        this.properties.selected = false;
+    }
 
     /**
      * @description Gets the position of the node
@@ -83,30 +87,28 @@ export abstract class GraphNode {
     public get position(): Point {
         return {
             x: this.properties.x,
-            y: this.properties.y
-        }
+            y: this.properties.y,
+        };
     }
 
     /**
      * @description Gets the dimensions of the node
      * */
     public get dimensions(): {
-        width: number,
-        height: number
+        width: number;
+        height: number;
     } {
-
         return {
             width: this.properties.width,
-            height: this.properties.height
-        }
+            height: this.properties.height,
+        };
     }
-
 
     /**
      * @description Returns the state of selection
      * */
     public get isSelected(): boolean {
-        return !!this.properties.selected
+        return !!this.properties.selected;
     }
 
     /**

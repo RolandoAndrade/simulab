@@ -4,7 +4,7 @@ export interface NodeProperties {
     y: number;
     width: number;
     height: number;
-    padding: number
+    padding: number;
     color?: string;
     selected?: boolean;
 }

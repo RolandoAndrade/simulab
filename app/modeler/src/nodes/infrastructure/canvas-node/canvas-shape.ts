@@ -1,5 +1,4 @@
-export function drawCircumference(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number){
-
+export function drawCircumference(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number) {
     ctx.beginPath();
     ctx.strokeStyle = "#424242";
     ctx.arc(x, y, radius, 0, 2 * Math.PI, false);

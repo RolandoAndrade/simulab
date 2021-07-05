@@ -1,5 +1,3 @@
 import { Edge } from "./domain/edge";
 
-export {
-    Edge
-}
+export { Edge };

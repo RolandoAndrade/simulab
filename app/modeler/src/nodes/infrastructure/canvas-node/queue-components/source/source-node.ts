@@ -1,7 +1,6 @@
-import {CanvasNode} from "../../canvas-node";
-import {CanvasSourcePort} from "./source-port";
-import {QueueCanvasComponentProperties} from "../../queue-canvas-component-properties";
-
+import { CanvasNode } from "../../canvas-node";
+import { CanvasSourcePort } from "./source-port";
+import { QueueCanvasComponentProperties } from "../../queue-canvas-component-properties";
 
 export class CanvasSourceNode extends CanvasNode {
     protected port: CanvasSourcePort;
@@ -12,7 +11,7 @@ export class CanvasSourceNode extends CanvasNode {
             width: 100,
             height: 65,
             padding: 0,
-            image
+            image,
         });
         this.port = new CanvasSourcePort(this);
     }

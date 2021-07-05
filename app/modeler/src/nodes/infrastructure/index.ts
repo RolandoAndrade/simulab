@@ -1,1 +1,1 @@
-export * from "./canvas-node"
+export * from "./canvas-node";

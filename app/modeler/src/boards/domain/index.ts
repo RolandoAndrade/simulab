@@ -1,5 +1,3 @@
 import { Board } from "./board";
 
-export {
-    Board
-}
+export { Board };

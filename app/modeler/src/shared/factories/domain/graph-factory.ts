@@ -1,6 +1,5 @@
-import {Board} from "../../../boards/domain";
+import { Board } from "../../../boards/domain";
 
-
-export interface GraphFactory{
+export interface GraphFactory {
     createBoard(container: HTMLElement): Board;
 }
