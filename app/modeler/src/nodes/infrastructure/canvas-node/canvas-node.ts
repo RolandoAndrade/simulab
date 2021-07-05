@@ -17,6 +17,9 @@ export abstract class CanvasNode extends GraphNode {
 
     public draw() {
         this.ctx.drawImage(this.image, this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
+        this.ctx.font = "12px Arial";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(this.properties.id, this.position.x + this.dimensions.width / 2, this.position.y + this.dimensions.height + 15);
         this.portCreator.draw(this.ctx);
     }
 

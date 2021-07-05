@@ -7,6 +7,7 @@ export class CanvasBoard extends Board {
     protected nodes: CanvasNode[];
 
     private isMouseDown: boolean;
+    private isCreatingPath: boolean;
 
     private selectedNode: CanvasNode | undefined;
     private origin: Point;
@@ -20,6 +21,7 @@ export class CanvasBoard extends Board {
         this.origin = new Point(0, 0);
         this.dragStartPoint = new Point(0, 0);
         this.isMouseDown = false;
+        this.isCreatingPath = true;
         this.container.addEventListener("resize", this.onResize.bind(this));
         this.container.addEventListener("mousedown", this.onClick.bind(this));
         this.container.addEventListener("mouseup", this.onMouseUp.bind(this));
@@ -28,21 +30,21 @@ export class CanvasBoard extends Board {
         const c1 = new CanvasSourceNode({
             x: 10,
             y: 10,
-            id: "1111",
+            id: "Source1",
             ctx: this.ctx,
         });
 
         const c2 = new CanvasSourceNode({
             x: 100,
             y: 10,
-            id: "1111",
+            id: "Source2",
             ctx: this.ctx,
         });
 
         const c3 = new CanvasSourceNode({
             x: 120,
             y: 100,
-            id: "1111",
+            id: "Source3",
             ctx: this.ctx,
         });
 
@@ -123,8 +125,10 @@ export class CanvasBoard extends Board {
     }
 
     private onMouseUp(event: MouseEvent) {
+        if(!!this.selectedNode){
+            this.selectedNode.unselect();
+        }
         this.isMouseDown = false;
-        this.selectedNode.unselect();
         this.container.style.cursor = "default";
     }
 
