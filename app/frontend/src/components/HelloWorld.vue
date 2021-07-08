@@ -4,7 +4,7 @@
     <nav-bar></nav-bar>
     <property-bar></property-bar>
     <v-main id="main-content" class="fill-height">
-      <div class="main-content fill-height">
+      <div class="main-content">
         <v-fade-transition mode="out-in">
           <board></board>
         </v-fade-transition>
@@ -28,3 +28,9 @@
     })
   })
 </script>
+
+<style scoped>
+  .main-content{
+    height: calc(100% - 8px);
+  }
+</style>

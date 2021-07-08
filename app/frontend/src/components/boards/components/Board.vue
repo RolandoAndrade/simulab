@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%">
-    <canvas id="graph-container" style="width: 100%; height: 99%">
+    <canvas id="graph-container" style="width: 100%; height: 100%">
     </canvas>
   </div>
 </template>
