@@ -1,34 +1,31 @@
 <template>
-  <v-navigation-drawer app mobile-breakpoint="0" clipped width="80px">
+  <v-navigation-drawer app mobile-breakpoint="0" clipped width="85px">
+
     <v-list dense class="my-2">
       <v-list-item>
-        <tooltip-button tip-color="grey" color="grey" title="Play" outlined>
-          <v-icon color="grey">
-            mdi-play
-          </v-icon>
-        </tooltip-button>
+        <hint-button tip-color="grey" color="transparent" tip-text="Source" small plain>
+          <v-img :src="require('@/assets/queue-components/source.png')" width="30px" height="20px" ></v-img>
+        </hint-button>
       </v-list-item>
       <v-list-item>
-        <tooltip-button tip-color="grey" color="grey" title="Stop" outlined>
-          <v-icon color="grey">
-            mdi-stop
-          </v-icon>
-        </tooltip-button>
-      </v-list-item>
-    </v-list>
-    <v-divider></v-divider>
-    <v-list dense class="my-2">
-      <v-list-item>
-        <tooltip-button tip-color="grey" color="grey" title="Router">
-          <v-avatar size="30">
-            <v-img :src="require('@/assets/queue-components/router.png')"></v-img>
-          </v-avatar>
-        </tooltip-button>
+        <hint-button tip-color="grey" color="transparent" tip-text="Server" small plain>
+          <v-img :src="require('@/assets/queue-components/server.png')" width="30px" height="20px" ></v-img>
+        </hint-button>
       </v-list-item>
       <v-list-item>
-        <tooltip-button tip-color="grey" color="grey" title="Server">
-            <v-img :src="require('@/assets/queue-components/server.png')" width="35px" height="25px" ></v-img>
-        </tooltip-button>
+        <hint-button tip-color="grey" color="transparent" tip-text="Sink" small plain>
+          <v-img :src="require('@/assets/queue-components/sink.png')" width="30px" height="20px" ></v-img>
+        </hint-button>
+      </v-list-item>
+      <v-list-item>
+        <hint-button tip-color="grey" color="transparent" tip-text="Separator" small plain>
+          <v-img :src="require('@/assets/queue-components/separator.png')" width="30px" height="20px" ></v-img>
+        </hint-button>
+      </v-list-item>
+      <v-list-item>
+        <hint-button tip-color="grey" color="transparent" tip-text="Combinator" small plain>
+          <v-img :src="require('@/assets/queue-components/combinator.png')" width="30px" height="20px" ></v-img>
+        </hint-button>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -39,10 +36,11 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import TooltipButton from "@/components/shared/components/buttons/TooltipButton.vue";
+import HintButton from "@/components/shared/components/buttons/HintButton.vue";
 
 @Component({
   name: 'nav-bar',
-  components: {TooltipButton},
+  components: {HintButton, TooltipButton},
 })
 export default class NavBar extends Vue {
 
