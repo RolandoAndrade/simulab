@@ -3,7 +3,6 @@
     <template v-slot:activator="{ on }">
       <v-btn v-bind="props"
              v-on="on"
-             class="elevation-0"
       >
         <slot>
         </slot>

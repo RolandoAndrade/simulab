@@ -1,30 +1,37 @@
 <template>
-  <v-navigation-drawer app mobile-breakpoint="0" clipped width="85px">
-
+  <v-navigation-drawer app mobile-breakpoint="0" clipped width="100px">
     <v-list dense class="my-2">
-      <v-list-item>
-        <hint-button tip-color="grey" color="transparent" tip-text="Source" small plain>
-          <v-img :src="require('@/assets/queue-components/source.png')" width="30px" height="20px" ></v-img>
+      <v-list-item class="mb-2">
+        <v-subheader>
+          <v-col class="text-center">
+            <v-icon class="mx-auto">mdi-sitemap</v-icon>
+            <div>Items</div>
+          </v-col>
+        </v-subheader>
+      </v-list-item>
+      <v-list-item class="my-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Source" plain block>
+          <v-img :src="require('@/assets/queue-components/source.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item>
-        <hint-button tip-color="grey" color="transparent" tip-text="Server" small plain>
-          <v-img :src="require('@/assets/queue-components/server.png')" width="30px" height="20px" ></v-img>
+      <v-list-item class="my-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Server" plain block>
+          <v-img :src="require('@/assets/queue-components/server.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item>
-        <hint-button tip-color="grey" color="transparent" tip-text="Sink" small plain>
-          <v-img :src="require('@/assets/queue-components/sink.png')" width="30px" height="20px" ></v-img>
+      <v-list-item class="my-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Sink" plain block>
+          <v-img :src="require('@/assets/queue-components/sink.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item>
-        <hint-button tip-color="grey" color="transparent" tip-text="Separator" small plain>
-          <v-img :src="require('@/assets/queue-components/separator.png')" width="30px" height="20px" ></v-img>
+      <v-list-item class="my-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Separator" plain block>
+          <v-img :src="require('@/assets/queue-components/separator.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item>
-        <hint-button tip-color="grey" color="transparent" tip-text="Combinator" small plain>
-          <v-img :src="require('@/assets/queue-components/combinator.png')" width="30px" height="20px" ></v-img>
+      <v-list-item class="my-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Combinator" plain block>
+          <v-img :src="require('@/assets/queue-components/combinator.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
     </v-list>

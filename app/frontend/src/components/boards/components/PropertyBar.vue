@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer app mobile-breakpoint="0" clipped width="200px" right>
-      <v-subheader><v-icon class="mr-2">mdi-playlist-edit</v-icon>Properties</v-subheader>
+      <v-subheader class="my-2"><v-icon class="mr-2">mdi-playlist-edit</v-icon>Properties</v-subheader>
       <table class="caption property-table">
         <thead class="property-title">
         <tr>
