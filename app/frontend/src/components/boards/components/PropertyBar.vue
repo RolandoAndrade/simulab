@@ -1,20 +1,19 @@
 <template>
-  <v-navigation-drawer app mobile-breakpoint="0" clipped width="200px" right>
+  <v-navigation-drawer app mobile-breakpoint="0" clipped width="280px" right>
       <v-subheader class="my-2"><v-icon class="mr-2">mdi-playlist-edit</v-icon>Properties</v-subheader>
-      <table class="caption property-table">
-        <thead class="property-title">
-        <tr>
-          <td class="pa-1 property-name">Property</td>
-          <td class="pa-1 property-value">Value</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td class="property-name">Name</td>
-          <td class="property-value"><v-text-field class="caption" hide-details dense></v-text-field></td>
-        </tr>
-        </tbody>
-      </table>
+      <v-data-table
+          id="properties-table"
+          :headers="headers"
+          :items="properties"
+          :items-per-page="5"
+          disable-sort disable-pagination disable-filtering
+          hide-default-footer
+          mobile-breakpoint="0"
+      >
+        <template v-slot:item.propertyValue="{ item }">
+          <v-text-field :placeholder="item.propertyName" outlined dense hide-details></v-text-field>
+        </template>
+      </v-data-table>
   </v-navigation-drawer>
 </template>
 
@@ -27,24 +26,40 @@ import {Prop} from 'vue-property-decorator';
   name: 'property-bar',
 })
 export default class PropertyBar extends Vue {
-
+  headers = [
+    {
+      text: 'Property',
+      align: 'start',
+      value: 'propertyName',
+    },
+    { text: 'Value', value: 'propertyValue' },
+  ];
+  properties = [
+    {
+      propertyName: 'Name',
+      propertyValue: 'Lorem ipsum',
+      type: "STRING"
+    },
+    {
+      propertyName: 'Something',
+      propertyValue: 'Lorem ipsum',
+      type: "STRING"
+    },
+    {
+      propertyName: 'Third',
+      propertyValue: 'Lorem ipsum',
+      type: "STRING"
+    },
+  ]
 }
 </script>
 
-<style scoped>
-
-td{
-  border: solid 1px red;
+<style>
+#properties-table > .v-data-table__wrapper > table > tbody > tr > td{
+  font-size: 12px !important;
+  font-weight: 400;
 }
-
-.property-title{
-  background: #f0f0f0;
-  color: rgba(0, 0, 0, 0.6);
-}
-.property-name{
-  width: 80px;
-}
-.property-value{
-  width: 120px;
+#properties-table  > .v-data-table__wrapper > table > tbody > tr > td > .v-input{
+  font-size: 12px !important;
 }
 </style>
