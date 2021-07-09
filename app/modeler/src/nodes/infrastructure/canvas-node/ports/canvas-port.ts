@@ -29,4 +29,8 @@ export abstract class CanvasPort {
             y: this.node.position.y + this.node.dimensions.height / 2,
         };
     }
+
+    public abstract containsRightPort(x: number, y: number): boolean;
+
+    public abstract containsLeftPort(x: number, y: number): boolean;
 }

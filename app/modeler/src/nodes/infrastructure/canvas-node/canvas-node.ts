@@ -32,4 +32,6 @@ export abstract class CanvasNode extends GraphNode {
     public isOverPort(x: number, y: number) {
         return this.portCreator.contains(x, y);
     }
+
+
 }

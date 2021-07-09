@@ -99,7 +99,7 @@ export class CanvasBoard extends Board {
     private createPath(){
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
-            if (node.isOverPort(this.dragStartPoint.x, this.dragStartPoint.y)) {
+            if (node.portCreator.containsRightPort(this.dragStartPoint.x, this.dragStartPoint.y)) {
                 this.createdPath = new Path(this.ctx, node, this.dragStartPoint);
                 this.draw();
                 return;
@@ -167,14 +167,13 @@ export class CanvasBoard extends Board {
     private finishPath(event: Point){
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
-            if (node.isOverPort(event.x, event.y)) {
+            if (node.portCreator.containsLeftPort(event.x, event.y)) {
                 this.paths.push(new Path(this.ctx, this.createdPath!.fromNode, node));
-                console.log(this.paths)
-                this.createdPath = undefined;
-                this.draw();
-                return;
+                break;
             }
         }
+        this.createdPath = undefined;
+        this.draw();
     }
 
     private onMouseUp(event: MouseEvent) {

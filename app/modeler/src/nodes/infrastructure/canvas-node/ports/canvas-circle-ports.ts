@@ -32,4 +32,12 @@ export class CanvasCirclePorts extends CanvasPort {
     hover(x: number, y: number): boolean {
         return false;
     }
+
+    containsLeftPort(x: number, y: number): boolean {
+        return false
+    }
+
+    containsRightPort(x: number, y: number): boolean {
+        return false
+    }
 }

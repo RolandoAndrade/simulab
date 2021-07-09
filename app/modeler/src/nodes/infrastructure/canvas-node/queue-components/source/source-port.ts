@@ -10,12 +10,7 @@ export class CanvasSourcePort extends CanvasPort {
     }
 
     public contains(x: number, y: number): boolean {
-        return (
-            this.positionRightPoint.x - CanvasPort.RADIUS <= x &&
-            x <= this.positionRightPoint.x + CanvasPort.RADIUS &&
-            this.positionRightPoint.y - CanvasPort.RADIUS <= y &&
-            y <= this.positionRightPoint.y + CanvasPort.RADIUS
-        );
+        return this.containsLeftPort(x, y)
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
@@ -31,5 +26,18 @@ export class CanvasSourcePort extends CanvasPort {
     hover(x: number, y: number): boolean {
         this.hoverRight = this.contains(x, y);
         return this.hoverRight;
+    }
+
+    containsLeftPort(x: number, y: number): boolean {
+        return false
+    }
+
+    containsRightPort(x: number, y: number): boolean {
+        return (
+            this.positionRightPoint.x - CanvasPort.RADIUS <= x &&
+            x <= this.positionRightPoint.x + CanvasPort.RADIUS &&
+            this.positionRightPoint.y - CanvasPort.RADIUS <= y &&
+            y <= this.positionRightPoint.y + CanvasPort.RADIUS
+        );
     }
 }
