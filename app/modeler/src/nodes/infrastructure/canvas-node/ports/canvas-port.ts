@@ -2,7 +2,7 @@ import { CanvasNode } from "../canvas-node";
 
 export abstract class CanvasPort {
     protected static readonly COLOR = "#000000";
-    protected static readonly IN_COLOR = "#1f1f1f";
+    protected static readonly IN_COLOR = "#583e7b";
     protected static readonly OUT_COLOR = "#7d2cff";
 
     protected static readonly LINE_DASH = [10];

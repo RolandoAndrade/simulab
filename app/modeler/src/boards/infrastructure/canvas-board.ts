@@ -1,5 +1,5 @@
 import { Board } from "../domain";
-import { CanvasNode, CanvasSourceNode } from "../../nodes/infrastructure/canvas-node";
+import {CanvasNode, CanvasServerNode, CanvasSourceNode} from "../../nodes/infrastructure/canvas-node";
 import { Point } from "../../shared/types";
 
 export class CanvasBoard extends Board {
@@ -35,10 +35,10 @@ export class CanvasBoard extends Board {
             ctx: this.ctx,
         });
 
-        const c2 = new CanvasSourceNode({
+        const c2 = new CanvasServerNode({
             x: 100,
             y: 10,
-            id: "Source2",
+            id: "Server1",
             ctx: this.ctx,
         });
 
