@@ -33,6 +33,9 @@ export default class Board extends Vue {
         }
       }))
     })
+    eventBus.$on(eventBus.CHANGE_MODE, (mode: boolean)=>{
+      this.board.setPathCreation(mode)
+    })
   }
 }
 </script>

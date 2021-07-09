@@ -24,7 +24,6 @@ export class CanvasBoard extends Board {
         this.origin = new Point(0, 0);
         this.dragStartPoint = new Point(0, 0);
         this.isMouseDown = false;
-        this.setPathCreation(true);
         this.onResize({} as UIEvent);
         window.addEventListener("resize", this.onResize.bind(this));
         this.container.addEventListener("mousedown", this.onClick.bind(this));

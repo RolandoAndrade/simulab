@@ -34,6 +34,11 @@
           <v-img :src="require('@/assets/queue-components/combinator.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
+      <v-list-item class="my-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Path" plain block @click="()=>changeMode()">
+          <v-img :src="require('@/assets/queue-components/path.png')" width="30px"></v-img>
+        </hint-button>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -57,6 +62,9 @@ export default class NavBar extends Vue {
   }
   createServer(){
     eventBus.$emit(eventBus.CREATE_NODE, NodeCreatorType.SERVER)
+  }
+  changeMode(){
+    eventBus.$emit(eventBus.CHANGE_MODE, true);
   }
 }
 </script>
