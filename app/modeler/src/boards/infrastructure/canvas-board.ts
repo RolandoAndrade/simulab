@@ -1,15 +1,18 @@
 import { Board } from "../domain";
 import {CanvasNode, CanvasServerNode, CanvasSourceNode} from "../../nodes/infrastructure/canvas-node";
 import { Point } from "../../shared/types";
+import {Edge, Path} from "../../edge";
 
 export class CanvasBoard extends Board {
     private readonly ctx: CanvasRenderingContext2D;
     protected nodes: CanvasNode[];
 
     private isMouseDown: boolean;
-    private isCreatingPath: boolean;
 
     private selectedNode: CanvasNode | undefined;
+    private createdPath: Edge | undefined;
+
+
     private origin: Point;
     private dragStartPoint: Point;
 
@@ -20,7 +23,7 @@ export class CanvasBoard extends Board {
         this.origin = new Point(0, 0);
         this.dragStartPoint = new Point(0, 0);
         this.isMouseDown = false;
-        this.isCreatingPath = true;
+        this.isCreatingPathEnable = true;
         this.onResize({} as UIEvent);
         window.addEventListener("resize", this.onResize.bind(this));
         this.container.addEventListener("mousedown", this.onClick.bind(this));
@@ -74,20 +77,12 @@ export class CanvasBoard extends Board {
         this.draw();
     }
 
-    private onClick(event: MouseEvent) {
-        this.isMouseDown = true;
-        this.dragStartPoint = new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
+    private selectNode(){
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
             if (node.contains(this.dragStartPoint.x, this.dragStartPoint.y)) {
                 if (this.selectedNode) {
-                    if (this.selectedNode == node) {
-                        if (this.selectedNode.isOverPort(this.dragStartPoint.x, this.dragStartPoint.y)) {
-                            console.log("Creating link");
-                        }
-                    } else {
-                        this.selectedNode.unselect();
-                    }
+                    this.selectedNode.unselect();
                 }
                 this.selectedNode = node.select() as CanvasNode;
                 this.draw();
@@ -101,20 +96,64 @@ export class CanvasBoard extends Board {
         }
     }
 
+    private createPath(){
+        const rNodes = this.nodes.reverse();
+        for (const node of rNodes) {
+            if (node.isOverPort(this.dragStartPoint.x, this.dragStartPoint.y)) {
+                this.createdPath = new Path(this.ctx, node, this.dragStartPoint);
+                return;
+            }
+        }
+    }
+
+    private onClick(event: MouseEvent) {
+        this.isMouseDown = true;
+        this.dragStartPoint = new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
+        if(this.isCreatingPathEnable){
+            this.createPath();
+        } else {
+            this.selectNode();
+        }
+
+    }
+
+    private moveBoard(event: Point) {
+        const dx = this.origin.x + event.x - this.dragStartPoint.x;
+        const dy = this.origin.y + event.y - this.dragStartPoint.y;
+        this.moveContext(dx, dy);
+        this.container.style.cursor = "move";
+    }
+
+    private moveNode(event: Point){
+        if (!!this.selectedNode) {
+            this.selectedNode.move(
+                event.x + this.origin.x - this.selectedNode.position.x,
+                event.y + this.origin.y - this.selectedNode.position.y
+            );
+            this.container.style.cursor = "grab";
+        } else {
+            this.moveBoard(event)
+        }
+    }
+
+    private movePath(event: Point){
+        if (!!this.createdPath) {
+            this.createdPath.move(
+                event.x + this.origin.x - this.createdPath.toPosition.x,
+                event.y + this.origin.y - this.createdPath.toPosition.y
+            );
+            this.container.style.cursor = "grab";
+        } else {
+            this.moveBoard(event)
+        }
+    }
+
     private onMouseMove(event: MouseEvent) {
         if (this.isMouseDown) {
-            if (!!this.selectedNode) {
-                this.selectedNode.isOverPort(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
-                this.selectedNode.move(
-                    event.offsetX + this.origin.x - this.selectedNode.position.x,
-                    event.offsetY + this.origin.y - this.selectedNode.position.y
-                );
-                this.container.style.cursor = "grab";
+            if(this.isCreatingPathEnable){
+                this.movePath(new Point(event.offsetX, event.offsetY))
             } else {
-                const dx = this.origin.x + event.offsetX - this.dragStartPoint.x;
-                const dy = this.origin.y + event.offsetY - this.dragStartPoint.y;
-                this.moveContext(dx, dy);
-                this.container.style.cursor = "move";
+                this.moveNode(new Point(event.offsetX, event.offsetY))
             }
 
             this.draw();

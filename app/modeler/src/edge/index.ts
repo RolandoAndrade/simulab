@@ -1,3 +1,2 @@
-import { Edge } from "./domain/edge";
-
-export { Edge };
+export * from "./domain"
+export * from "./infrastructure"

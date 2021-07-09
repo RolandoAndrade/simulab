@@ -1,9 +1,17 @@
 import { GraphNode } from "../../nodes/domain";
+import {Point} from "../../shared";
 
 export abstract class Edge {
     private selected: boolean = false;
 
-    protected constructor(protected from: GraphNode, protected to?: GraphNode, protected padding: number = 5) {}
+    protected constructor(protected from: GraphNode, protected to: GraphNode | Point, protected padding: number = 5) {}
+
+    public get toPosition(): Point{
+        if (this.to instanceof Point) {
+            return this.to;
+        }
+        return this.to.position;
+    }
 
     /**
      * @description Returns true if the given point is contained by the node
@@ -11,11 +19,8 @@ export abstract class Edge {
      * @param y Coordinate y inside the container
      * */
     public contains(x: number, y: number): boolean {
-        if (!this.to) {
-            return false;
-        }
         const p1 = this.from.position,
-            p2 = this.to.position;
+            p2 = this.toPosition;
         const yMax = Math.max(p2.y, p1.y);
         const yMin = Math.min(p2.y, p1.y);
         const d = p2.x - p1.x;
@@ -58,4 +63,16 @@ export abstract class Edge {
      * @description Renders the edge
      * */
     abstract draw(): any;
+
+    /**
+     * @description Moves the ending point
+     * */
+    public move(x: number, y: number){
+        if(this.to instanceof Point){
+            this.to = new Point(x, y);
+        } else {
+            this.to.setPosition(x, y)
+        }
+
+    }
 }

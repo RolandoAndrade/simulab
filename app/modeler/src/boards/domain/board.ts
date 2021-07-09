@@ -1,9 +1,15 @@
 import { GraphNode } from "../../nodes/domain";
+import {Edge} from "../../edge";
+
 
 export abstract class Board {
     protected nodes: GraphNode[];
+    protected paths: Edge[]
+    protected isCreatingPathEnable: boolean = false;
+
     protected constructor(protected container: HTMLElement) {
         this.nodes = [];
+        this.paths = [];
     }
 
     /**
