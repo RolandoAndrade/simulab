@@ -92,6 +92,16 @@ export abstract class GraphNode {
     }
 
     /**
+     * @description Gets the center position of the node
+     * */
+    public get center(): Point {
+        return {
+            x: this.properties.x + this.dimensions.width / 2,
+            y: this.properties.y + this.dimensions.height / 2,
+        };
+    }
+
+    /**
      * @description Gets the dimensions of the node
      * */
     public get dimensions(): {

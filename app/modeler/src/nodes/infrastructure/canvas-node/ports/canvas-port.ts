@@ -1,4 +1,5 @@
 import { CanvasNode } from "../canvas-node";
+import {Point} from "../../../../shared";
 
 export abstract class CanvasPort {
     protected static readonly COLOR = "#000000";
@@ -14,4 +15,18 @@ export abstract class CanvasPort {
     abstract contains(x: number, y: number): boolean;
     abstract hover(x: number, y: number): boolean;
     abstract draw(ctx: CanvasRenderingContext2D): void;
+
+    public get positionRightPoint(): Point {
+        return {
+            x: this.node.position.x + this.node.dimensions.width + 2 * CanvasPort.MARGIN,
+            y: this.node.position.y + this.node.dimensions.height / 2,
+        };
+    }
+
+    public get positionLeftPoint(): Point {
+        return {
+            x: this.node.position.x - 2 * CanvasPort.MARGIN,
+            y: this.node.position.y + this.node.dimensions.height / 2,
+        };
+    }
 }

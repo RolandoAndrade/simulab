@@ -10,20 +10,6 @@ export class CanvasServerPort extends CanvasPort {
         super(node);
     }
 
-    private get positionRightPoint(): Point {
-        return {
-            x: this.node.position.x + this.node.dimensions.width + 2 * CanvasPort.MARGIN,
-            y: this.node.position.y + this.node.dimensions.height / 2,
-        };
-    }
-
-    private get positionLeftPoint(): Point {
-        return {
-            x: this.node.position.x - 2 * CanvasPort.MARGIN,
-            y: this.node.position.y + this.node.dimensions.height / 2,
-        };
-    }
-
     private containsPoint(position: Point, x: number, y: number): boolean {
         return (
             position.x - CanvasPort.RADIUS <= x &&

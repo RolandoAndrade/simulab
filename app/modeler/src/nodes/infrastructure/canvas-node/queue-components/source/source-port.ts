@@ -9,25 +9,18 @@ export class CanvasSourcePort extends CanvasPort {
         super(node);
     }
 
-    private get positionPoint(): Point {
-        return {
-            x: this.node.position.x + this.node.dimensions.width + 2 * CanvasPort.MARGIN,
-            y: this.node.position.y + this.node.dimensions.height / 2,
-        };
-    }
-
     public contains(x: number, y: number): boolean {
         return (
-            this.positionPoint.x - CanvasPort.RADIUS <= x &&
-            x <= this.positionPoint.x + CanvasPort.RADIUS &&
-            this.positionPoint.y - CanvasPort.RADIUS <= y &&
-            y <= this.positionPoint.y + CanvasPort.RADIUS
+            this.positionRightPoint.x - CanvasPort.RADIUS <= x &&
+            x <= this.positionRightPoint.x + CanvasPort.RADIUS &&
+            this.positionRightPoint.y - CanvasPort.RADIUS <= y &&
+            y <= this.positionRightPoint.y + CanvasPort.RADIUS
         );
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
         ctx.save();
-        ctx.translate(this.positionPoint.x, this.positionPoint.y);
+        ctx.translate(this.positionRightPoint.x, this.positionRightPoint.y);
         ctx.rotate(Math.PI / 4);
         ctx.fillStyle = CanvasPort.OUT_COLOR;
         ctx.translate(-CanvasPort.RADIUS, -CanvasPort.RADIUS);

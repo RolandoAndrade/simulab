@@ -23,7 +23,7 @@ export class CanvasBoard extends Board {
         this.origin = new Point(0, 0);
         this.dragStartPoint = new Point(0, 0);
         this.isMouseDown = false;
-        this.isCreatingPathEnable = true;
+        this.setPathCreation(true);
         this.onResize({} as UIEvent);
         window.addEventListener("resize", this.onResize.bind(this));
         this.container.addEventListener("mousedown", this.onClick.bind(this));
@@ -32,27 +32,21 @@ export class CanvasBoard extends Board {
 
 
         const c1 = new CanvasSourceNode({
-            x: 10,
-            y: 10,
+            x: 120,
+            y: 100,
             id: "Source1",
             ctx: this.ctx,
         });
 
+
         const c2 = new CanvasServerNode({
-            x: 100,
-            y: 10,
+            x: 400,
+            y: 100,
             id: "Server1",
             ctx: this.ctx,
         });
 
-        const c3 = new CanvasSourceNode({
-            x: 120,
-            y: 100,
-            id: "Source3",
-            ctx: this.ctx,
-        });
-
-        this.nodes = [c1, c2, c3];
+        this.nodes = [c1, c2];
     }
 
     private setSize(width: number, height: number) {
@@ -62,11 +56,17 @@ export class CanvasBoard extends Board {
 
     draw() {
         this.clear();
+        for (const path of this.paths) {
+            path.draw();
+        }
         for (const node of this.nodes) {
             node.draw();
         }
         if (!!this.selectedNode) {
             this.selectedNode.draw();
+        }
+        if (!!this.createdPath) {
+            this.createdPath.draw();
         }
     }
 
@@ -101,6 +101,7 @@ export class CanvasBoard extends Board {
         for (const node of rNodes) {
             if (node.isOverPort(this.dragStartPoint.x, this.dragStartPoint.y)) {
                 this.createdPath = new Path(this.ctx, node, this.dragStartPoint);
+                this.draw();
                 return;
             }
         }
@@ -139,10 +140,10 @@ export class CanvasBoard extends Board {
     private movePath(event: Point){
         if (!!this.createdPath) {
             this.createdPath.move(
-                event.x + this.origin.x - this.createdPath.toPosition.x,
-                event.y + this.origin.y - this.createdPath.toPosition.y
+                event.x + this.origin.x,
+                event.y + this.origin.y
             );
-            this.container.style.cursor = "grab";
+            this.container.style.cursor = "cell";
         } else {
             this.moveBoard(event)
         }
@@ -163,12 +164,29 @@ export class CanvasBoard extends Board {
         }
     }
 
+    private finishPath(event: Point){
+        const rNodes = this.nodes.reverse();
+        for (const node of rNodes) {
+            if (node.isOverPort(event.x, event.y)) {
+                this.paths.push(new Path(this.ctx, this.createdPath!.fromNode, node));
+                console.log(this.paths)
+                this.createdPath = undefined;
+                this.draw();
+                return;
+            }
+        }
+    }
+
     private onMouseUp(event: MouseEvent) {
+        this.isMouseDown = false;
+        this.container.style.cursor = "default";
         if(!!this.selectedNode){
             this.selectedNode.unselect();
         }
-        this.isMouseDown = false;
-        this.container.style.cursor = "default";
+        if(!!this.createdPath){
+            this.setPathCreation(true);
+            this.finishPath(new Point(event.offsetX, event.offsetY))
+        }
     }
 
     private moveContext(dx: number, dy: number) {
@@ -183,5 +201,14 @@ export class CanvasBoard extends Board {
         this.ctx.fillStyle = color;
         this.ctx.fillRect(0, 0, this.container.width, this.container.height);
         this.ctx.restore();
+    }
+
+    public setPathCreation(value: boolean) {
+        super.setPathCreation(value);
+        if (value) {
+            this.container.style.cursor = "crosshair";
+        } else {
+            this.container.style.cursor = "default";
+        }
     }
 }

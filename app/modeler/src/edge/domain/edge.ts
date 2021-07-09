@@ -2,6 +2,8 @@ import { GraphNode } from "../../nodes/domain";
 import {Point} from "../../shared";
 
 export abstract class Edge {
+    protected static readonly COLOR = "#4e176f";
+
     private selected: boolean = false;
 
     protected constructor(protected from: GraphNode, protected to: GraphNode | Point, protected padding: number = 5) {}
@@ -10,7 +12,11 @@ export abstract class Edge {
         if (this.to instanceof Point) {
             return this.to;
         }
-        return this.to.position;
+        return this.to.center;
+    }
+
+    public get fromNode(): GraphNode{
+        return this.from;
     }
 
     /**
@@ -19,7 +25,7 @@ export abstract class Edge {
      * @param y Coordinate y inside the container
      * */
     public contains(x: number, y: number): boolean {
-        const p1 = this.from.position,
+        const p1 = this.from.center,
             p2 = this.toPosition;
         const yMax = Math.max(p2.y, p1.y);
         const yMin = Math.min(p2.y, p1.y);

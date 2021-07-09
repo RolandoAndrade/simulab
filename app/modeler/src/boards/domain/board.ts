@@ -17,4 +17,13 @@ export abstract class Board {
      * @param model Model to be imported.
      * */
     public abstract importModel(model: any): void;
+
+
+    /**
+     * @description Sets the path creation mode
+     * @param value Enable or disable
+     * */
+    public setPathCreation(value: boolean) {
+        this.isCreatingPathEnable = value;
+    }
 }
