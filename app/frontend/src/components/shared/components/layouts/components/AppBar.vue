@@ -9,16 +9,7 @@
             <div>Simulation</div>
           </v-col>
         </v-subheader>
-        <tooltip-button tip-color="grey" color="grey" title="Play" outlined v-if="!simulationRunning">
-          <v-icon color="grey">
-            mdi-play
-          </v-icon>
-        </tooltip-button>
-        <tooltip-button tip-color="grey" color="grey" title="Stop" outlined v-if="simulationRunning">
-          <v-icon color="grey">
-            mdi-stop
-          </v-icon>
-        </tooltip-button>
+
         <div class="date-selector">
           <v-text-field class="caption mx-1" outlined dense hide-details label="Starting time" type="datetime-local"></v-text-field>
         </div>
@@ -79,6 +70,18 @@
             </v-menu>
 
         </div>
+
+        <tooltip-button tip-color="grey" color="grey" title="Play" outlined v-if="!simulationRunning">
+          <v-icon color="grey">
+            mdi-play
+          </v-icon>
+        </tooltip-button>
+        <tooltip-button tip-color="grey" color="grey" title="Stop" outlined v-if="simulationRunning">
+          <v-icon color="grey">
+            mdi-stop
+          </v-icon>
+        </tooltip-button>
+        <v-divider vertical class="mx-2"></v-divider>
       </v-row>
       <v-spacer></v-spacer>
       <tooltip-button title="Save Model" tip-color="grey">

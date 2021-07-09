@@ -8,8 +8,8 @@ export class CanvasSourceNode extends CanvasNode {
         const image = require("assets/queue-components/source.png");
         super({
             ...properties,
-            width: 100,
-            height: 65,
+            width: 75,
+            height: 50,
             padding: 0,
             image,
         });
