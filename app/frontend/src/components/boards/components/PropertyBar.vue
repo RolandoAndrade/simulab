@@ -5,13 +5,14 @@
           id="properties-table"
           :headers="headers"
           :items="properties"
-          :items-per-page="5"
           disable-sort disable-pagination disable-filtering
           hide-default-footer
           mobile-breakpoint="0"
       >
         <template v-slot:item.propertyValue="{ item }">
-          <v-text-field :placeholder="item.propertyName" outlined dense hide-details></v-text-field>
+          <v-text-field :placeholder="item.propertyName" outlined dense hide-details v-if="item.type === 'STRING'"></v-text-field>
+          <v-autocomplete :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.type === 'EXPRESSION'"></v-autocomplete>
+          <v-select :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.type === 'BOOLEAN'" :items="['True', 'False']"></v-select>
         </template>
       </v-data-table>
   </v-navigation-drawer>
@@ -41,14 +42,14 @@ export default class PropertyBar extends Vue {
       type: "STRING"
     },
     {
-      propertyName: 'Something',
+      propertyName: 'Arrival time',
       propertyValue: 'Lorem ipsum',
-      type: "STRING"
+      type: "EXPRESSION"
     },
     {
-      propertyName: 'Third',
+      propertyName: 'Enabled',
       propertyValue: 'Lorem ipsum',
-      type: "STRING"
+      type: "BOOLEAN"
     },
   ]
 }
