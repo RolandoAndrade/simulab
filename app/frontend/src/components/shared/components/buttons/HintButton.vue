@@ -3,6 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn v-bind="props"
              v-on="on"
+             @click="click"
       >
         <slot>
         </slot>
@@ -15,7 +16,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import {Prop} from 'vue-property-decorator';
+import {Emit, Prop} from 'vue-property-decorator';
 import { VBtn } from 'vuetify/lib';
 
 @Component({
@@ -30,6 +31,11 @@ export default class HintButton extends VBtn {
 
   get props(){
     return this.$props
+  }
+
+  @Emit()
+  click(){
+
   }
 }
 </script>

@@ -195,5 +195,6 @@ export class CanvasBoard extends Board {
 
     public createNode(nodeCreator: NodeCreator) {
         this.nodes.push(nodeCreator.create(this.ctx) as CanvasNode);
+        this.draw();
     }
 }

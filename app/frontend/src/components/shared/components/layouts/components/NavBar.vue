@@ -10,12 +10,12 @@
         </v-subheader>
       </v-list-item>
       <v-list-item class="my-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Source" plain block>
+        <hint-button tip-color="grey" color="transparent" tip-text="Source" plain block @click="()=>createSource()">
           <v-img :src="require('@/assets/queue-components/source.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
       <v-list-item class="my-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Server" plain block>
+        <hint-button tip-color="grey" color="transparent" tip-text="Server" plain block @click="()=>createServer()">
           <v-img :src="require('@/assets/queue-components/server.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
@@ -44,6 +44,8 @@ import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import TooltipButton from "@/components/shared/components/buttons/TooltipButton.vue";
 import HintButton from "@/components/shared/components/buttons/HintButton.vue";
+import {eventBus} from "@/components/shared/domain/event-bus";
+import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
 
 @Component({
   name: 'nav-bar',
@@ -51,7 +53,10 @@ import HintButton from "@/components/shared/components/buttons/HintButton.vue";
 })
 export default class NavBar extends Vue {
   createSource(){
-
+    eventBus.$emit(eventBus.CREATE_NODE, NodeCreatorType.SOURCE)
+  }
+  createServer(){
+    eventBus.$emit(eventBus.CREATE_NODE, NodeCreatorType.SERVER)
   }
 }
 </script>
