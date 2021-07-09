@@ -1,5 +1,6 @@
 import { GraphNode } from "../../nodes/domain";
 import {Edge} from "../../edge";
+import {NodeCreator} from "../../nodes/domain/node-creator";
 
 
 export abstract class Board {
@@ -26,4 +27,10 @@ export abstract class Board {
     public setPathCreation(value: boolean) {
         this.isCreatingPathEnable = value;
     }
+
+    /**
+     * @description Creates a node
+     * @param nodeCreator Node creator for an specific node
+     * */
+    public abstract createNode(nodeCreator: NodeCreator): void;
 }

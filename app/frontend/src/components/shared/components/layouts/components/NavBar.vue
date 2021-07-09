@@ -50,7 +50,9 @@ import HintButton from "@/components/shared/components/buttons/HintButton.vue";
   components: {HintButton, TooltipButton},
 })
 export default class NavBar extends Vue {
+  createSource(){
 
+  }
 }
 </script>
 

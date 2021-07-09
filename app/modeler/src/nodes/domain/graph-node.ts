@@ -1,8 +1,17 @@
 import { NodeProperties } from "./node-properties";
 import { Point } from "../../shared/types";
+import {Entity} from "../../shared/types/entity";
 
 export abstract class GraphNode {
     protected constructor(protected readonly properties: NodeProperties) {}
+
+    /**
+     * @description Gets the entity of the nod
+     * */
+    public getEntity(): Entity {
+        return this.properties.entity;
+    }
+
 
     /**
      * @description Sets the ID of the model

@@ -1,3 +1,5 @@
+import {Entity} from "../../shared/types/entity";
+
 export interface NodeProperties {
     id: string;
     x: number;
@@ -7,4 +9,5 @@ export interface NodeProperties {
     padding: number;
     color?: string;
     selected?: boolean;
+    entity: Entity
 }

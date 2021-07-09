@@ -9,6 +9,8 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
+import {SourceNodeCreator} from "modeler/nodes/infrastructure/canvas-node/queue-components/source";
+
 
 @Component({
   name: 'board',
@@ -18,6 +20,12 @@ export default class Board extends Vue {
     const container = document.getElementById("graph-container");
     this.$nextTick(()=>{
       const board = graphFactory.createBoard(container!);
+      board.createNode(new SourceNodeCreator({
+        name: "Source 1",
+        properties: {
+
+        }
+      }))
     })
 
   }

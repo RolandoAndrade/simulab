@@ -2,6 +2,7 @@ import { Board } from "../domain";
 import {CanvasNode, CanvasServerNode, CanvasSourceNode} from "../../nodes/infrastructure/canvas-node";
 import { Point } from "../../shared/types";
 import {Edge, Path} from "../../edge";
+import {NodeCreator} from "../../nodes";
 
 export class CanvasBoard extends Board {
     private readonly ctx: CanvasRenderingContext2D;
@@ -29,24 +30,6 @@ export class CanvasBoard extends Board {
         this.container.addEventListener("mousedown", this.onClick.bind(this));
         this.container.addEventListener("mouseup", this.onMouseUp.bind(this));
         this.container.addEventListener("mousemove", this.onMouseMove.bind(this));
-
-
-        const c1 = new CanvasSourceNode({
-            x: 120,
-            y: 100,
-            id: "Source1",
-            ctx: this.ctx,
-        });
-
-
-        const c2 = new CanvasServerNode({
-            x: 400,
-            y: 100,
-            id: "Server1",
-            ctx: this.ctx,
-        });
-
-        this.nodes = [c1, c2];
     }
 
     private setSize(width: number, height: number) {
@@ -105,6 +88,7 @@ export class CanvasBoard extends Board {
                 return;
             }
         }
+        this.setPathCreation(false);
     }
 
     private onClick(event: MouseEvent) {
@@ -158,9 +142,6 @@ export class CanvasBoard extends Board {
             }
 
             this.draw();
-        } else if (!!this.selectedNode) {
-            this.selectedNode.isOverPort(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
-            this.draw();
         }
     }
 
@@ -173,6 +154,7 @@ export class CanvasBoard extends Board {
             }
         }
         this.createdPath = undefined;
+        this.setPathCreation(false);
         this.draw();
     }
 
@@ -209,5 +191,9 @@ export class CanvasBoard extends Board {
         } else {
             this.container.style.cursor = "default";
         }
+    }
+
+    public createNode(nodeCreator: NodeCreator) {
+        this.nodes.push(nodeCreator.create(this.ctx) as CanvasNode);
     }
 }
