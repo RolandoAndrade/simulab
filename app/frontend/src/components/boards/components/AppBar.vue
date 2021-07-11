@@ -33,7 +33,7 @@
                 :close-on-content-click="false"
             >
               <template v-slot:activator="{ on, attrs }">
-                <v-text-field class="caption mx-1" outlined dense hide-details label="Ending time" v-on="on" readonly></v-text-field>
+                <v-text-field id="ending-time-field" class="caption mx-1" outlined dense hide-details label="Ending time" v-on="on" readonly></v-text-field>
               </template>
               <v-card width="300px" class="pt-2">
                 <v-subheader class="pa-4"><v-icon class="mr-2">mdi-calendar</v-icon>Ending time selection</v-subheader>
@@ -141,5 +141,9 @@ export default class AppBar extends Vue {
 #app-bar{
   border-bottom: rgb(224,224,224) 1px solid !important;
   background: white;
+}
+
+label[for="ending-time-field"]{
+  font-size: 12px;
 }
 </style>
