@@ -1,7 +1,19 @@
 <template>
   <div>
-    <v-app-bar app clipped-left clipped-right color="white" outlined>
-
+    <v-system-bar app color="blue" height="40px">
+      <div class="app-title">SimTesis</div>
+      <v-spacer></v-spacer>
+      <hint-button tip-text="Save Model" tip-color="primary" icon color="white">
+        <v-icon color="white" small>mdi-floppy</v-icon>
+      </hint-button>
+      <hint-button tip-text="Import Model" tip-color="primary" icon color="white">
+        <v-icon color="white" small>mdi-upload</v-icon>
+      </hint-button>
+      <hint-button tip-text="Settings" tip-color="primary" icon color="white">
+        <v-icon color="white" small>mdi-cog</v-icon>
+      </hint-button>
+    </v-system-bar>
+    <v-app-bar id="app-bar" app outlined flat clipped-right clipped-left class="app-bar" color="white">
       <v-row no-gutters align="center">
         <v-subheader class="ma-0 pa-0">
           <v-col class="text-center">
@@ -83,16 +95,6 @@
         </tooltip-button>
         <v-divider vertical class="mx-2"></v-divider>
       </v-row>
-      <v-spacer></v-spacer>
-      <tooltip-button title="Save Model" tip-color="grey">
-        <v-icon color="grey">mdi-floppy</v-icon>
-      </tooltip-button>
-      <tooltip-button title="Import Model" tip-color="grey">
-        <v-icon color="grey">mdi-upload</v-icon>
-      </tooltip-button>
-      <tooltip-button title="Settings" tip-color="grey">
-        <v-icon color="grey">mdi-cog</v-icon>
-      </tooltip-button>
     </v-app-bar>
   </div>
 </template>
@@ -102,10 +104,11 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import TooltipButton from "@/components/shared/components/buttons/TooltipButton.vue";
+import HintButton from "@/components/shared/components/buttons/HintButton.vue";
 
 @Component({
   name: 'app-bar',
-  components: {TooltipButton},
+  components: {HintButton, TooltipButton},
 })
 export default class AppBar extends Vue {
   private simulationRunning = false;
@@ -119,5 +122,24 @@ export default class AppBar extends Vue {
 <style scoped>
 .date-selector{
   width: 200px;
+}
+
+.app-title{
+  font-size: 15px;
+  padding: 0 20px;
+  height: 40px;
+  line-height: 40px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: white
+}
+
+
+</style>
+
+<style>
+#app-bar{
+  border-bottom: rgb(224,224,224) 1px solid !important;
+  background: white;
 }
 </style>

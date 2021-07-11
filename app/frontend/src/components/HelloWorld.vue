@@ -16,13 +16,13 @@
 <script lang="ts">
   import Vue from 'vue'
   import Board from "@/components/boards/components/Board.vue";
-  import AppBar from "@/components/shared/components/layouts/components/AppBar.vue";
   import NavBar from "@/components/shared/components/layouts/components/NavBar.vue";
   import PropertyBar from "@/components/boards/components/PropertyBar.vue";
+  import AppBar from "@/components/boards/components/AppBar.vue";
 
   export default Vue.extend({
     name: 'HelloWorld',
-    components: {PropertyBar, NavBar, AppBar, Board},
+    components: {AppBar, PropertyBar, NavBar, Board},
     data: () => ({
       opened: true
     })
