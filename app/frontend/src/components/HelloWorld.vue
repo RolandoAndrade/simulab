@@ -1,7 +1,7 @@
 <template>
   <div class="fill-height">
     <app-bar></app-bar>
-    <nav-bar></nav-bar>
+    <items-bar></items-bar>
     <property-bar></property-bar>
     <v-main id="main-content" class="fill-height">
       <div class="main-content">
@@ -16,13 +16,13 @@
 <script lang="ts">
   import Vue from 'vue'
   import Board from "@/components/boards/components/Board.vue";
-  import NavBar from "@/components/shared/components/layouts/components/NavBar.vue";
+  import ItemsBar from "@/components/boards/components/ItemsBar.vue";
   import PropertyBar from "@/components/boards/components/PropertyBar.vue";
   import AppBar from "@/components/boards/components/AppBar.vue";
 
   export default Vue.extend({
     name: 'HelloWorld',
-    components: {AppBar, PropertyBar, NavBar, Board},
+    components: {AppBar, PropertyBar, ItemsBar, Board},
     data: () => ({
       opened: true
     })

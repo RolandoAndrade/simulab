@@ -1,7 +1,7 @@
 <template>
-  <v-navigation-drawer app mobile-breakpoint="0" clipped width="100px">
+  <v-navigation-drawer app mobile-breakpoint="0" clipped width="80px">
     <v-list dense class="my-2">
-      <v-list-item class="mb-2">
+      <v-list-item class="px-2 mb-4 ml-n1">
         <v-subheader>
           <v-col class="text-center">
             <v-icon class="mx-auto">mdi-sitemap</v-icon>
@@ -9,34 +9,44 @@
           </v-col>
         </v-subheader>
       </v-list-item>
-      <v-list-item class="my-2">
+      <v-list-item class="pa-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Path" plain block @click="()=>changeMode()">
+          <v-img :src="require('@/assets/queue-components/path.png')" width="30px"></v-img>
+        </hint-button>
+      </v-list-item>
+      <v-list-item class="pa-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Model Entity" plain block @click="()=>changeMode()">
+          <v-img :src="require('@/assets/queue-components/model-entity.png')" max-width="13px"></v-img>
+        </hint-button>
+      </v-list-item>
+      <v-list-item class="pa-2">
         <hint-button tip-color="grey" color="transparent" tip-text="Source" plain block @click="()=>createSource()">
           <v-img :src="require('@/assets/queue-components/source.png')" width="30px" :draggable="true" @dragstart="(event)=>this.dragStart(event, nodeCreatorType.SOURCE)"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item class="my-2">
+      <v-list-item class="pa-2">
         <hint-button tip-color="grey" color="transparent" tip-text="Server" plain block @click="()=>createServer()">
           <v-img :src="require('@/assets/queue-components/server.png')" width="30px" :draggable="true" @dragstart="(event)=>this.dragStart(event, nodeCreatorType.SERVER)"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item class="my-2">
+      <v-list-item class="pa-2">
         <hint-button tip-color="grey" color="transparent" tip-text="Sink" plain block>
           <v-img :src="require('@/assets/queue-components/sink.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item class="my-2">
+      <v-list-item class="pa-2">
         <hint-button tip-color="grey" color="transparent" tip-text="Separator" plain block>
           <v-img :src="require('@/assets/queue-components/separator.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item class="my-2">
+      <v-list-item class="pa-2">
         <hint-button tip-color="grey" color="transparent" tip-text="Combinator" plain block>
           <v-img :src="require('@/assets/queue-components/combinator.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
-      <v-list-item class="my-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Path" plain block @click="()=>changeMode()">
-          <v-img :src="require('@/assets/queue-components/path.png')" width="30px"></v-img>
+      <v-list-item class="pa-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Label" plain block>
+          <v-img :src="require('@/assets/queue-components/label.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
     </v-list>
@@ -53,10 +63,10 @@ import {eventBus} from "@/components/shared/domain/event-bus";
 import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
 
 @Component({
-  name: 'nav-bar',
+  name: 'items-bar',
   components: {HintButton, TooltipButton},
 })
-export default class NavBar extends Vue {
+export default class ItemsBar extends Vue {
 
   get nodeCreatorType(): typeof NodeCreatorType {
     return NodeCreatorType
