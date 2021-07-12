@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-system-bar app color="blue" height="40px">
-      <div class="app-title">SimTesis</div>
+      <div class="app-title">SimThesis</div>
       <v-spacer></v-spacer>
       <hint-button tip-text="Save Model" tip-color="primary" icon color="white">
         <v-icon color="white" small>mdi-floppy</v-icon>

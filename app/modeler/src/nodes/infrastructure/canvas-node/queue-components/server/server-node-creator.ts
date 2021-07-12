@@ -9,8 +9,8 @@ export class ServerNodeCreator extends NodeCreator {
     }): GraphNode {
         return new CanvasServerNode({
             ctx: options.ctx,
-            x: options.x,
-            y: options.y,
+            x: options.x - 75/2,
+            y: options.y - 50/2,
             id: this.entity.name,
             entity: this.entity
         });

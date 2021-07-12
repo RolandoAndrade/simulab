@@ -16,7 +16,7 @@
       </v-list-item>
       <v-list-item class="my-2">
         <hint-button tip-color="grey" color="transparent" tip-text="Server" plain block @click="()=>createServer()">
-          <v-img :src="require('@/assets/queue-components/server.png')" width="30px"></v-img>
+          <v-img :src="require('@/assets/queue-components/server.png')" width="30px" :draggable="true" @dragstart="(event)=>this.dragStart(event, nodeCreatorType.SERVER)"></v-img>
         </hint-button>
       </v-list-item>
       <v-list-item class="my-2">
