@@ -1,8 +1,7 @@
-import { CanvasPort } from "../../ports";
-import { CanvasNode } from "../../canvas-node";
-import { Point } from "../../../../../shared/types";
+import {CanvasPort} from "../../ports";
+import {CanvasNode} from "../../canvas-node";
 
-export class CanvasSourcePort extends CanvasPort {
+export class CanvasSinkPort extends CanvasPort {
     private hoverRight: boolean = false;
 
     constructor(node: CanvasNode) {
@@ -10,14 +9,14 @@ export class CanvasSourcePort extends CanvasPort {
     }
 
     public contains(x: number, y: number): boolean {
-        return this.containsRightPort(x, y)
+        return this.containsLeftPort(x, y)
     }
 
     public draw(ctx: CanvasRenderingContext2D): void {
         ctx.save();
-        ctx.translate(this.positionRightPoint.x, this.positionRightPoint.y);
+        ctx.translate(this.positionLeftPoint.x, this.positionLeftPoint.y);
         ctx.rotate(Math.PI / 4);
-        ctx.fillStyle = CanvasPort.OUT_COLOR;
+        ctx.fillStyle = CanvasPort.IN_COLOR;
         ctx.translate(-CanvasPort.RADIUS, -CanvasPort.RADIUS);
         ctx.fillRect(0, 0, 2 * CanvasPort.RADIUS, 2 * CanvasPort.RADIUS);
         ctx.restore();
@@ -29,15 +28,15 @@ export class CanvasSourcePort extends CanvasPort {
     }
 
     containsLeftPort(x: number, y: number): boolean {
-        return false
+        return (
+            this.positionLeftPoint.x - CanvasPort.RADIUS <= x &&
+            x <= this.positionLeftPoint.x + CanvasPort.RADIUS &&
+            this.positionLeftPoint.y - CanvasPort.RADIUS <= y &&
+            y <= this.positionLeftPoint.y + CanvasPort.RADIUS
+        );
     }
 
     containsRightPort(x: number, y: number): boolean {
-        return (
-            this.positionRightPoint.x - CanvasPort.RADIUS <= x &&
-            x <= this.positionRightPoint.x + CanvasPort.RADIUS &&
-            this.positionRightPoint.y - CanvasPort.RADIUS <= y &&
-            y <= this.positionRightPoint.y + CanvasPort.RADIUS
-        );
+        return false
     }
 }

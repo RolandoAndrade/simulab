@@ -20,18 +20,18 @@
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Source" plain block @click="()=>createSource()">
+        <hint-button tip-color="grey" color="transparent" tip-text="Source" plain block @click="()=>createNode(nodeCreatorType.SOURCE)">
           <v-img :src="require('@/assets/queue-components/source.png')" width="30px" :draggable="true" @dragstart="(event)=>this.dragStart(event, nodeCreatorType.SOURCE)"></v-img>
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Server" plain block @click="()=>createServer()">
+        <hint-button tip-color="grey" color="transparent" tip-text="Server" plain block @click="()=>createNode(nodeCreatorType.SERVER)">
           <v-img :src="require('@/assets/queue-components/server.png')" width="30px" :draggable="true" @dragstart="(event)=>this.dragStart(event, nodeCreatorType.SERVER)"></v-img>
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Sink" plain block>
-          <v-img :src="require('@/assets/queue-components/sink.png')" width="30px"></v-img>
+        <hint-button tip-color="grey" color="transparent" tip-text="Sink" plain block  @click="()=>createNode(nodeCreatorType.SINK)">
+          <v-img :src="require('@/assets/queue-components/sink.png')" width="30px" :draggable="true" @dragstart="(event)=>this.dragStart(event, nodeCreatorType.SINK)"></v-img>
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
@@ -72,12 +72,10 @@ export default class ItemsBar extends Vue {
     return NodeCreatorType
   }
 
-  createSource(){
-    eventBus.$emit(eventBus.CREATE_NODE, NodeCreatorType.SOURCE)
+  createNode(type: NodeCreatorType){
+    eventBus.$emit(eventBus.CREATE_NODE, type)
   }
-  createServer(){
-    eventBus.$emit(eventBus.CREATE_NODE, NodeCreatorType.SERVER)
-  }
+
   changeMode(){
     eventBus.$emit(eventBus.CHANGE_MODE, true);
   }
