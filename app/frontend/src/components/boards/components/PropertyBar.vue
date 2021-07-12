@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer app mobile-breakpoint="0" clipped width="280px" right>
+  <v-navigation-drawer app mobile-breakpoint="0" clipped :width="width" right ref="drawer">
       <v-subheader class="my-2"><v-icon class="mr-2">mdi-playlist-edit</v-icon>Properties</v-subheader>
       <v-data-table
           id="properties-table"
@@ -27,6 +27,64 @@ import {Prop} from 'vue-property-decorator';
   name: 'property-bar',
 })
 export default class PropertyBar extends Vue {
+  private width = 280;
+
+  $refs!: {
+    drawer: any
+  }
+
+  mounted(){
+    this.setBorderWidth()
+    this.setEvents()
+  }
+
+  setBorderWidth() {
+    let i = this.$refs.drawer.$el.querySelector(
+        ".v-navigation-drawer__border"
+    );
+    i.style.cursor = "ew-resize";
+    i.style.borderWidth = "5px";
+  }
+
+  setEvents() {
+    const el = this.$refs.drawer.$el;
+    const drawerBorder = el.querySelector(".v-navigation-drawer__border");
+    drawerBorder.style.cursor = "ew-resize";
+
+    const child = drawerBorder.appendChild(document.createElement("div"))
+    child.style.width = "10px";
+    child.style.height = "100%"
+    const vm = this;
+
+    function resize(e: MouseEvent) {
+      document.body.style.cursor = "ew-resize";
+      let f = document.body.scrollWidth - e.clientX
+      el.style.width = Math.max(280, f) + "px";
+    }
+
+    child.addEventListener(
+        "mousedown",
+        (e: MouseEvent) => {
+          if (e.offsetX < 280) {
+            el.style.transition = "initial";
+            document.addEventListener("mousemove", resize, false);
+          }
+        },
+        false
+    );
+
+    document.addEventListener(
+        "mouseup",
+        () => {
+          el.style.transition = "";
+          vm.width = el.style.width;
+          document.body.style.cursor = "";
+          document.removeEventListener("mousemove", resize, false);
+        },
+        false
+    );
+  }
+
   headers = [
     {
       text: 'Property',
