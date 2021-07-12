@@ -1,18 +1,5 @@
 <template>
   <div>
-    <v-system-bar app color="blue" height="40px">
-      <div class="app-title">SimThesis</div>
-      <v-spacer></v-spacer>
-      <hint-button tip-text="Save Model" tip-color="primary" icon color="white">
-        <v-icon color="white" small>mdi-floppy</v-icon>
-      </hint-button>
-      <hint-button tip-text="Import Model" tip-color="primary" icon color="white">
-        <v-icon color="white" small>mdi-upload</v-icon>
-      </hint-button>
-      <hint-button tip-text="Settings" tip-color="primary" icon color="white">
-        <v-icon color="white" small>mdi-cog</v-icon>
-      </hint-button>
-    </v-system-bar>
     <v-app-bar id="app-bar" app outlined flat clipped-right clipped-left class="app-bar" color="white">
       <v-row no-gutters align="center">
         <v-subheader class="ma-0 pa-0">
@@ -123,17 +110,6 @@ export default class AppBar extends Vue {
 .date-selector{
   width: 200px;
 }
-
-.app-title{
-  font-size: 15px;
-  padding: 0 20px;
-  height: 40px;
-  line-height: 40px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: white
-}
-
 
 </style>
 

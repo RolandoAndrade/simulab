@@ -1,15 +1,19 @@
 <template>
   <div class="fill-height">
-    <app-bar></app-bar>
-    <items-bar></items-bar>
-    <property-bar></property-bar>
-    <v-main id="main-content" class="fill-height">
-      <div class="main-content">
-        <v-fade-transition mode="out-in">
-          <board></board>
-        </v-fade-transition>
-      </div>
-    </v-main>
+    <system-bar>
+      <template slot="simulation">
+        <app-bar></app-bar>
+        <items-bar></items-bar>
+        <property-bar></property-bar>
+        <v-main id="main-content" class="fill-height">
+          <div class="main-content">
+            <v-fade-transition mode="out-in">
+              <board></board>
+            </v-fade-transition>
+          </div>
+        </v-main>
+      </template>
+    </system-bar>
   </div>
 </template>
 
@@ -19,12 +23,14 @@
   import ItemsBar from "@/components/boards/components/ItemsBar.vue";
   import PropertyBar from "@/components/boards/components/PropertyBar.vue";
   import AppBar from "@/components/boards/components/AppBar.vue";
+  import SystemBar from "@/components/shared/components/layouts/components/SystemBar.vue";
 
   export default Vue.extend({
     name: 'HelloWorld',
-    components: {AppBar, PropertyBar, ItemsBar, Board},
+    components: {SystemBar, AppBar, PropertyBar, ItemsBar, Board},
     data: () => ({
-      opened: true
+      opened: true,
+      tab: null
     })
   })
 </script>
