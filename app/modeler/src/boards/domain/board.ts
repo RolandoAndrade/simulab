@@ -31,6 +31,8 @@ export abstract class Board {
     /**
      * @description Creates a node
      * @param nodeCreator Node creator for an specific node
+     * @param x Start position x
+     * @param y Start position y
      * */
-    public abstract createNode(nodeCreator: NodeCreator): void;
+    public abstract createNode(nodeCreator: NodeCreator, x?: number, y?: number): void;
 }

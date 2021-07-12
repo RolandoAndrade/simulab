@@ -11,7 +11,7 @@
       </v-list-item>
       <v-list-item class="my-2">
         <hint-button tip-color="grey" color="transparent" tip-text="Source" plain block @click="()=>createSource()">
-          <v-img :src="require('@/assets/queue-components/source.png')" width="30px"></v-img>
+          <v-img :src="require('@/assets/queue-components/source.png')" width="30px" :draggable="true" @dragstart="(event)=>this.dragStart(event, nodeCreatorType.SOURCE)"></v-img>
         </hint-button>
       </v-list-item>
       <v-list-item class="my-2">
@@ -57,6 +57,11 @@ import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
   components: {HintButton, TooltipButton},
 })
 export default class NavBar extends Vue {
+
+  get nodeCreatorType(): typeof NodeCreatorType {
+    return NodeCreatorType
+  }
+
   createSource(){
     eventBus.$emit(eventBus.CREATE_NODE, NodeCreatorType.SOURCE)
   }
@@ -65,6 +70,10 @@ export default class NavBar extends Vue {
   }
   changeMode(){
     eventBus.$emit(eventBus.CHANGE_MODE, true);
+  }
+
+  dragStart(event: DragEvent, type: NodeCreatorType){
+    event.dataTransfer!.setData("nodeCreatorType", type)
   }
 }
 </script>

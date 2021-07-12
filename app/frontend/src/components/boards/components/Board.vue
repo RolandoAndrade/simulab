@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%">
+  <div style="height: 100%" @drop="drop" @drop.prevent @dragover.prevent>
     <canvas id="graph-container" style="width: 100%; height: 100%">
     </canvas>
   </div>
@@ -25,17 +25,24 @@ export default class Board extends Vue {
     this.$nextTick(()=>{
       this.board = graphFactory.createBoard(container!);
     })
-    eventBus.$on(eventBus.CREATE_NODE, (nodeCreatorType: NodeCreatorType)=>{
-      this.board.createNode(graphFactory.createNodeCreator(nodeCreatorType, {
-        name: "Source 1",
-        properties: {
-
-        }
-      }))
-    })
+    eventBus.$on(eventBus.CREATE_NODE, this.createNode.bind(this))
     eventBus.$on(eventBus.CHANGE_MODE, (mode: boolean)=>{
       this.board.setPathCreation(mode)
     })
+  }
+
+  createNode(nodeCreatorType: NodeCreatorType, x?: number, y?: number){
+    this.board.createNode(graphFactory.createNodeCreator(nodeCreatorType, {
+      name: "Source 1",
+      properties: {
+
+      }
+    }), x, y)
+  }
+
+  drop(event: DragEvent){
+    const type: NodeCreatorType = event.dataTransfer!.getData("nodeCreatorType") as NodeCreatorType;
+    this.createNode(type, event.offsetX, event.offsetY);
   }
 }
 </script>
