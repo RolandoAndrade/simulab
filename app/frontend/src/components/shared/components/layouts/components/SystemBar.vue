@@ -2,27 +2,46 @@
   <div class="fill-height">
     <v-system-bar app color="blue" height="40px">
       <div class="app-title">SimThesis</div>
+
+      <hint-button tip-text="Simulation View" tip-color="primary" :color="selectedView === 0?'white':'primary'"
+                   tile fab elevation="0" @click="()=>changeView(0)" small>
+        <v-icon :color="selectedView === 0?'primary':'white'"  small class="mx-auto">mdi-reload</v-icon>
+      </hint-button>
+      <hint-button tip-text="Report View" tip-color="primary" :color="selectedView === 1?'white':'primary'"
+                   tile fab elevation="0" @click="()=>changeView(1)" small>
+        <v-icon :color="selectedView === 1?'primary':'white'" small class="mx-auto">mdi-file</v-icon>
+      </hint-button>
+
       <v-spacer></v-spacer>
-      <hint-button tip-text="Simulation View" tip-color="primary" icon color="white" tile>
-        <v-icon color="white" small>mdi-reload</v-icon>
-      </hint-button>
-      <hint-button tip-text="Report View" tip-color="primary" icon color="white" tile>
-        <v-icon color="white" small>mdi-file</v-icon>
-      </hint-button>
-      <v-divider vertical dark class="mx-2"></v-divider>
+      <v-divider vertical dark class="mr-2"></v-divider>
       <hint-button tip-text="Save Model" tip-color="primary" icon color="white">
-        <v-icon color="white" small>mdi-floppy</v-icon>
+        <v-icon color="white" small class="mx-auto">mdi-floppy</v-icon>
       </hint-button>
       <hint-button tip-text="Import Model" tip-color="primary" icon color="white">
-        <v-icon color="white" small>mdi-upload</v-icon>
+        <v-icon color="white" small class="mx-auto">mdi-upload</v-icon>
       </hint-button>
       <hint-button tip-text="Settings" tip-color="primary" icon color="white">
-        <v-icon color="white" small>mdi-cog</v-icon>
+        <v-icon color="white" small class="mx-auto">mdi-cog</v-icon>
       </hint-button>
     </v-system-bar>
-    <slot name="simulation">
+    <v-scale-transition group leave-absolute>
+      <div class="fill-height" v-show="selectedView===0" key="simulation">
+        <slot name="simulation">
 
-    </slot>
+        </slot>
+      </div>
+      <div class="fill-height" v-show="selectedView===1" key="reports">
+        <slot name="reports">
+
+        </slot>
+      </div>
+      <div class="fill-height" v-show="selectedView===3" key="data">
+        <slot name="data">
+
+        </slot>
+      </div>
+    </v-scale-transition>
+
   </div>
 </template>
 
@@ -38,6 +57,11 @@ import HintButton from "@/components/shared/components/buttons/HintButton.vue";
 })
 export default class SystemBar extends Vue {
 
+  private selectedView: number = 0
+
+  private changeView(view: number){
+    this.selectedView = view
+  }
 }
 </script>
 
