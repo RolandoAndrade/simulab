@@ -13,6 +13,9 @@
           </div>
         </v-main>
       </template>
+      <template slot="reports">
+        <app-bar></app-bar>
+      </template>
     </system-bar>
   </div>
 </template>

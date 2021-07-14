@@ -2,14 +2,13 @@
   <div class="fill-height">
     <v-system-bar app color="blue" height="40px">
       <div class="app-title">SimThesis</div>
-
       <hint-button tip-text="Simulation View" tip-color="primary" :color="selectedView === 0?'white':'primary'"
-                   tile fab elevation="0" @click="()=>changeView(0)" small>
-        <v-icon :color="selectedView === 0?'primary':'white'"  small class="mx-auto">mdi-reload</v-icon>
+                   tile elevation="0" @click="()=>changeView(0)" x-small height="40px">
+        <v-icon :color="selectedView === 0?'primary':'white'"  small class="px-1 mx-auto">mdi-reload</v-icon>
       </hint-button>
       <hint-button tip-text="Report View" tip-color="primary" :color="selectedView === 1?'white':'primary'"
-                   tile fab elevation="0" @click="()=>changeView(1)" small>
-        <v-icon :color="selectedView === 1?'primary':'white'" small class="mx-auto">mdi-file</v-icon>
+                   tile elevation="0" @click="()=>changeView(1)" x-small height="40px">
+        <v-icon :color="selectedView === 1?'primary':'white'" small class="px-1 mx-auto">mdi-file</v-icon>
       </hint-button>
 
       <v-spacer></v-spacer>
@@ -24,24 +23,29 @@
         <v-icon color="white" small class="mx-auto">mdi-cog</v-icon>
       </hint-button>
     </v-system-bar>
-    <v-scale-transition group leave-absolute>
-      <div class="fill-height" v-show="selectedView===0" key="simulation">
-        <slot name="simulation">
+    <v-tabs-items v-model="selectedView">
+      <v-tab-item>
+        <div class="fill-height" key="simulation">
+          <slot name="simulation">
 
-        </slot>
-      </div>
-      <div class="fill-height" v-show="selectedView===1" key="reports">
-        <slot name="reports">
+          </slot>
+        </div>
+      </v-tab-item>
+      <v-tab-item>
+        <div class="fill-height" key="reports">
+          <slot name="reports">
 
-        </slot>
-      </div>
-      <div class="fill-height" v-show="selectedView===3" key="data">
-        <slot name="data">
+          </slot>
+        </div>
+      </v-tab-item>
+      <v-tab-item>
+        <div class="fill-height" key="data">
+          <slot name="data">
 
-        </slot>
-      </div>
-    </v-scale-transition>
-
+          </slot>
+        </div>
+      </v-tab-item>
+    </v-tabs-items>
   </div>
 </template>
 
