@@ -4,6 +4,7 @@
       <v-btn v-bind="props"
              v-on="on"
              @click="click"
+             :class="classStyle"
       >
         <slot>
         </slot>
@@ -28,6 +29,9 @@ export default class HintButton extends VBtn {
 
   @Prop({ type: String, required: false, default: "" })
   public tipText!: string;
+
+  @Prop({ type: String, required: false, default: "" })
+  public classStyle!: string;
 
   get props(){
     return this.$props

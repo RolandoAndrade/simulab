@@ -70,17 +70,52 @@
 
         </div>
 
-        <tooltip-button tip-color="grey" color="grey" title="Play" outlined v-if="!simulationRunning">
-          <v-icon color="grey">
+        <v-divider vertical class="mx-2"></v-divider>
+
+        <v-card
+            flat
+            color="transparent"
+            class="pa-0"
+            width="200"
+        >
+
+          <v-subheader class="small-text pa-0 mx-auto my-n5">Simulation Speed</v-subheader>
+          <v-slider
+              max="2"
+              min="0.1"
+              step="0.1"
+              thumb-label inverse-label ticks
+              hide-details
+          ></v-slider>
+        </v-card>
+
+        <v-divider vertical class="mx-2"></v-divider>
+        <hint-button tip-color="primary" color="primary" tip-text="Play" outlined :disabled="simulationRunning" fab x-small class-style="mx-1">
+          <v-icon color="primary">
             mdi-play
           </v-icon>
-        </tooltip-button>
-        <tooltip-button tip-color="grey" color="grey" title="Stop" outlined v-if="simulationRunning">
-          <v-icon color="grey">
+        </hint-button>
+        <hint-button tip-color="primary" color="primary" tip-text="Next Step" :disabled="simulationRunning" outlined fab x-small class-style="mx-1">
+          <v-icon color="primary">
+            mdi-arrow-right
+          </v-icon>
+        </hint-button>
+        <hint-button tip-color="primary" color="primary" tip-text="Fast Forward" :disabled="simulationRunning" outlined fab x-small class-style="mx-1">
+          <v-icon color="primary">
+            mdi-fast-forward
+          </v-icon>
+        </hint-button>
+        <hint-button tip-color="red" color="red" tip-text="Pause" outlined :disabled="!simulationRunning" fab x-small class-style="mx-1">
+          <v-icon color="stop">
+            mdi-pause
+          </v-icon>
+        </hint-button>
+        <hint-button tip-color="red" color="red" tip-text="Stop" outlined :disabled="!simulationRunning" fab x-small class-style="mx-1">
+          <v-icon color="stop">
             mdi-stop
           </v-icon>
-        </tooltip-button>
-        <v-divider vertical class="mx-2"></v-divider>
+        </hint-button>
+
       </v-row>
     </v-app-bar>
   </div>
@@ -109,6 +144,10 @@ export default class AppBar extends Vue {
 <style scoped>
 .date-selector{
   width: 200px;
+}
+
+.small-text{
+  font-size: 10px;
 }
 
 </style>
