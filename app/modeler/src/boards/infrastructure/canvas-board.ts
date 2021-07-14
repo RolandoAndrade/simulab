@@ -175,7 +175,7 @@ export class CanvasBoard extends Board {
         this.origin.y -= dy;
     }
 
-    public clear(color = "#fff") {
+    public clear(color = "#fafafa") {
         this.ctx.save();
         this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.fillStyle = color;

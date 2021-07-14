@@ -43,6 +43,10 @@ export abstract class Edge {
         return xMin - this.padding <= x && x <= xMax + this.padding && yy - this.padding <= y && y <= yy + this.padding;
     }
 
+    protected isSameNode(){
+        return this.from === this.to
+    }
+
     /**
      * @description Selects the edge
      * */

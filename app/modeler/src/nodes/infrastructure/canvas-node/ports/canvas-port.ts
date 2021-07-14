@@ -8,7 +8,7 @@ export abstract class CanvasPort {
 
     protected static readonly LINE_DASH = [10];
     protected static readonly RADIUS = 5;
-    protected static readonly MARGIN = 10;
+    public static readonly MARGIN = 10;
 
     protected constructor(protected node: CanvasNode) {}
 
