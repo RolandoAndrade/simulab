@@ -129,10 +129,10 @@ import TooltipButton from "@/components/shared/components/buttons/TooltipButton.
 import HintButton from "@/components/shared/components/buttons/HintButton.vue";
 
 @Component({
-  name: 'app-bar',
+  name: 'simulation-bar',
   components: {HintButton, TooltipButton},
 })
-export default class AppBar extends Vue {
+export default class SimulationBar extends Vue {
   private simulationRunning = false;
 
   dateSelector = false

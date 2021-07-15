@@ -2,19 +2,10 @@
   <div class="fill-height">
     <system-bar>
       <template slot="simulation">
-        <app-bar></app-bar>
-        <items-bar></items-bar>
-        <property-bar></property-bar>
-        <v-main id="main-content" class="fill-height">
-          <div class="main-content">
-            <v-fade-transition mode="out-in">
-              <board></board>
-            </v-fade-transition>
-          </div>
-        </v-main>
+        <simulation-view></simulation-view>
       </template>
       <template slot="reports">
-        <app-bar></app-bar>
+        <simulation-bar></simulation-bar>
       </template>
     </system-bar>
   </div>
@@ -22,15 +13,13 @@
 
 <script lang="ts">
   import Vue from 'vue'
-  import Board from "@/components/boards/components/Board.vue";
-  import ItemsBar from "@/components/boards/components/ItemsBar.vue";
-  import PropertyBar from "@/components/boards/components/PropertyBar.vue";
-  import AppBar from "@/components/boards/components/AppBar.vue";
   import SystemBar from "@/components/shared/components/layouts/components/SystemBar.vue";
+  import SimulationView from "@/components/simulation/views/SimulationView.vue";
+  import SimulationBar from "@/components/simulation/components/SimulationBar.vue";
 
   export default Vue.extend({
     name: 'HelloWorld',
-    components: {SystemBar, AppBar, PropertyBar, ItemsBar, Board},
+    components: {SimulationBar, SimulationView, SystemBar},
     data: () => ({
       opened: true,
       tab: null
