@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer app mobile-breakpoint="0" clipped :width="width" right ref="drawer">
+  <v-navigation-drawer app mobile-breakpoint="0" clipped :width="width" right ref="drawer" id="property-drawer">
       <v-subheader class="my-2"><v-icon class="mr-2">mdi-playlist-edit</v-icon>Properties</v-subheader>
       <v-data-table
           id="properties-table"
@@ -120,5 +120,10 @@ export default class PropertyBar extends Vue {
 }
 #properties-table  > .v-data-table__wrapper > table > tbody > tr > td > .v-input{
   font-size: 12px !important;
+}
+
+#property-drawer {
+  z-index: 10;
+  max-height: calc(100% - 100px) !important;
 }
 </style>

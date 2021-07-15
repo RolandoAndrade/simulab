@@ -1,6 +1,7 @@
 <template>
   <div class="fill-height">
     <simulation-bar></simulation-bar>
+    <status-bar></status-bar>
     <items-bar></items-bar>
     <property-bar></property-bar>
     <v-main id="main-content" class="fill-height">
@@ -10,7 +11,7 @@
         </v-fade-transition>
       </div>
     </v-main>
-    <status-bar></status-bar>
+
   </div>
 </template>
 

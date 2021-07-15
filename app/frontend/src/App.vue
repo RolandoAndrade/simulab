@@ -18,6 +18,6 @@ export default Vue.extend({
 
 <style>
 html{
-  overflow-y: auto;
+  overflow-y: hidden !important;
 }
 </style>

@@ -6,9 +6,17 @@
                    tile elevation="0" @click="()=>changeView(0)" x-small height="40px">
         <v-icon :color="selectedView === 0?'primary':'white'"  small class="px-1 mx-auto">mdi-reload</v-icon>
       </hint-button>
-      <hint-button tip-text="Report View" tip-color="primary" :color="selectedView === 1?'white':'primary'"
+      <hint-button tip-text="Result View" tip-color="primary" :color="selectedView === 1?'white':'primary'"
                    tile elevation="0" @click="()=>changeView(1)" x-small height="40px">
-        <v-icon :color="selectedView === 1?'primary':'white'" small class="px-1 mx-auto">mdi-file</v-icon>
+        <v-icon :color="selectedView === 1?'primary':'white'" small class="px-1 mx-auto">mdi-file-chart-outline</v-icon>
+      </hint-button>
+      <hint-button tip-text="Data View" tip-color="primary" :color="selectedView === 2?'white':'primary'"
+                   tile elevation="0" @click="()=>changeView(2)" x-small height="40px">
+        <v-icon :color="selectedView === 2?'primary':'white'" small class="px-1 mx-auto">mdi-database</v-icon>
+      </hint-button>
+      <hint-button tip-text="Definitions View" tip-color="primary" :color="selectedView === 3?'white':'primary'"
+                   tile elevation="0" @click="()=>changeView(3)" x-small height="40px">
+        <v-icon :color="selectedView === 3?'primary':'white'" small class="px-1 mx-auto">mdi-variable</v-icon>
       </hint-button>
 
       <v-spacer></v-spacer>
