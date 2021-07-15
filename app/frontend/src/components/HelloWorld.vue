@@ -28,7 +28,5 @@
 </script>
 
 <style scoped>
-  .main-content{
-    height: calc(100% - 8px);
-  }
+
 </style>

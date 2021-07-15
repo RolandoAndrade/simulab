@@ -75,8 +75,8 @@
         <v-card
             flat
             color="transparent"
-            class="pa-0"
-            width="200"
+            class="pa-0 flex"
+            min-width="150"
         >
 
           <v-subheader class="small-text pa-0 mx-auto my-n5">Simulation Speed</v-subheader>

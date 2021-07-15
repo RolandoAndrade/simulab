@@ -23,22 +23,22 @@
         <v-icon color="white" small class="mx-auto">mdi-cog</v-icon>
       </hint-button>
     </v-system-bar>
-    <v-tabs-items v-model="selectedView">
-      <v-tab-item>
+    <v-tabs-items v-model="selectedView" class="fill-height">
+      <v-tab-item class="fill-height">
         <div class="fill-height" key="simulation">
           <slot name="simulation">
 
           </slot>
         </div>
       </v-tab-item>
-      <v-tab-item>
+      <v-tab-item class="fill-height">
         <div class="fill-height" key="reports">
           <slot name="reports">
 
           </slot>
         </div>
       </v-tab-item>
-      <v-tab-item>
+      <v-tab-item class="fill-height">
         <div class="fill-height" key="data">
           <slot name="data">
 
