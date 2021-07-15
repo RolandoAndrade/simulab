@@ -1,6 +1,8 @@
 <template>
   <v-navigation-drawer app mobile-breakpoint="0" clipped :width="width" right ref="drawer" id="property-drawer">
-      <v-subheader class="my-2"><v-icon class="mr-2">mdi-playlist-edit</v-icon>Properties</v-subheader>
+      <v-subheader class="my-2"><v-icon class="mr-2">mdi-playlist-edit</v-icon>
+        <div class="caption">Properties</div>
+      </v-subheader>
       <v-data-table
           id="properties-table"
           :headers="headers"
@@ -123,7 +125,7 @@ export default class PropertyBar extends Vue {
 }
 
 #property-drawer {
-  z-index: 10;
+
   max-height: calc(100% - 100px) !important;
 }
 </style>

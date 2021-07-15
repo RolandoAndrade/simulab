@@ -77,5 +77,6 @@ export default class StatusBar extends Vue {
   border-top: rgb(224,224,224) 1px solid !important;
   border-left: rgb(224,224,224) 1px solid !important;
   background: white;
+  z-index: 1 !important;
 }
 </style>

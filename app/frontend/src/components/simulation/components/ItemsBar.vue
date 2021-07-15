@@ -4,7 +4,7 @@
       <v-list-item class="px-2 mb-4 ml-n1">
         <v-subheader>
           <v-col class="text-center">
-            <v-icon class="mx-auto">mdi-sitemap</v-icon>
+            <v-icon class="mx-auto" small>mdi-sitemap</v-icon>
             <div>Items</div>
           </v-col>
         </v-subheader>
