@@ -3,6 +3,8 @@ import {CanvasNode, CanvasServerNode, CanvasSourceNode} from "../../nodes/infras
 import { Point } from "../../shared/types";
 import {Edge, Path} from "../../edge";
 import {NodeCreator} from "../../nodes";
+//@ts-ignore
+import {ResizeObserver} from "resize-observer";
 
 export class CanvasBoard extends Board {
     private readonly ctx: CanvasRenderingContext2D;
@@ -25,7 +27,7 @@ export class CanvasBoard extends Board {
         this.dragStartPoint = new Point(0, 0);
         this.isMouseDown = false;
         this.onResize({} as UIEvent);
-        window.addEventListener("resize", this.onResize.bind(this));
+        new ResizeObserver(this.onResize.bind(this)).observe(this.container)
         this.container.addEventListener("mousedown", this.onClick.bind(this));
         this.container.addEventListener("mouseup", this.onMouseUp.bind(this));
         this.container.addEventListener("mousemove", this.onMouseMove.bind(this));
@@ -33,7 +35,7 @@ export class CanvasBoard extends Board {
 
     private setSize(width: number, height: number) {
         this.container.width = width;
-        this.container.height = height;
+        this.container.height = height - 7;
     }
 
     draw() {

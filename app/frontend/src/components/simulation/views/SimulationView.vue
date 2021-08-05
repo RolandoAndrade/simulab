@@ -6,9 +6,7 @@
     <property-bar></property-bar>
     <v-main id="main-content" class="fill-height">
       <div class="main-content">
-        <v-fade-transition mode="out-in">
           <board></board>
-        </v-fade-transition>
       </div>
     </v-main>
 
