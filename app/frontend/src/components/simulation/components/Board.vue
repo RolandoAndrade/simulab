@@ -42,7 +42,9 @@ export default class Board extends Vue {
 
   drop(event: DragEvent){
     const type: NodeCreatorType = event.dataTransfer!.getData("nodeCreatorType") as NodeCreatorType;
-    this.createNode(type, event.offsetX, event.offsetY);
+    if (!!type) {
+      this.createNode(type, event.offsetX, event.offsetY);
+    }
   }
 }
 </script>
