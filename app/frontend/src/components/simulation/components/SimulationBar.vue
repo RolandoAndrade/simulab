@@ -23,8 +23,10 @@
               max="2"
               min="0.1"
               step="0.1"
-              thumb-label inverse-label ticks
+              thumb-label
+              ticks
               hide-details
+              v-model="simulationSpeed"
           ></v-slider>
         </v-card>
 
@@ -74,6 +76,8 @@ import SimulationTime from "@/components/simulation/components/SimulationTime.vu
 })
 export default class SimulationBar extends Vue {
   private simulationRunning = false;
+
+  private simulationSpeed = 1
 }
 </script>
 
