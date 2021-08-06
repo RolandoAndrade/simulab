@@ -20,4 +20,12 @@ export default Vue.extend({
 html{
   overflow-y: hidden !important;
 }
+
+.v-input{
+  font-size: 12px !important;
+}
+
+.v-label{
+  font-size: 12px !important;
+}
 </style>
