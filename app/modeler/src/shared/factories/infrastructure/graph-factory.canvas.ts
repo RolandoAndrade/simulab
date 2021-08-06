@@ -20,6 +20,10 @@ export class GraphFactoryCanvas implements GraphFactory {
     }
 
     createNodeCreator(nodeCreatorType: NodeCreatorType, entity: Entity): NodeCreator {
-        return new this.nodeCreatorTypes[nodeCreatorType](entity);
+        const nodeClass = this.nodeCreatorTypes[nodeCreatorType];
+        if (!!nodeClass){
+            return new nodeClass(entity)
+        }
+        return undefined;
     }
 }
