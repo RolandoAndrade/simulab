@@ -58,6 +58,7 @@ export class CanvasBoard extends Board {
 
     private onResize(event: UIEvent) {
         this.setSize(this.container.offsetWidth, this.container.offsetHeight);
+        this.origin = new Point(0,0)
         this.draw();
     }
 
@@ -95,6 +96,7 @@ export class CanvasBoard extends Board {
     private onClick(event: MouseEvent) {
         this.isMouseDown = true;
         this.dragStartPoint = new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
+        console.log(event.offsetX, event.offsetY, this.origin, this.dragStartPoint)
         if(this.isCreatingPathEnable){
             this.createPath();
         } else {
@@ -167,7 +169,7 @@ export class CanvasBoard extends Board {
         }
         if(!!this.createdPath){
             this.setPathCreation(true);
-            this.finishPath(new Point(event.offsetX, event.offsetY))
+            this.finishPath(new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y))
         }
     }
 

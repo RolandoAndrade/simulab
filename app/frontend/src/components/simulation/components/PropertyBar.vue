@@ -125,7 +125,7 @@ export default class PropertyBar extends Vue {
 }
 
 #property-drawer {
-
+  user-select: none;
   max-height: calc(100% - 100px) !important;
 }
 </style>

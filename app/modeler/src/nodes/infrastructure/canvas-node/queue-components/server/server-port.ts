@@ -39,19 +39,19 @@ export class CanvasServerPort extends CanvasPort {
 
     containsLeftPort(x: number, y: number): boolean {
         return (
-            this.positionLeftPoint.x - CanvasPort.RADIUS <= x &&
-            x <= this.positionLeftPoint.x + CanvasPort.RADIUS &&
-            this.positionLeftPoint.y - CanvasPort.RADIUS <= y &&
-            y <= this.positionLeftPoint.y + CanvasPort.RADIUS
+            this.positionLeftPoint.x - CanvasPort.SELECTION_RADIUS <= x &&
+            x <= this.positionLeftPoint.x + CanvasPort.SELECTION_RADIUS &&
+            this.positionLeftPoint.y - CanvasPort.SELECTION_RADIUS <= y &&
+            y <= this.positionLeftPoint.y + CanvasPort.SELECTION_RADIUS
         );
     }
 
     containsRightPort(x: number, y: number): boolean {
         return (
-            this.positionRightPoint.x - CanvasPort.RADIUS <= x &&
-            x <= this.positionRightPoint.x + CanvasPort.RADIUS &&
-            this.positionRightPoint.y - CanvasPort.RADIUS <= y &&
-            y <= this.positionRightPoint.y + CanvasPort.RADIUS
+            this.positionRightPoint.x - CanvasPort.SELECTION_RADIUS <= x &&
+            x <= this.positionRightPoint.x + CanvasPort.SELECTION_RADIUS &&
+            this.positionRightPoint.y - CanvasPort.SELECTION_RADIUS <= y &&
+            y <= this.positionRightPoint.y + CanvasPort.SELECTION_RADIUS
         );
     }
 }

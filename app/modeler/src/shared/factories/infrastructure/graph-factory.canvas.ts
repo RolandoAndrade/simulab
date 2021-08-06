@@ -24,6 +24,6 @@ export class GraphFactoryCanvas implements GraphFactory {
         if (!!nodeClass){
             return new nodeClass(entity)
         }
-        return undefined;
+        return undefined!;
     }
 }

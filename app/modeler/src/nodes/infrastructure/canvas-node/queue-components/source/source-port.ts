@@ -34,10 +34,10 @@ export class CanvasSourcePort extends CanvasPort {
 
     containsRightPort(x: number, y: number): boolean {
         return (
-            this.positionRightPoint.x - CanvasPort.RADIUS <= x &&
-            x <= this.positionRightPoint.x + CanvasPort.RADIUS &&
-            this.positionRightPoint.y - CanvasPort.RADIUS <= y &&
-            y <= this.positionRightPoint.y + CanvasPort.RADIUS
+            this.positionRightPoint.x - CanvasPort.SELECTION_RADIUS <= x &&
+            x <= this.positionRightPoint.x + CanvasPort.SELECTION_RADIUS &&
+            this.positionRightPoint.y - CanvasPort.SELECTION_RADIUS <= y &&
+            y <= this.positionRightPoint.y + CanvasPort.SELECTION_RADIUS
         );
     }
 }
