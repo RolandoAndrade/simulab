@@ -49,6 +49,11 @@
           <v-img :src="require('@/assets/queue-components/label.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
+      <v-list-item class="pa-2">
+        <hint-button tip-color="grey" color="transparent" tip-text="Delete" plain block>
+          <v-img :src="require('@/assets/queue-components/eraser.png')" width="20px"></v-img>
+        </hint-button>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

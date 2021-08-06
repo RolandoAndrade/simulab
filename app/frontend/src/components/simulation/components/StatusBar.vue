@@ -29,7 +29,15 @@
 
 
     <v-divider vertical class="mx-1"></v-divider>
-
+    <v-col>
+      <div class="progress-text">{{new Date().toISOString()}} ({{progress}}% completed)</div>
+      <v-progress-linear
+          buffer-value="0"
+          color="primary"
+          stream
+          :value="progress"
+      ></v-progress-linear>
+    </v-col>
   </v-app-bar>
 </template>
 
@@ -42,7 +50,8 @@ import {Prop} from 'vue-property-decorator';
   name: 'status-bar',
 })
 export default class StatusBar extends Vue {
-  status: string = "STOPPED";
+  progress: number = 30
+  status: string = "RUNNING";
 
   get showPaused(): boolean{
     return this.status === "PAUSED"
@@ -69,6 +78,12 @@ export default class StatusBar extends Vue {
 
 .status-label{
   width: 125px;
+}
+
+.progress-text{
+  font-size: 10px!important;
+  color: grey;
+  padding-bottom: 5px;
 }
 </style>
 
