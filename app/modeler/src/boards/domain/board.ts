@@ -1,12 +1,14 @@
 import { GraphNode } from "../../nodes/domain";
 import {Edge} from "../../edge";
 import {NodeCreator} from "../../nodes/domain/node-creator";
+import {BoardMode} from "./board-mode";
 
 
 export abstract class Board {
     protected nodes: GraphNode[];
     protected paths: Edge[]
     protected isCreatingPathEnable: boolean = false;
+    protected isDeletingEnable: boolean = false;
 
     protected constructor(protected container: HTMLElement) {
         this.nodes = [];
@@ -24,8 +26,15 @@ export abstract class Board {
      * @description Sets the path creation mode
      * @param value Enable or disable
      * */
-    public setPathCreation(value: boolean) {
-        this.isCreatingPathEnable = value;
+    public setMode(value: BoardMode) {
+        const modes = {
+            [BoardMode.CREATING_PATH_MODE]: false,
+            [BoardMode.ERASING_MODE]: false,
+            [BoardMode.DEFAULT_MODE]: false,
+        }
+        modes[value] = true;
+        this.isCreatingPathEnable = modes[BoardMode.CREATING_PATH_MODE];
+        this.isDeletingEnable = modes[BoardMode.ERASING_MODE];
     }
 
     /**

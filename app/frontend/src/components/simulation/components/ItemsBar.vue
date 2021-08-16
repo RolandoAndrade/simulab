@@ -10,12 +10,12 @@
         </v-subheader>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Path" plain block @click="()=>changeMode()">
+        <hint-button tip-color="grey" color="transparent" tip-text="Path" plain block @click="()=>createPath()">
           <v-img :src="require('@/assets/queue-components/path.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Model Entity" plain block @click="()=>changeMode()">
+        <hint-button tip-color="grey" color="transparent" tip-text="Model Entity" plain block>
           <v-img :src="require('@/assets/queue-components/model-entity.png')" max-width="13px"></v-img>
         </hint-button>
       </v-list-item>
@@ -50,7 +50,7 @@
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Delete" plain block>
+        <hint-button tip-color="grey" color="transparent" tip-text="Delete" plain block @click="()=>eraseMode()">
           <v-img :src="require('@/assets/queue-components/eraser.png')" width="20px"></v-img>
         </hint-button>
       </v-list-item>
@@ -61,11 +61,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import {Prop} from 'vue-property-decorator';
 import TooltipButton from "@/components/shared/components/buttons/TooltipButton.vue";
 import HintButton from "@/components/shared/components/buttons/HintButton.vue";
 import {eventBus} from "@/components/shared/domain/event-bus";
 import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
+import {BoardMode} from "../../../../../modeler/src/boards/domain/board-mode";
 
 @Component({
   name: 'items-bar',
@@ -81,8 +81,12 @@ export default class ItemsBar extends Vue {
     eventBus.$emit(eventBus.CREATE_NODE, type)
   }
 
-  changeMode(){
-    eventBus.$emit(eventBus.CHANGE_MODE, true);
+  createPath(){
+    eventBus.$emit(eventBus.CHANGE_MODE, BoardMode.CREATING_PATH_MODE);
+  }
+
+  eraseMode(){
+    eventBus.$emit(eventBus.CHANGE_MODE, BoardMode.ERASING_MODE);
   }
 
   dragStart(event: DragEvent, type: NodeCreatorType){

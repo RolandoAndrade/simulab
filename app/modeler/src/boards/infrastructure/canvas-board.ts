@@ -1,10 +1,13 @@
-import { Board } from "../domain";
-import {CanvasNode, CanvasServerNode, CanvasSourceNode} from "../../nodes/infrastructure/canvas-node";
-import { Point } from "../../shared/types";
+import {Board} from "../domain";
+import {CanvasNode} from "../../nodes/infrastructure/canvas-node";
+import {Point} from "../../shared/types";
 import {Edge, Path} from "../../edge";
 import {NodeCreator} from "../../nodes";
 //@ts-ignore
 import {ResizeObserver} from "resize-observer";
+import {BoardMode} from "../domain/board-mode";
+
+const deleteCursor = require("assets/cursors/cursor-eraser.png")
 
 export class CanvasBoard extends Board {
     private readonly ctx: CanvasRenderingContext2D;
@@ -90,7 +93,7 @@ export class CanvasBoard extends Board {
                 return;
             }
         }
-        this.setPathCreation(false);
+        this.setMode(BoardMode.DEFAULT_MODE);
     }
 
     private onClick(event: MouseEvent) {
@@ -100,6 +103,13 @@ export class CanvasBoard extends Board {
             this.createPath();
         } else {
             this.selectNode();
+            if (this.isDeletingEnable){
+                if (this.selectedNode){
+                    this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);
+                    this.selectedNode = undefined;
+                    this.draw();
+                }
+            }
         }
 
     }
@@ -156,20 +166,21 @@ export class CanvasBoard extends Board {
             }
         }
         this.createdPath = undefined;
-        this.setPathCreation(false);
+        this.setMode(BoardMode.DEFAULT_MODE);
         this.draw();
     }
 
     private onMouseUp(event: MouseEvent) {
         this.isMouseDown = false;
-        this.container.style.cursor = "default";
+
         if(!!this.selectedNode){
             this.selectedNode.unselect();
         }
         if(!!this.createdPath){
-            this.setPathCreation(true);
+            this.setMode(BoardMode.CREATING_PATH_MODE);
             this.finishPath(new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y))
         }
+        this.setMode(BoardMode.DEFAULT_MODE);
     }
 
     private moveContext(dx: number, dy: number) {
@@ -186,10 +197,13 @@ export class CanvasBoard extends Board {
         this.ctx.restore();
     }
 
-    public setPathCreation(value: boolean) {
-        super.setPathCreation(value);
-        if (value) {
+    public setMode(value: BoardMode) {
+        super.setMode(value);
+        if (this.isCreatingPathEnable) {
             this.container.style.cursor = "crosshair";
+        } else if (this.isDeletingEnable) {
+
+            this.container.style.cursor = `url(${deleteCursor}), auto`;
         } else {
             this.container.style.cursor = "default";
         }

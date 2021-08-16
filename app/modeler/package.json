@@ -5,6 +5,7 @@
   "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "serve": "tsc --watch",
     "format": "prettier --write \"./src/**/*{.ts,.js}\""
   },
   "dependencies": {

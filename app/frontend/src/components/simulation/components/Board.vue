@@ -12,6 +12,7 @@ import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
 import {Board as MainBoard} from "modeler/boards/domain/board";
 import {eventBus} from "@/components/shared/domain/event-bus";
+import {BoardMode} from "../../../../../modeler/dist/boards/domain/board-mode";
 
 
 @Component({
@@ -26,8 +27,8 @@ export default class Board extends Vue {
       this.board = graphFactory.createBoard(container!);
     })
     eventBus.$on(eventBus.CREATE_NODE, this.createNode.bind(this))
-    eventBus.$on(eventBus.CHANGE_MODE, (mode: boolean)=>{
-      this.board.setPathCreation(mode)
+    eventBus.$on(eventBus.CHANGE_MODE, (mode: BoardMode)=>{
+      this.board.setMode(mode)
     })
   }
 
