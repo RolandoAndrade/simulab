@@ -173,9 +173,6 @@ export class CanvasBoard extends Board {
     private onMouseUp(event: MouseEvent) {
         this.isMouseDown = false;
 
-        if(!!this.selectedNode){
-            this.selectedNode.unselect();
-        }
         if(!!this.createdPath){
             this.setMode(BoardMode.CREATING_PATH_MODE);
             this.finishPath(new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y))

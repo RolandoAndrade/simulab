@@ -16,6 +16,16 @@ export abstract class CanvasNode extends GraphNode {
     }
 
     public draw() {
+        const BORDER_RADIUS = 5;
+        const MARGIN = 1;
+        if (this.isSelected) {
+            this.ctx.setLineDash([4]);
+            this.ctx.strokeStyle = "cyan";
+            this.ctx.lineWidth = 1;
+            this.ctx.strokeRect(this.position.x - MARGIN, this.position. y - MARGIN, this.dimensions.width + 2 * MARGIN, this.dimensions.height + 2 *MARGIN)
+            this.ctx.stroke();
+            this.ctx.setLineDash([])
+        }
         this.ctx.drawImage(this.image, this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
         this.ctx.font = "12px Arial";
         this.ctx.textAlign = "center";
