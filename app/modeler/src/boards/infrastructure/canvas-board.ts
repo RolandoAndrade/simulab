@@ -16,8 +16,8 @@ export class CanvasBoard extends Board {
     private isMouseDown: boolean;
 
     private selectedNode: CanvasNode | undefined;
-    private selectedPath: Edge | undefined;
-    private createdPath: Edge | undefined;
+    private selectedPath: Path | undefined;
+    private createdPath: Path | undefined;
 
 
     private origin: Point;
@@ -93,7 +93,7 @@ export class CanvasBoard extends Board {
                 if (this.selectedPath) {
                     this.selectedPath.unselect();
                 }
-                this.selectedPath = path.select();
+                this.selectedPath = path.select() as Path;
                 this.draw();
                 return;
             }
@@ -108,8 +108,11 @@ export class CanvasBoard extends Board {
     private createPath(){
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
-            if (node.portManager.containsSourcePoint(this.dragStartPoint.x, this.dragStartPoint.y)) {
-                this.createdPath = new Path(this.ctx, node, this.dragStartPoint);
+            const port = node.portManager.containsSourcePoint(this.dragStartPoint.x, this.dragStartPoint.y);
+            if (port) {
+                this.createdPath = new Path(this.ctx, port, new Point(
+                    this.dragStartPoint.x + this.originDrag.x,
+                    this.dragStartPoint.y + this.originDrag.y));
                 this.draw();
                 return;
             }
@@ -185,8 +188,10 @@ export class CanvasBoard extends Board {
     private finishPath(event: Point){
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
-            if (node.portManager.containsDestinationPoint(event.x, event.y)) {
-                this.paths.push(new Path(this.ctx, this.createdPath!.fromNode, node));
+            const port = node.portManager.containsDestinationPoint(event.x, event.y);
+            console.log(port)
+            if (port) {
+                this.paths.push(new Path(this.ctx, this.createdPath!.portStart, port));
                 break;
             }
         }
@@ -200,7 +205,7 @@ export class CanvasBoard extends Board {
 
         if(!!this.createdPath){
             this.setMode(BoardMode.CREATING_PATH_MODE);
-            this.finishPath(new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y))
+            this.finishPath(new Point(event.offsetX, event.offsetY))
         }
         this.setMode(BoardMode.DEFAULT_MODE);
     }

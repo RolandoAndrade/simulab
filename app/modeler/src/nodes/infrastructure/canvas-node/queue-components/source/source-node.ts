@@ -1,6 +1,6 @@
 import { CanvasNode } from "../../canvas-node";
 import { QueueCanvasComponentProperties } from "../../queue-canvas-component-properties";
-import {LeftPort} from "../../ports/left-port";
+import {RightPort} from "../../ports/right-port";
 
 export class CanvasSourceNode extends CanvasNode {
     constructor(properties: QueueCanvasComponentProperties) {
@@ -13,6 +13,6 @@ export class CanvasSourceNode extends CanvasNode {
             image,
         });
 
-        this.portManager.sourcePorts.push(new LeftPort(this))
+        this.portManager.sourcePorts.push(new RightPort(this))
     }
 }

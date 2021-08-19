@@ -29,7 +29,7 @@ export class CanvasPortManager {
     }
 
     containsDestinationPoint(x: number, y: number){
-        for (const port of this.sourcePorts){
+        for (const port of this.destinationPorts){
             const d = port.contains(x, y);
             if (d) {
                 return port;

@@ -1,22 +1,29 @@
 import {Edge} from "../domain/edge";
-import {CanvasNode, CanvasPort, GraphNode} from "../../nodes";
+import {CanvasPort, GraphNode} from "../../nodes";
 import {Point} from "../../shared";
 
 export class Path extends Edge{
-    constructor(private readonly ctx: CanvasRenderingContext2D, from: GraphNode, to: GraphNode | Point) {
-        super(from, to);
+    public readonly portStart: CanvasPort;
+    public readonly portEnd: CanvasPort | Point;
+
+    constructor(private readonly ctx: CanvasRenderingContext2D, from: CanvasPort, to: CanvasPort | Point) {
+        super(from.node, to instanceof Point ? to : to.node);
+        this.portStart = from;
+        this.portEnd = to;
     }
 
     public get toPosition(): Point{
-        if (this.to instanceof Point) {
-            return this.to;
+        if (this.portEnd instanceof CanvasPort) {
+            return this.portEnd.position;
         }
-        return (this.to as CanvasNode).portCreator.positionLeftPoint;
+        return super.toPosition;
     }
 
     private drawSameNode(){
-        const portRight = (this.from as CanvasNode).portCreator.positionRightPoint;
-        const portLeft = (this.from as CanvasNode).portCreator.positionLeftPoint;
+        console.log(this.from, this.to)
+        console.log(this.portStart, this.portEnd)
+        const portRight = this.portStart.position;
+        const portLeft = (this.portEnd as GraphNode).position;
         this.ctx.strokeStyle = Edge.COLOR;
         this.ctx.lineWidth = 2;
         const h = portRight.y - this.from.dimensions.height / 2 - CanvasPort.MARGIN * 2
@@ -29,7 +36,7 @@ export class Path extends Edge{
     }
 
     private differentNode(){
-        const port = (this.from as CanvasNode).portCreator.positionRightPoint;
+        const port = this.portStart.position;
         this.ctx.beginPath();
         this.ctx.strokeStyle = this.isSelected ? "purple" : Edge.COLOR;
         this.ctx.lineWidth = this.isSelected ? 4 : 2;
@@ -46,25 +53,21 @@ export class Path extends Edge{
      * @param y Coordinate y inside the container
      * */
     public contains(x: number, y: number): boolean {
-        const port = (this.from as CanvasNode).portCreator.positionRightPoint;
+        const port = this.portStart.position;
         this.ctx.beginPath();
         this.ctx.lineWidth = 10;
         this.ctx.moveTo(port.x,port.y);
         this.ctx.lineTo(this.toPosition.x,this.toPosition.y);
         const contained = this.ctx.isPointInStroke(x, y)
         this.ctx.closePath();
-        console.log(x, y, contained)
         return contained;
     }
 
     draw(): void {
-        this.ctx.beginPath();
         if(this.isSameNode()){
             this.drawSameNode()
         } else {
             this.differentNode()
         }
-
     }
-
 }

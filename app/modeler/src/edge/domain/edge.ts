@@ -84,6 +84,5 @@ export abstract class Edge {
         } else {
             this.to.setPosition(x, y)
         }
-
     }
 }
