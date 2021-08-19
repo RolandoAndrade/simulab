@@ -6,6 +6,9 @@ import {NodeCreator} from "../../nodes";
 //@ts-ignore
 import {ResizeObserver} from "resize-observer";
 import {BoardMode} from "../domain/board-mode";
+import {ModelerEvents} from "../../shared/events/modeler.events";
+import {SelectedNodeEvent} from "../../shared/events/selected-node.event";
+import {SelectedPathEvent} from "../../shared/events/selected-path.event";
 
 const deleteCursor = require("assets/cursors/cursor-eraser.png")
 
@@ -74,7 +77,16 @@ export class CanvasBoard extends Board {
                 if (this.selectedNode) {
                     this.selectedNode.unselect();
                 }
+                if (this.selectedPath) {
+                    this.selectedPath.unselect();
+                    this.selectedPath = undefined;
+                }
                 this.selectedNode = node.select() as CanvasNode;
+                this.container.dispatchEvent(new CustomEvent<SelectedNodeEvent>(ModelerEvents.SELECTED_NODE, {
+                    detail: {
+                        node
+                    }
+                }))
                 this.draw();
                 return;
             }
@@ -94,6 +106,11 @@ export class CanvasBoard extends Board {
                     this.selectedPath.unselect();
                 }
                 this.selectedPath = path.select() as Path;
+                this.container.dispatchEvent(new CustomEvent<SelectedPathEvent>(ModelerEvents.SELECTED_NODE, {
+                    detail: {
+                        path
+                    }
+                }))
                 this.draw();
                 return;
             }
