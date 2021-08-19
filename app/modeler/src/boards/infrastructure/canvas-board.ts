@@ -147,6 +147,11 @@ export class CanvasBoard extends Board {
             this.selectNode();
             if (!this.selectedNode){
                 this.selectPath()
+                if (this.selectedPath && this.isDeletingEnable) {
+                    this.paths = this.paths.filter((path)=>path!=this.selectedPath)
+                    this.selectedPath = undefined;
+                    this.draw();
+                }
             } else if (this.isDeletingEnable){
                 this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);
                 this.paths = this.paths.filter((path)=>path.fromNode!=this.selectedNode && path.toNode!=this.selectedNode)
@@ -244,7 +249,7 @@ export class CanvasBoard extends Board {
             this.container.style.cursor = "crosshair";
         } else if (this.isDeletingEnable) {
 
-            this.container.style.cursor = `url(${deleteCursor}), auto`;
+            this.container.style.cursor = `url(${deleteCursor}) 8 8, auto`;
         } else {
             this.container.style.cursor = "default";
         }
