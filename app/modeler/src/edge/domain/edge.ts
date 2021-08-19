@@ -20,6 +20,10 @@ export abstract class Edge {
         return this.from;
     }
 
+    public get toNode(): GraphNode | Point {
+        return this.to;
+    }
+
     /**
      * @description Returns true if the given point is contained by the node
      * @param x Coordinate x inside the container

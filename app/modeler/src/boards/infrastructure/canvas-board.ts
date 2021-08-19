@@ -147,13 +147,11 @@ export class CanvasBoard extends Board {
             this.selectNode();
             if (!this.selectedNode){
                 this.selectPath()
-            }
-            if (this.isDeletingEnable){
-                if (this.selectedNode){
-                    this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);
-                    this.selectedNode = undefined;
-                    this.draw();
-                }
+            } else if (this.isDeletingEnable){
+                this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);
+                this.paths = this.paths.filter((path)=>path.fromNode!=this.selectedNode && path.toNode!=this.selectedNode)
+                this.selectedNode = undefined;
+                this.draw();
             }
         }
 
