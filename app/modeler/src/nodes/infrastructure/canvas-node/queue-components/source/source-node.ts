@@ -1,9 +1,8 @@
 import { CanvasNode } from "../../canvas-node";
-import { CanvasSourcePort } from "./source-port";
 import { QueueCanvasComponentProperties } from "../../queue-canvas-component-properties";
+import {LeftPort} from "../../ports/left-port";
 
 export class CanvasSourceNode extends CanvasNode {
-    protected port: CanvasSourcePort;
     constructor(properties: QueueCanvasComponentProperties) {
         const image = require("assets/queue-components/source.png");
         super({
@@ -13,10 +12,7 @@ export class CanvasSourceNode extends CanvasNode {
             padding: 0,
             image,
         });
-        this.port = new CanvasSourcePort(this);
-    }
 
-    get portCreator(): CanvasSourcePort {
-        return this.port;
+        this.portManager.sourcePorts.push(new LeftPort(this))
     }
 }

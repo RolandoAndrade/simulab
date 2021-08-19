@@ -15,7 +15,7 @@ export abstract class CanvasPort {
 
     abstract contains(x: number, y: number): boolean;
     abstract hover(x: number, y: number): boolean;
-    abstract draw(ctx: CanvasRenderingContext2D): void;
+    abstract draw(): void;
 
     public get positionRightPoint(): Point {
         return {
@@ -30,8 +30,4 @@ export abstract class CanvasPort {
             y: this.node.position.y + this.node.dimensions.height / 2,
         };
     }
-
-    public abstract containsRightPort(x: number, y: number): boolean;
-
-    public abstract containsLeftPort(x: number, y: number): boolean;
 }

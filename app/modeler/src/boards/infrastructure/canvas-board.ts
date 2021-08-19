@@ -108,7 +108,7 @@ export class CanvasBoard extends Board {
     private createPath(){
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
-            if (node.portCreator.containsRightPort(this.dragStartPoint.x, this.dragStartPoint.y)) {
+            if (node.portManager.containsSourcePoint(this.dragStartPoint.x, this.dragStartPoint.y)) {
                 this.createdPath = new Path(this.ctx, node, this.dragStartPoint);
                 this.draw();
                 return;
@@ -185,7 +185,7 @@ export class CanvasBoard extends Board {
     private finishPath(event: Point){
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
-            if (node.portCreator.containsLeftPort(event.x, event.y)) {
+            if (node.portManager.containsDestinationPoint(event.x, event.y)) {
                 this.paths.push(new Path(this.ctx, this.createdPath!.fromNode, node));
                 break;
             }
