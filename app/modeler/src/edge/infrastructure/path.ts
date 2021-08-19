@@ -30,6 +30,7 @@ export class Path extends Edge{
 
     private differentNode(){
         const port = (this.from as CanvasNode).portCreator.positionRightPoint;
+        this.ctx.beginPath();
         this.ctx.strokeStyle = Edge.COLOR;
         this.ctx.lineWidth = 2;
         this.ctx.moveTo(port.x,port.y);

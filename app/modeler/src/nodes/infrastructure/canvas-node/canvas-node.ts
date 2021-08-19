@@ -1,6 +1,7 @@
 import { GraphNode } from "../../domain";
 import { CanvasNodeProperties } from "./canvas-node-properties";
 import { CanvasPort } from "./ports";
+import {roundedRect} from "../../../shared/functions/canvas.functions";
 
 export abstract class CanvasNode extends GraphNode {
     protected image: HTMLImageElement;
@@ -16,16 +17,18 @@ export abstract class CanvasNode extends GraphNode {
     }
 
     public draw() {
-        const BORDER_RADIUS = 5;
-        const MARGIN = 1;
+        const BORDER_RADIUS = 8;
+        const MARGIN = 2;
         if (this.isSelected) {
-            this.ctx.setLineDash([4]);
-            this.ctx.strokeStyle = "cyan";
-            this.ctx.lineWidth = 1;
-            this.ctx.strokeRect(this.position.x - MARGIN, this.position. y - MARGIN, this.dimensions.width + 2 * MARGIN, this.dimensions.height + 2 *MARGIN)
-            this.ctx.stroke();
-            this.ctx.setLineDash([])
+            //this.ctx.beginPath();
+            //this.ctx.setLineDash([10, 4]);
+            this.ctx.fillStyle = "purple";
+            //this.ctx.lineWidth = 1;
+            roundedRect(this.ctx, this.position.x - MARGIN, this.position.y - MARGIN,
+                this.dimensions.width + 2 * MARGIN, this.dimensions.height + 2 * MARGIN, BORDER_RADIUS).fill()
+            //this.ctx.setLineDash([])
         }
+        this.ctx.fillStyle = "black";
         this.ctx.drawImage(this.image, this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
         this.ctx.font = "12px Arial";
         this.ctx.textAlign = "center";
