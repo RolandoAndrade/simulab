@@ -46,5 +46,12 @@ export abstract class CanvasNode extends GraphNode {
         return this.portCreator.contains(x, y);
     }
 
-
+    public contains(x: number, y: number): boolean {
+        const path = new Path2D();
+        path.rect(this.position.x - this.properties.padding, this.position.y - this.properties.padding,
+            this.dimensions.width + this.properties.padding * 2, this.dimensions.height + this.properties.padding * 2);
+        const contained = this.ctx.isPointInPath(path, x, y)
+        path.closePath();
+        return contained;
+    }
 }

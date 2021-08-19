@@ -21,6 +21,7 @@ export class CanvasBoard extends Board {
 
 
     private origin: Point;
+    private originDrag: Point;
     private dragStartPoint: Point;
 
     constructor(protected readonly container: HTMLCanvasElement) {
@@ -88,8 +89,7 @@ export class CanvasBoard extends Board {
     private selectPath(){
         const rPaths = this.paths.reverse();
         for (const path of rPaths) {
-            if (path.contains(this.dragStartPoint.x - this.origin.x, this.dragStartPoint.y - this.origin.y)) {
-                console.log(path)
+            if (path.contains(this.dragStartPoint.x, this.dragStartPoint.y)) {
                 if (this.selectedPath) {
                     this.selectedPath.unselect();
                 }
@@ -119,7 +119,8 @@ export class CanvasBoard extends Board {
 
     private onClick(event: MouseEvent) {
         this.isMouseDown = true;
-        this.dragStartPoint = new Point(event.offsetX + this.origin.x, event.offsetY + this.origin.y);
+        this.dragStartPoint = new Point(event.offsetX, event.offsetY);
+        this.originDrag = new Point(this.origin.x, this.origin.y);
         if(this.isCreatingPathEnable){
             this.createPath();
         } else {
@@ -139,8 +140,8 @@ export class CanvasBoard extends Board {
     }
 
     private moveBoard(event: Point) {
-        const dx = this.origin.x + event.x - this.dragStartPoint.x;
-        const dy = this.origin.y + event.y - this.dragStartPoint.y;
+        const dx = this.origin.x + event.x - this.dragStartPoint.x - this.originDrag.x;
+        const dy = this.origin.y + event.y - this.dragStartPoint.y - this.originDrag.y;
         this.moveContext(dx, dy);
         this.container.style.cursor = "move";
     }
