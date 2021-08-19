@@ -11,8 +11,6 @@ export class LeftPort extends CanvasPort {
     }
 
     contains(x: number, y: number): boolean {
-        console.log(x, y)
-        console.log(this.position)
         return super.contains(x, y);
     }
 

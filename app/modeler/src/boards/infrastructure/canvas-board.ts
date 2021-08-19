@@ -1,7 +1,7 @@
 import {Board} from "../domain";
 import {CanvasNode} from "../../nodes/infrastructure/canvas-node";
 import {Point} from "../../shared/types";
-import {Edge, Path} from "../../edge";
+import {Path} from "../../edge";
 import {NodeCreator} from "../../nodes";
 //@ts-ignore
 import {ResizeObserver} from "resize-observer";
@@ -189,7 +189,6 @@ export class CanvasBoard extends Board {
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
             const port = node.portManager.containsDestinationPoint(event.x, event.y);
-            console.log(port)
             if (port) {
                 this.paths.push(new Path(this.ctx, this.createdPath!.portStart, port));
                 break;

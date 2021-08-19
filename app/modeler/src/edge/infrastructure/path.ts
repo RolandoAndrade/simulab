@@ -20,8 +20,6 @@ export class Path extends Edge{
     }
 
     private drawSameNode(){
-        console.log(this.from, this.to)
-        console.log(this.portStart, this.portEnd)
         const portRight = this.portStart.position;
         const portLeft = (this.portEnd as GraphNode).position;
         this.ctx.strokeStyle = Edge.COLOR;
