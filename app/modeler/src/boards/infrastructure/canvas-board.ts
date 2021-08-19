@@ -16,6 +16,7 @@ export class CanvasBoard extends Board {
     private isMouseDown: boolean;
 
     private selectedNode: CanvasNode | undefined;
+    private selectedPath: Edge | undefined;
     private createdPath: Edge | undefined;
 
 
@@ -84,6 +85,26 @@ export class CanvasBoard extends Board {
         }
     }
 
+    private selectPath(){
+        const rPaths = this.paths.reverse();
+        for (const path of rPaths) {
+            if (path.contains(this.dragStartPoint.x - this.origin.x, this.dragStartPoint.y - this.origin.y)) {
+                console.log(path)
+                if (this.selectedPath) {
+                    this.selectedPath.unselect();
+                }
+                this.selectedPath = path.select();
+                this.draw();
+                return;
+            }
+        }
+        if (this.selectedPath) {
+            this.selectedPath.unselect();
+            this.draw();
+            this.selectedPath = undefined;
+        }
+    }
+
     private createPath(){
         const rNodes = this.nodes.reverse();
         for (const node of rNodes) {
@@ -103,6 +124,9 @@ export class CanvasBoard extends Board {
             this.createPath();
         } else {
             this.selectNode();
+            if (!this.selectedNode){
+                this.selectPath()
+            }
             if (this.isDeletingEnable){
                 if (this.selectedNode){
                     this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);

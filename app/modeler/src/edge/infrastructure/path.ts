@@ -31,12 +31,30 @@ export class Path extends Edge{
     private differentNode(){
         const port = (this.from as CanvasNode).portCreator.positionRightPoint;
         this.ctx.beginPath();
-        this.ctx.strokeStyle = Edge.COLOR;
-        this.ctx.lineWidth = 2;
+        this.ctx.strokeStyle = this.isSelected ? "purple" : Edge.COLOR;
+        this.ctx.lineWidth = this.isSelected ? 4 : 2;
         this.ctx.moveTo(port.x,port.y);
         this.ctx.lineTo(this.toPosition.x,this.toPosition.y);
         this.ctx.stroke();
+        this.ctx.closePath();
         this.from.draw();
+    }
+
+    /**
+     * @description Returns true if the given point is contained by the node
+     * @param x Coordinate x inside the container
+     * @param y Coordinate y inside the container
+     * */
+    public contains(x: number, y: number): boolean {
+        const port = (this.from as CanvasNode).portCreator.positionRightPoint;
+        this.ctx.beginPath();
+        this.ctx.lineWidth = 10;
+        this.ctx.moveTo(port.x,port.y);
+        this.ctx.lineTo(this.toPosition.x,this.toPosition.y);
+        const contained = this.ctx.isPointInStroke(x, y)
+        this.ctx.closePath();
+        console.log(x, y, contained)
+        return contained;
     }
 
     draw(): void {

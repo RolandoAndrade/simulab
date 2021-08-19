@@ -3,6 +3,7 @@ import {Point} from "../../shared";
 
 export abstract class Edge {
     protected static readonly COLOR = "#4e176f";
+    protected static readonly SELECTION_COLOR = "purple";
 
     private selected: boolean = false;
 
