@@ -1,13 +1,30 @@
 import { GraphNode } from "../../nodes/domain";
-import {Point} from "../../shared";
+import {Entity, Point} from "../../shared";
 
 export abstract class Edge {
     protected static readonly COLOR = "#4e176f";
     protected static readonly SELECTION_COLOR = "purple";
+    private entity: Entity;
 
     private selected: boolean = false;
 
-    protected constructor(protected from: GraphNode, protected to: GraphNode | Point, protected padding: number = 5) {}
+    protected constructor(protected from: GraphNode, protected to: GraphNode | Point, protected padding: number = 5) {
+        this.entity = {
+            name: "Path 1",
+            properties: [{
+                propertyName: "Weight",
+                propertyValue: 1,
+                type: "Expression"
+            }]
+        }
+    }
+
+    /**
+     * @description Gets the entity of the nod
+     * */
+    public getEntity(): Entity {
+        return this.entity;
+    }
 
     public get toPosition(): Point{
         if (this.to instanceof Point) {

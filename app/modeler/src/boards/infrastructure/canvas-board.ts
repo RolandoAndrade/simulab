@@ -2,7 +2,7 @@ import {Board} from "../domain";
 import {CanvasNode} from "../../nodes/infrastructure/canvas-node";
 import {Point} from "../../shared/types";
 import {Path} from "../../edge";
-import {NodeCreator} from "../../nodes";
+import {GraphNode, NodeCreator} from "../../nodes";
 //@ts-ignore
 import {ResizeObserver} from "resize-observer";
 import {BoardMode} from "../domain/board-mode";
@@ -96,6 +96,17 @@ export class CanvasBoard extends Board {
             this.draw();
             this.selectedNode = undefined;
         }
+        this.container.dispatchEvent(new CustomEvent<SelectedNodeEvent>(ModelerEvents.SELECTED_NODE, {
+            detail: {
+                node: {
+                    getEntity() {
+                        return {
+                            properties: []
+                        }
+                    }
+                } as GraphNode
+            }
+        }))
     }
 
     private selectPath(){
@@ -106,7 +117,7 @@ export class CanvasBoard extends Board {
                     this.selectedPath.unselect();
                 }
                 this.selectedPath = path.select() as Path;
-                this.container.dispatchEvent(new CustomEvent<SelectedPathEvent>(ModelerEvents.SELECTED_NODE, {
+                this.container.dispatchEvent(new CustomEvent<SelectedPathEvent>(ModelerEvents.SELECTED_PATH, {
                     detail: {
                         path
                     }

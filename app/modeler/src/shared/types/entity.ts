@@ -1,4 +1,6 @@
+import {EntityProperty} from "./entity-property";
+
 export interface Entity {
     name: string,
-    properties: { [key: string]: any }
+    properties: EntityProperty[]
 }

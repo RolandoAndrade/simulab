@@ -12,7 +12,8 @@ import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
 import {Board as MainBoard} from "modeler/boards/domain/board";
 import {eventBus} from "@/components/shared/domain/event-bus";
-import {BoardMode} from "../../../../../modeler/dist/boards/domain/board-mode";
+import {BoardMode} from "modeler/boards/domain/board-mode";
+import {EntityProperty} from "modeler";
 
 
 @Component({
@@ -33,11 +34,34 @@ export default class Board extends Vue {
   }
 
   createNode(nodeCreatorType: NodeCreatorType, x?: number, y?: number){
+    let properties: EntityProperty[] = [{
+      propertyName: "Name",
+      propertyValue: "Whatever",
+      type: "STRING"
+    }]
+    switch (nodeCreatorType) {
+      case NodeCreatorType.SOURCE:
+        properties = [
+          {
+            propertyName: "Name",
+            propertyValue: "Source",
+            type: "STRING"
+          },
+          {
+            propertyName: "Interarrival time",
+            propertyValue: 1,
+            type: "EXPRESSION"
+          },
+          {
+            propertyName: "Entities per arrival",
+            propertyValue: 1,
+            type: "EXPRESSION"
+          },
+        ]
+    }
     this.board.createNode(graphFactory.createNodeCreator(nodeCreatorType, {
-      name: "Source 1",
-      properties: {
-
-      }
+      name: properties[0].propertyValue,
+      properties
     }), x, y)
   }
 

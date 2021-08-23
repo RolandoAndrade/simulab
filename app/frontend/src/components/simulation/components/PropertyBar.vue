@@ -10,11 +10,12 @@
           disable-sort disable-pagination disable-filtering
           hide-default-footer
           mobile-breakpoint="0"
+          no-data-text="No properties available"
       >
         <template v-slot:item.propertyValue="{ item }">
-          <v-text-field :placeholder="item.propertyName" outlined dense hide-details v-if="item.type === 'STRING'"></v-text-field>
-          <v-autocomplete :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.type === 'EXPRESSION'"></v-autocomplete>
-          <v-select :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.type === 'BOOLEAN'" :items="['True', 'False']"></v-select>
+          <v-text-field v-model="item.propertyValue"  :placeholder="item.propertyName" outlined dense hide-details v-if="item.type === 'STRING'"></v-text-field>
+          <v-autocomplete v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.type === 'EXPRESSION'"></v-autocomplete>
+          <v-select v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.type === 'BOOLEAN'" :items="['True', 'False']"></v-select>
         </template>
       </v-data-table>
   </v-navigation-drawer>
@@ -23,7 +24,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import {Prop} from 'vue-property-decorator';
+import {ModelerEvents} from "modeler/shared/events/modeler.events";
+import {SelectedNodeEvent} from "modeler/shared/events/selected-node.event";
+import {SelectedPathEvent} from "modeler/shared/events/selected-path.event";
+import {EntityProperty} from "modeler";
+
 
 @Component({
   name: 'property-bar',
@@ -37,7 +42,19 @@ export default class PropertyBar extends Vue {
 
   mounted(){
     this.setBorderWidth()
-    this.setEvents()
+    this.setEvents();
+    const container = document.getElementById("graph-container")!;
+    this.$nextTick(()=>{
+      container.addEventListener(ModelerEvents.SELECTED_NODE, (event: any) => {
+        const nodeSelection: SelectedNodeEvent = event.detail;
+        this.properties = nodeSelection.node.getEntity().properties;
+      })
+
+      container.addEventListener(ModelerEvents.SELECTED_PATH, (event: any) => {
+        const nodeSelection: SelectedPathEvent = event.detail;
+        this.properties = nodeSelection.path.getEntity().properties;
+      })
+    })
   }
 
   setBorderWidth() {
@@ -95,23 +112,7 @@ export default class PropertyBar extends Vue {
     },
     { text: 'Value', value: 'propertyValue' },
   ];
-  properties = [
-    {
-      propertyName: 'Name',
-      propertyValue: 'Lorem ipsum',
-      type: "STRING"
-    },
-    {
-      propertyName: 'Arrival time',
-      propertyValue: 'Lorem ipsum',
-      type: "EXPRESSION"
-    },
-    {
-      propertyName: 'Enabled',
-      propertyValue: 'Lorem ipsum',
-      type: "BOOLEAN"
-    },
-  ]
+  properties: EntityProperty[] = []
 }
 </script>
 
