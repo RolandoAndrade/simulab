@@ -10,8 +10,8 @@ export class EntityEmitterNodeCreator extends NodeCreator {
     }): GraphNode {
         return new CanvasEntityEmitterNode({
             ctx: options.ctx,
-            x: options.x - Math.sqrt(3) * 50 /2,
-            y: options.y - 50/2,
+            x: options.x - Math.sqrt(3) * 30 /2,
+            y: options.y - 30/2,
             id: this.entity.name,
             entity: this.entity
         });

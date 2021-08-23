@@ -24,11 +24,7 @@ export abstract class CanvasImageNode extends CanvasNode {
             roundedRect(this.ctx, this.position.x - MARGIN, this.position.y - MARGIN,
                 this.dimensions.width + 2 * MARGIN, this.dimensions.height + 2 * MARGIN, BORDER_RADIUS).fill()
         }
-        this.ctx.fillStyle = "black";
         this.ctx.drawImage(this.image, this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
-        this.ctx.font = "12px Arial";
-        this.ctx.textAlign = "center";
-        this.ctx.fillText(this.properties.id, this.position.x + this.dimensions.width / 2, this.position.y + this.dimensions.height + 15);
-        this.portManager.draw();
+        super.draw();
     }
 }

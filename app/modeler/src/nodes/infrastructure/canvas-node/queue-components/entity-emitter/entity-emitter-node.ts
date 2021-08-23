@@ -5,19 +5,28 @@ export class CanvasEntityEmitterNode extends CanvasNode {
     constructor(properties: QueueCanvasComponentProperties) {
         super({
             ...properties,
-            width: Math.sqrt(3) * 50 /2,
-            height: 50,
+            width: Math.sqrt(3) * 30 /2,
+            height: 30,
             padding: 0,
         });
     }
 
     draw() {
+        this.ctx.save();
         this.ctx.fillStyle = this.properties.color;
         this.ctx.beginPath();
-        this.ctx.moveTo(this.position.x - this.dimensions.width / 2, this.position.y - this.dimensions.height / 2);
-        this.ctx.lineTo(this.position.x - this.dimensions.width / 2, this.position.y + this.dimensions.height / 2);
-        this.ctx.lineTo(this.position.x + this.dimensions.width / 2, this.position.y);
+        this.ctx.lineJoin = "round";
+        this.ctx.lineWidth = 8;
+        this.ctx.moveTo(this.position.x, this.position.y);
+        this.ctx.lineTo(this.position.x, this.position.y + this.dimensions.height);
+        this.ctx.lineTo(this.position.x + this.dimensions.width , this.position.y + this.dimensions.height / 2);
         this.ctx.closePath();
+        this.ctx.stroke();
         this.ctx.fill();
+        this.ctx.restore();
+        this.ctx.fillStyle = "black";
+        this.ctx.font = "12px Arial";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(this.properties.id, this.position.x + this.dimensions.width / 2, this.position.y + this.dimensions.height + 25);
     }
 }
