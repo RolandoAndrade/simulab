@@ -1,8 +1,8 @@
-import { CanvasNode } from "../../canvas-node";
+import {CanvasImageNode} from "../../canvas-image-node";
 import { QueueCanvasComponentProperties } from "../../queue-canvas-component-properties";
 import {RightPort} from "../../ports/right-port";
 
-export class CanvasSourceNode extends CanvasNode {
+export class CanvasSourceNode extends CanvasImageNode {
     constructor(properties: QueueCanvasComponentProperties) {
         const image = require("assets/queue-components/source.png");
         super({

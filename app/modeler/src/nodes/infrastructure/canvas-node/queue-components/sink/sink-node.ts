@@ -1,8 +1,8 @@
-import {CanvasNode} from "../../canvas-node";
+import {CanvasImageNode} from "../../canvas-image-node";
 import {QueueCanvasComponentProperties} from "../../queue-canvas-component-properties";
 import {LeftPort} from "../../ports/left-port";
 
-export class CanvasSinkNode extends CanvasNode {
+export class CanvasSinkNode extends CanvasImageNode {
     constructor(properties: QueueCanvasComponentProperties) {
         const image = require("assets/queue-components/sink.png");
         super({

@@ -15,7 +15,7 @@
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Model Entity" plain block>
+        <hint-button tip-color="grey" color="transparent" tip-text="Model Entity" plain block  @click="()=>createNode(nodeCreatorType.ENTITY_EMITTER)">
           <v-img :src="require('@/assets/queue-components/model-entity.png')" max-width="13px"></v-img>
         </hint-button>
       </v-list-item>
