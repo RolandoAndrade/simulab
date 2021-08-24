@@ -1,8 +1,19 @@
 import { Module } from 'vuex';
 import {BuilderState} from "@/components/simulation/store/builder/builder.state";
 import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
-import {Board, CanvasBoard, CanvasNode, ModelerEvents, Path, SelectedNodeEvent} from "modeler";
+import {
+    Board,
+    CanvasBoard,
+    CanvasNode,
+    EntityProperty,
+    ModelerEvents,
+    NodeCreatorType,
+    Path,
+    SelectedNodeEvent
+} from "modeler";
 import {BoardMode} from "modeler/boards/domain/board-mode";
+import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
+import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 
 export const builderStore: Module<BuilderState, undefined> = {
     namespaced: true,
@@ -37,6 +48,40 @@ export const builderStore: Module<BuilderState, undefined> = {
             state.board!.onEvent(ModelerEvents.SELECTED_NODE, (event: SelectedNodeEvent) => {
                 commit(BuilderMethods.MUTATIONS.SET_SELECTED, event.node);
             })
+        },
+        [BuilderMethods.ACTIONS.CHANGE_MODE]({state}, mode: BoardMode){
+            state.board!.setMode(mode);
+        },
+        [BuilderMethods.ACTIONS.CREATE_NODE]({state}, event: DropItemEvent){
+            let properties: EntityProperty[] = [{
+                propertyName: "Name",
+                propertyValue: "Whatever",
+                type: "STRING"
+            }]
+            switch (event.node) {
+                case NodeCreatorType.SOURCE:
+                    properties = [
+                        {
+                            propertyName: "Name",
+                            propertyValue: "Source",
+                            type: "STRING"
+                        },
+                        {
+                            propertyName: "Interarrival time",
+                            propertyValue: 1,
+                            type: "EXPRESSION"
+                        },
+                        {
+                            propertyName: "Entities per arrival",
+                            propertyValue: 1,
+                            type: "EXPRESSION"
+                        },
+                    ]
+            }
+            state.board!.createNode(graphFactory.createNodeCreator(event.node, {
+                name: properties[0].propertyValue,
+                properties
+            }), event.x, event.y)
         }
     }
 }

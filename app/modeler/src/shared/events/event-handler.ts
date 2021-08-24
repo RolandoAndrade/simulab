@@ -3,7 +3,11 @@ import { ModelerEvents } from "./modeler.events";
 export class EventHandler {
     private events: {
         [event: string]: Set<(params: any) => void>
-    } = {}
+    }
+
+    constructor() {
+        this.events = {}
+    }
 
     public emit(message: ModelerEvents, params: any) {
         for(const call of this.events[message]) {

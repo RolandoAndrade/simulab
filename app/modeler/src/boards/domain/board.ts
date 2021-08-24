@@ -2,7 +2,7 @@ import {GraphNode} from "../../nodes/domain";
 import {Edge} from "../../edge";
 import {NodeCreator} from "../../nodes/domain/node-creator";
 import {BoardMode} from "./board-mode";
-import {EventHandler} from "../../shared";
+import {EventHandler} from "../../shared/events/event-handler";
 
 
 export abstract class Board extends EventHandler {

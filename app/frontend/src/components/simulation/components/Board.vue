@@ -14,6 +14,10 @@ import {Board as MainBoard} from "modeler/boards/domain/board";
 import {eventBus} from "@/components/shared/domain/event-bus";
 import {BoardMode} from "modeler/boards/domain/board-mode";
 import {EntityProperty} from "modeler";
+import {builderStore} from "@/components/simulation/store/builder/builder.store";
+import {builder} from "@/components/simulation/store/namespaces";
+import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
+import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
 
 
 @Component({
@@ -25,52 +29,30 @@ export default class Board extends Vue {
   mounted(){
     const container = document.getElementById("graph-container");
     this.$nextTick(()=>{
-      this.board = graphFactory.createBoard(container!);
-    })
-    eventBus.$on(eventBus.CREATE_NODE, this.createNode.bind(this))
-    eventBus.$on(eventBus.CHANGE_MODE, (mode: BoardMode)=>{
-      this.board.setMode(mode)
+      this.startBoard(container!);
     })
   }
 
   createNode(nodeCreatorType: NodeCreatorType, x?: number, y?: number){
-    let properties: EntityProperty[] = [{
-      propertyName: "Name",
-      propertyValue: "Whatever",
-      type: "STRING"
-    }]
-    switch (nodeCreatorType) {
-      case NodeCreatorType.SOURCE:
-        properties = [
-          {
-            propertyName: "Name",
-            propertyValue: "Source",
-            type: "STRING"
-          },
-          {
-            propertyName: "Interarrival time",
-            propertyValue: 1,
-            type: "EXPRESSION"
-          },
-          {
-            propertyName: "Entities per arrival",
-            propertyValue: 1,
-            type: "EXPRESSION"
-          },
-        ]
-    }
-    this.board.createNode(graphFactory.createNodeCreator(nodeCreatorType, {
-      name: properties[0].propertyValue,
-      properties
-    }), x, y)
+
   }
 
-  drop(event: DragEvent){
+  drop(event: DragEvent) {
     const type: NodeCreatorType = event.dataTransfer!.getData("nodeCreatorType") as NodeCreatorType;
     if (!!type) {
-      this.createNode(type, event.offsetX, event.offsetY);
+      this.dropCreateNode({
+        node: type,
+        x: event.offsetX,
+        y: event.offsetY
+      });
     }
   }
+
+  @builder.Action(BuilderMethods.ACTIONS.START_BOARD)
+  startBoard!: (board: HTMLElement) => void;
+
+  @builder.Action(BuilderMethods.ACTIONS.CREATE_NODE)
+  dropCreateNode!: (event: DropItemEvent) => void;
 }
 </script>
 

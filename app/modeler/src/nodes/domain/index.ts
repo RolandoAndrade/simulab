@@ -1,5 +1,5 @@
 import { GraphNode } from "./graph-node";
-import { NodeCreator } from "./node-creator";
+import { NodeCreator, NodeCreatorType } from "./node-creator";
 import { NodeProperties } from "./node-properties";
 
-export { GraphNode, NodeProperties, NodeCreator };
+export { GraphNode, NodeProperties, NodeCreator, NodeCreatorType };
