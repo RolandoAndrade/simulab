@@ -1,4 +1,4 @@
-import { GraphNode } from "../../nodes/domain";
+import {GraphNode} from "../../nodes/domain";
 import {Edge} from "../../edge";
 import {NodeCreator} from "../../nodes/domain/node-creator";
 import {BoardMode} from "./board-mode";
@@ -9,6 +9,7 @@ export abstract class Board {
     protected paths: Edge[]
     protected isCreatingPathEnable: boolean = false;
     protected isDeletingEnable: boolean = false;
+    protected currentMode: BoardMode = BoardMode.DEFAULT_MODE;
 
     protected constructor(protected container: HTMLElement) {
         this.nodes = [];
@@ -35,6 +36,14 @@ export abstract class Board {
         modes[value] = true;
         this.isCreatingPathEnable = modes[BoardMode.CREATING_PATH_MODE];
         this.isDeletingEnable = modes[BoardMode.ERASING_MODE];
+        this.currentMode = value;
+    }
+
+    /**
+     * @description Gets the mode of the board.
+     * */
+    public getMode(): BoardMode {
+        return this.currentMode;
     }
 
     /**
