@@ -1,4 +1,4 @@
-import { Module } from 'vuex';
+import {Module} from 'vuex';
 import {BuilderState} from "@/components/simulation/store/builder/builder.state";
 import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
 import {
@@ -27,7 +27,11 @@ export const builderStore: Module<BuilderState, undefined> = {
             return state.board!;
         },
         [BuilderMethods.GETTERS.GET_BOARD_MODE](state): BoardMode {
-            return state.board!.getMode();
+            try {
+                return state.board!.getMode();
+            } catch (e){
+                return BoardMode.DEFAULT_MODE
+            }
         },
         [BuilderMethods.GETTERS.GET_SELECTED](state): Path | CanvasNode | undefined {
             return state.selected;

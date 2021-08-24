@@ -27,7 +27,10 @@ import Component from 'vue-class-component';
 import {ModelerEvents} from "modeler/shared/events/modeler.events";
 import {SelectedNodeEvent} from "modeler/shared/events/selected-node.event";
 import {SelectedPathEvent} from "modeler/shared/events/selected-path.event";
-import {EntityProperty} from "modeler";
+import {Edge, EntityProperty, GraphNode} from "modeler";
+import {builder} from "@/components/simulation/store/namespaces";
+import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
+import {Watch} from "vue-property-decorator";
 
 
 @Component({
@@ -43,18 +46,6 @@ export default class PropertyBar extends Vue {
   mounted(){
     this.setBorderWidth()
     this.setEvents();
-    const container = document.getElementById("graph-container")!;
-    this.$nextTick(()=>{
-      container.addEventListener(ModelerEvents.SELECTED_NODE, (event: any) => {
-        const nodeSelection: SelectedNodeEvent = event.detail;
-        this.properties = nodeSelection.node.getEntity().properties;
-      })
-
-      container.addEventListener(ModelerEvents.SELECTED_PATH, (event: any) => {
-        const nodeSelection: SelectedPathEvent = event.detail;
-        this.properties = nodeSelection.path.getEntity().properties;
-      })
-    })
   }
 
   setBorderWidth() {
@@ -113,6 +104,18 @@ export default class PropertyBar extends Vue {
     { text: 'Value', value: 'propertyValue' },
   ];
   properties: EntityProperty[] = []
+
+  @Watch("selectedNode")
+  onSelectedNodeChanged() {
+    if (!!this.selectedNode) {
+      this.properties = this.selectedNode.getEntity().properties
+    } else {
+      this.properties = [];
+    }
+  }
+
+  @builder.Getter(BuilderMethods.GETTERS.GET_SELECTED)
+  selectedNode!: Edge | GraphNode | undefined;
 }
 </script>
 

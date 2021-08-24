@@ -13,7 +13,8 @@ export class CanvasEntityEmitterNode extends CanvasNode {
 
     draw() {
         this.ctx.save();
-        this.ctx.fillStyle = this.properties.color;
+        this.ctx.fillStyle = this.properties.color || "#000";
+        this.ctx.strokeStyle = this.isSelected ? 'purple': this.properties.color || "#000";
         this.ctx.beginPath();
         this.ctx.lineJoin = "round";
         this.ctx.lineWidth = 8;

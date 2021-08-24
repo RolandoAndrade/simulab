@@ -1,7 +1,5 @@
-import { GraphNode } from "../../domain";
 import { CanvasImageNodeProperties } from "./canvas-image-node-properties";
 import {roundedRect} from "../../../shared/functions/canvas.functions";
-import {CanvasPortManager} from "./ports/canvas-port-manager";
 import {CanvasNode} from "./canvas-node";
 
 export abstract class CanvasImageNode extends CanvasNode {

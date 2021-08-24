@@ -8,13 +8,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
 import {Board as MainBoard} from "modeler/boards/domain/board";
-import {eventBus} from "@/components/shared/domain/event-bus";
-import {BoardMode} from "modeler/boards/domain/board-mode";
-import {EntityProperty} from "modeler";
-import {builderStore} from "@/components/simulation/store/builder/builder.store";
 import {builder} from "@/components/simulation/store/namespaces";
 import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
 import {DropItemEvent} from "@/components/shared/domain/drop-item-event";

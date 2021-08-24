@@ -10,7 +10,7 @@
         </v-subheader>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Path" plain block @click="()=>createPath()">
+        <hint-button tip-color="grey" color="transparent" tip-text="Path" :plain="!isCreatingPathModeEnabled" class-style="elevation-0" block @click="()=>createPath()">
           <v-img :src="require('@/assets/queue-components/path.png')" width="30px"></v-img>
         </hint-button>
       </v-list-item>
@@ -50,7 +50,7 @@
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Delete" plain block @click="()=>eraseMode()">
+        <hint-button tip-color="grey" color="transparent" tip-text="Delete" :plain="!isDeletingModeEnabled" class-style="elevation-0" block @click="()=>eraseMode()">
           <v-img :src="require('@/assets/queue-components/eraser.png')" width="20px"></v-img>
         </hint-button>
       </v-list-item>
@@ -63,9 +63,11 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import TooltipButton from "@/components/shared/components/buttons/TooltipButton.vue";
 import HintButton from "@/components/shared/components/buttons/HintButton.vue";
-import {eventBus} from "@/components/shared/domain/event-bus";
 import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
 import {BoardMode} from "../../../../../modeler/src/boards/domain/board-mode";
+import {builder} from "@/components/simulation/store/namespaces";
+import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
+import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
 
 @Component({
   name: 'items-bar',
@@ -78,20 +80,39 @@ export default class ItemsBar extends Vue {
   }
 
   createNode(type: NodeCreatorType){
-    eventBus.$emit(eventBus.CREATE_NODE, type)
+    this.createNodeRequest({
+      node: type
+    })
   }
 
   createPath(){
-    eventBus.$emit(eventBus.CHANGE_MODE, BoardMode.CREATING_PATH_MODE);
+    this.changeModeRequest(BoardMode.CREATING_PATH_MODE)
   }
 
   eraseMode(){
-    eventBus.$emit(eventBus.CHANGE_MODE, BoardMode.ERASING_MODE);
+    this.changeModeRequest(BoardMode.ERASING_MODE)
   }
 
   dragStart(event: DragEvent, type: NodeCreatorType){
     event.dataTransfer!.setData("nodeCreatorType", type)
   }
+
+  get isDeletingModeEnabled() {
+    return this.getBoardMode === BoardMode.ERASING_MODE
+  }
+
+  get isCreatingPathModeEnabled() {
+    return this.getBoardMode === BoardMode.CREATING_PATH_MODE
+  }
+
+  @builder.Action(BuilderMethods.ACTIONS.CREATE_NODE)
+  createNodeRequest!: (params: DropItemEvent) => void;
+
+  @builder.Action(BuilderMethods.ACTIONS.CHANGE_MODE)
+  changeModeRequest!: (mode: BoardMode) => void;
+
+  @builder.Getter(BuilderMethods.GETTERS.GET_BOARD_MODE)
+  getBoardMode!: BoardMode;
 }
 </script>
 
