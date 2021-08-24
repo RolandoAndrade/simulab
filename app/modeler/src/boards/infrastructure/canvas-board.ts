@@ -82,11 +82,9 @@ export class CanvasBoard extends Board {
                     this.selectedPath = undefined;
                 }
                 this.selectedNode = node.select() as CanvasNode;
-                this.container.dispatchEvent(new CustomEvent<SelectedNodeEvent>(ModelerEvents.SELECTED_NODE, {
-                    detail: {
-                        node
-                    }
-                }))
+                this.emit(ModelerEvents.SELECTED_NODE, {
+                    node
+                })
                 this.draw();
                 return;
             }
@@ -96,17 +94,15 @@ export class CanvasBoard extends Board {
             this.draw();
             this.selectedNode = undefined;
         }
-        this.container.dispatchEvent(new CustomEvent<SelectedNodeEvent>(ModelerEvents.SELECTED_NODE, {
-            detail: {
-                node: {
-                    getEntity() {
-                        return {
-                            properties: []
-                        }
+        this.emit(ModelerEvents.SELECTED_NODE, {
+            node: {
+                getEntity() {
+                    return {
+                        properties: []
                     }
-                } as GraphNode
+                }
             }
-        }))
+        })
     }
 
     private selectPath(){
@@ -117,11 +113,9 @@ export class CanvasBoard extends Board {
                     this.selectedPath.unselect();
                 }
                 this.selectedPath = path.select() as Path;
-                this.container.dispatchEvent(new CustomEvent<SelectedPathEvent>(ModelerEvents.SELECTED_PATH, {
-                    detail: {
-                        path
-                    }
-                }))
+                this.emit(ModelerEvents.SELECTED_NODE, {
+                    node: path
+                })
                 this.draw();
                 return;
             }

@@ -2,9 +2,10 @@ import {GraphNode} from "../../nodes/domain";
 import {Edge} from "../../edge";
 import {NodeCreator} from "../../nodes/domain/node-creator";
 import {BoardMode} from "./board-mode";
+import {EventHandler} from "../../shared";
 
 
-export abstract class Board {
+export abstract class Board extends EventHandler {
     protected nodes: GraphNode[];
     protected paths: Edge[]
     protected isCreatingPathEnable: boolean = false;
@@ -12,6 +13,7 @@ export abstract class Board {
     protected currentMode: BoardMode = BoardMode.DEFAULT_MODE;
 
     protected constructor(protected container: HTMLElement) {
+        super();
         this.nodes = [];
         this.paths = [];
     }
