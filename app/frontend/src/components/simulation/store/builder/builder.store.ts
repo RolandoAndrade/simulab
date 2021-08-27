@@ -71,7 +71,6 @@ export const builderStore: Module<BuilderState, undefined> = {
         },
         [BuilderMethods.ACTIONS.CREATE_NODE]({state}, event: DropItemEvent){
             (this as any)._vm.$socket.emit("CREATE_NODE", event);
-            console.log("entro")
             let properties: EntityProperty[] = [{
                 propertyName: "Name",
                 propertyValue: "Whatever",
