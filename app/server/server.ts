@@ -24,7 +24,9 @@ console.log('ZMQ sub connected to port 4000');
 
 //Connect to SocketIO
 io.on('connection', function(socket) {
-    console.log('a user connected');
+    socket.on('CREATE_NODE', (data)=>{
+        console.log({data})
+    })
 })
 
 //Create a function that will get triggered by ZeroMQ. Data is the binary stream that is recieved by ZeroMQ.
@@ -39,14 +41,6 @@ function trigger(data) {
 
 //Connect your triggerfunction and zeromq.
 sock.on('message', trigger)
-
-io.on('CREATE_NODE', (data)=>{
-    console.log({data})
-})
-
-io.on('message', (data)=>{
-    console.log({data})
-})
 
 server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
