@@ -44,6 +44,16 @@ export const builderStore: Module<BuilderState, undefined> = {
         },
         [BuilderMethods.MUTATIONS.SET_SELECTED](state, selection: Path | CanvasNode | undefined) {
             state.selected = selection;
+        },
+        [BuilderMethods.MUTATIONS.SET_PROPERTY](state, property: EntityProperty) {
+            const properties = state.selected!.getEntity().properties;
+            for (let i = 0; i < properties.length; i++){
+                if (properties[i].propertyName == property.propertyName) {
+                    properties[i] = property;
+                    break;
+                }
+            }
+
         }
     },
     actions: {
@@ -55,6 +65,9 @@ export const builderStore: Module<BuilderState, undefined> = {
         },
         [BuilderMethods.ACTIONS.CHANGE_MODE]({state}, mode: BoardMode){
             state.board!.setMode(mode);
+        },
+        [BuilderMethods.ACTIONS.CHANGE_PROPERTY]({commit}, property: EntityProperty){
+            commit(BuilderMethods.MUTATIONS.SET_PROPERTY, property)
         },
         [BuilderMethods.ACTIONS.CREATE_NODE]({state}, event: DropItemEvent){
             let properties: EntityProperty[] = [{

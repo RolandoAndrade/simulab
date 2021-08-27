@@ -6,11 +6,13 @@ export const BuilderMethods = {
     },
     MUTATIONS: {
         SET_CONTAINER: "SET_CONTAINER",
-        SET_SELECTED: "SET_SELECTED"
+        SET_SELECTED: "SET_SELECTED",
+        SET_PROPERTY: "SET_PROPERTY"
     },
     ACTIONS: {
         START_BOARD: "START_BOARD",
         CREATE_NODE: "CREATE_NODE",
-        CHANGE_MODE: "CHANGE_MODE"
+        CHANGE_MODE: "CHANGE_MODE",
+        CHANGE_PROPERTY: "CHANGE_PROPERTY"
     }
 }
