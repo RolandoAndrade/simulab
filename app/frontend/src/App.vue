@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <v-snackbar :timeout="5000" v-model="showMessage" :color="color" top>{{message}}</v-snackbar>
     <router-view/>
   </v-app>
 </template>
@@ -11,9 +12,25 @@ export default Vue.extend({
   name: 'App',
 
   data: () => ({
-    //
+    message: "",
+    color: "",
+    showMessage: false
   }),
-});
+
+  sockets: {
+    disconnect() {
+      this.color = "error"
+      this.message = "You are disconnected"
+      this.showMessage = true;
+    },
+    reconnect() {
+      this.color = "primary"
+      this.message = "Connection reestablished"
+      this.showMessage = true;
+      console.log('socket connected')
+    },
+  } as any
+} as any);
 </script>
 
 <style>

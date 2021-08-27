@@ -14,6 +14,7 @@ import {
 import {BoardMode} from "modeler/boards/domain/board-mode";
 import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
 import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
+import {socketConnection} from "@/main";
 
 export const builderStore: Module<BuilderState, undefined> = {
     namespaced: true,
@@ -53,7 +54,6 @@ export const builderStore: Module<BuilderState, undefined> = {
                     break;
                 }
             }
-
         }
     },
     actions: {
@@ -70,6 +70,7 @@ export const builderStore: Module<BuilderState, undefined> = {
             commit(BuilderMethods.MUTATIONS.SET_PROPERTY, property)
         },
         [BuilderMethods.ACTIONS.CREATE_NODE]({state}, event: DropItemEvent){
+            this._vm.$socket.emit("CREATE_NODE", event);
             let properties: EntityProperty[] = [{
                 propertyName: "Name",
                 propertyValue: "Whatever",
