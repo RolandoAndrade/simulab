@@ -70,7 +70,7 @@ export const builderStore: Module<BuilderState, undefined> = {
             commit(BuilderMethods.MUTATIONS.SET_PROPERTY, property)
         },
         [BuilderMethods.ACTIONS.CREATE_NODE]({state}, event: DropItemEvent){
-            (this as any)._vm.$socket.emit("CREATE_NODE", event);
+            socketConnection.emit("CREATE_NODE", event);
             let properties: EntityProperty[] = [{
                 propertyName: "Name",
                 propertyValue: "Whatever",
