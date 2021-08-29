@@ -14,7 +14,7 @@ export abstract class Edge {
             properties: [{
                 propertyName: "Weight",
                 propertyValue: 1,
-                type: "Expression"
+                propertyType: "Expression"
             }]
         }
     }

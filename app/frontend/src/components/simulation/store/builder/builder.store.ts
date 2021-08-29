@@ -70,36 +70,13 @@ export const builderStore: Module<BuilderState, undefined> = {
             commit(BuilderMethods.MUTATIONS.SET_PROPERTY, property)
         },
         [BuilderMethods.ACTIONS.CREATE_NODE]({state}, event: DropItemEvent){
-            socketConnection.emit("CREATE_NODE", event);
-            let properties: EntityProperty[] = [{
-                propertyName: "Name",
-                propertyValue: "Whatever",
-                type: "STRING"
-            }]
-            switch (event.node) {
-                case NodeCreatorType.SOURCE:
-                    properties = [
-                        {
-                            propertyName: "Name",
-                            propertyValue: "Source",
-                            type: "STRING"
-                        },
-                        {
-                            propertyName: "Interarrival time",
-                            propertyValue: 1,
-                            type: "EXPRESSION"
-                        },
-                        {
-                            propertyName: "Entities per arrival",
-                            propertyValue: 1,
-                            type: "EXPRESSION"
-                        },
-                    ]
-            }
-            state.board!.createNode(graphFactory.createNodeCreator(event.node, {
-                name: properties[0].propertyValue,
-                properties
-            }), event.x, event.y)
+            socketConnection.emit("create_node", event, (properties: EntityProperty[])=>{
+                console.log(properties)
+                state.board!.createNode(graphFactory.createNodeCreator(event.node, {
+                    name: properties[0].propertyValue,
+                    properties
+                }), event.x, event.y)
+            });
         }
     }
 }

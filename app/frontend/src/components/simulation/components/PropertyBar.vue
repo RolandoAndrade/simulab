@@ -13,9 +13,9 @@
           no-data-text="No properties available"
       >
         <template v-slot:item.propertyValue="{ item }">
-          <v-text-field @change="()=>propertyChanged(item)" v-model="item.propertyValue"  :placeholder="item.propertyName" outlined dense hide-details v-if="item.type === 'STRING'"></v-text-field>
-          <v-autocomplete @change="()=>propertyChanged(item)" v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.type === 'EXPRESSION'"></v-autocomplete>
-          <v-select @change="()=>propertyChanged(item)" v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.type === 'BOOLEAN'" :items="['True', 'False']"></v-select>
+          <v-text-field @change="()=>propertyChanged(item)" v-model="item.propertyValue"  :placeholder="item.propertyName" outlined dense hide-details v-if="item.propertyType === 'STRING' || item.propertyType === 'ANY'"></v-text-field>
+          <v-combobox @change="()=>propertyChanged(item)" v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.propertyType === 'EXPRESSION'"></v-combobox>
+          <v-select @change="()=>propertyChanged(item)" v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.propertyType === 'BOOLEAN'" :items="['True', 'False']"></v-select>
         </template>
       </v-data-table>
   </v-navigation-drawer>
