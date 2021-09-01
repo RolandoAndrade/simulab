@@ -9,7 +9,8 @@ import {
     ModelerEvents,
     NodeCreatorType,
     Path,
-    SelectedNodeEvent
+    SelectedNodeEvent,
+    PathCreatedEvent
 } from "modeler";
 import {BoardMode} from "modeler/boards/domain/board-mode";
 import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
@@ -57,11 +58,23 @@ export const builderStore: Module<BuilderState, undefined> = {
         }
     },
     actions: {
-        [BuilderMethods.ACTIONS.START_BOARD]({state, commit}, container: HTMLCanvasElement){
+        [BuilderMethods.ACTIONS.START_BOARD]({state, commit, dispatch}, container: HTMLCanvasElement){
             commit(BuilderMethods.MUTATIONS.SET_CONTAINER, container);
             state.board!.onEvent(ModelerEvents.SELECTED_NODE, (event: SelectedNodeEvent) => {
                 commit(BuilderMethods.MUTATIONS.SET_SELECTED, event.node);
             })
+            state.board!.onEvent(ModelerEvents.PATH_CREATED, (event: PathCreatedEvent) => {
+                dispatch(BuilderMethods.ACTIONS.CREATE_PATH, event)
+            })
+        },
+        [BuilderMethods.ACTIONS.CREATE_PATH]({state}, event: PathCreatedEvent){
+            const {path} = event;
+            socketConnection.emit("create_path", {
+                from: path.fromNode.getEntity().name,
+                to: (path.toNode as any).getEntity().name
+            }, (properties: EntityProperty[])=>{
+                path.getEntity().properties = properties
+            });
         },
         [BuilderMethods.ACTIONS.CHANGE_MODE]({state}, mode: BoardMode){
             state.board!.setMode(mode);
@@ -71,7 +84,6 @@ export const builderStore: Module<BuilderState, undefined> = {
         },
         [BuilderMethods.ACTIONS.CREATE_NODE]({state}, event: DropItemEvent){
             socketConnection.emit("create_node", event, (properties: EntityProperty[])=>{
-                console.log(properties)
                 state.board!.createNode(graphFactory.createNodeCreator(event.node, {
                     name: properties[0].propertyValue,
                     properties

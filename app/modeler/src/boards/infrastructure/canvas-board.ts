@@ -215,7 +215,11 @@ export class CanvasBoard extends Board {
         for (const node of rNodes) {
             const port = node.portManager.containsDestinationPoint(event.x, event.y);
             if (port) {
-                this.paths.push(new Path(this.ctx, this.createdPath!.portStart, port));
+                const createdPath = new Path(this.ctx, this.createdPath!.portStart, port)
+                this.paths.push(createdPath);
+                this.emit(ModelerEvents.PATH_CREATED, {
+                    path: createdPath
+                })
                 break;
             }
         }

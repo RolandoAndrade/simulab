@@ -13,6 +13,7 @@ export const BuilderMethods = {
         START_BOARD: "START_BOARD",
         CREATE_NODE: "CREATE_NODE",
         CHANGE_MODE: "CHANGE_MODE",
-        CHANGE_PROPERTY: "CHANGE_PROPERTY"
+        CHANGE_PROPERTY: "CHANGE_PROPERTY",
+        CREATE_PATH: "CREATE_PATH"
     }
 }
