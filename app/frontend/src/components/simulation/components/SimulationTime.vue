@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="date-selector">
-      <v-text-field class="caption mx-1" outlined dense hide-details label="Starting time" type="datetime-local" v-model="startDate"></v-text-field>
+      <v-text-field class="caption mx-1" outlined dense hide-details label="Starting time" type="datetime-local" v-model="params.startingTime"></v-text-field>
     </div>
 
     <div class="date-selector">
@@ -77,6 +77,9 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import {Time} from "@/components/shared/domain/time";
+import {simulation} from "@/components/simulation/store/namespaces";
+import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
+import {SimulationParams} from "@/components/simulation/domain/simulation-params";
 
 @Component({
   name: 'simulation-time',
@@ -104,6 +107,9 @@ export default class SimulationTime extends Vue {
     }
     return this.time.toString()
   }
+
+  @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_PARAMS)
+  params!: SimulationParams;
 }
 </script>
 

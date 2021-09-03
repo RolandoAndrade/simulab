@@ -26,7 +26,7 @@
               thumb-label
               ticks
               hide-details
-              v-model="simulationSpeed"
+              v-model="params.speed"
           ></v-slider>
         </v-card>
 
@@ -69,6 +69,9 @@ import {Prop} from 'vue-property-decorator';
 import TooltipButton from "@/components/shared/components/buttons/TooltipButton.vue";
 import HintButton from "@/components/shared/components/buttons/HintButton.vue";
 import SimulationTime from "@/components/simulation/components/SimulationTime.vue";
+import {simulation} from "@/components/simulation/store/namespaces";
+import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
+import {SimulationParams} from "@/components/simulation/domain/simulation-params";
 
 @Component({
   name: 'simulation-bar',
@@ -77,7 +80,8 @@ import SimulationTime from "@/components/simulation/components/SimulationTime.vu
 export default class SimulationBar extends Vue {
   private simulationRunning = false;
 
-  private simulationSpeed = 1
+  @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_PARAMS)
+  params!: SimulationParams;
 }
 </script>
 

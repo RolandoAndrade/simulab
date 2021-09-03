@@ -29,7 +29,7 @@
 
 
     <v-divider vertical class="mx-1"></v-divider>
-    <v-col>
+    <v-col v-if="showRunning || showPaused">
       <div class="progress-text">{{new Date().toISOString()}} ({{progress}}% completed)</div>
       <v-progress-linear
           buffer-value="0"
@@ -51,7 +51,7 @@ import {Prop} from 'vue-property-decorator';
 })
 export default class StatusBar extends Vue {
   progress: number = 30
-  status: string = "RUNNING";
+  status: string = "STOPPED";
 
   get showPaused(): boolean{
     return this.status === "PAUSED"
