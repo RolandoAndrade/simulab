@@ -1,5 +1,6 @@
 import {Edge} from "../../edge";
 
 export interface PathCreatedEvent {
-    path: Edge
+    path: Edge,
+    onCreated: (path: Edge) => void;
 }

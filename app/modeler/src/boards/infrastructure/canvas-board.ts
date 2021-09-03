@@ -2,13 +2,11 @@ import {Board} from "../domain";
 import {CanvasNode} from "../../nodes/infrastructure/canvas-node";
 import {Point} from "../../shared/types";
 import {Path} from "../../edge";
-import {GraphNode, NodeCreator} from "../../nodes";
+import {NodeCreator} from "../../nodes";
 //@ts-ignore
 import {ResizeObserver} from "resize-observer";
 import {BoardMode} from "../domain/board-mode";
 import {ModelerEvents} from "../../shared/events/modeler.events";
-import {SelectedNodeEvent} from "../../shared/events/selected-node.event";
-import {SelectedPathEvent} from "../../shared/events/selected-path.event";
 
 const deleteCursor = require("assets/cursors/cursor-eraser.png")
 
@@ -153,15 +151,25 @@ export class CanvasBoard extends Board {
             if (!this.selectedNode){
                 this.selectPath()
                 if (this.selectedPath && this.isDeletingEnable) {
-                    this.paths = this.paths.filter((path)=>path!=this.selectedPath)
-                    this.selectedPath = undefined;
-                    this.draw();
+                    this.emit(ModelerEvents.DELETED_COMPONENT, {
+                        component: this.selectedPath,
+                        onDeleted: () => {
+                            this.paths = this.paths.filter((path)=>path!=this.selectedPath)
+                            this.selectedPath = undefined;
+                            this.draw();
+                        }
+                    });
                 }
             } else if (this.isDeletingEnable){
-                this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);
-                this.paths = this.paths.filter((path)=>path.fromNode!=this.selectedNode && path.toNode!=this.selectedNode)
-                this.selectedNode = undefined;
-                this.draw();
+                this.emit(ModelerEvents.DELETED_COMPONENT, {
+                    component: this.selectedNode,
+                    onDeleted: () => {
+                        this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);
+                        this.paths = this.paths.filter((path)=>path.fromNode!=this.selectedNode && path.toNode!=this.selectedNode)
+                        this.selectedNode = undefined;
+                        this.draw();
+                    }
+                });
             }
         }
 
@@ -216,9 +224,12 @@ export class CanvasBoard extends Board {
             const port = node.portManager.containsDestinationPoint(event.x, event.y);
             if (port) {
                 const createdPath = new Path(this.ctx, this.createdPath!.portStart, port)
-                this.paths.push(createdPath);
                 this.emit(ModelerEvents.PATH_CREATED, {
-                    path: createdPath
+                    path: createdPath,
+                    onCreated: (path: Path) => {
+                        this.paths.push(path);
+                        this.draw();
+                    }
                 })
                 break;
             }

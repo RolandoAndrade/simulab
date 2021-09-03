@@ -35,16 +35,6 @@
         </hint-button>
       </v-list-item>
       <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Separator" plain block>
-          <v-img :src="require('@/assets/queue-components/separator.png')" width="30px"></v-img>
-        </hint-button>
-      </v-list-item>
-      <v-list-item class="pa-2">
-        <hint-button tip-color="grey" color="transparent" tip-text="Combinator" plain block>
-          <v-img :src="require('@/assets/queue-components/combinator.png')" width="30px"></v-img>
-        </hint-button>
-      </v-list-item>
-      <v-list-item class="pa-2">
         <hint-button tip-color="grey" color="transparent" tip-text="Label" plain block>
           <v-img :src="require('@/assets/queue-components/label.png')" width="30px"></v-img>
         </hint-button>

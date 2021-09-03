@@ -10,7 +10,8 @@ import {
     NodeCreatorType,
     Path,
     SelectedNodeEvent,
-    PathCreatedEvent
+    PathCreatedEvent,
+    DeletedComponentEvent
 } from "modeler";
 import {BoardMode} from "modeler/boards/domain/board-mode";
 import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
@@ -66,6 +67,19 @@ export const builderStore: Module<BuilderState, undefined> = {
             state.board!.onEvent(ModelerEvents.PATH_CREATED, (event: PathCreatedEvent) => {
                 dispatch(BuilderMethods.ACTIONS.CREATE_PATH, event)
             })
+            state.board!.onEvent(ModelerEvents.DELETED_COMPONENT, (event: DeletedComponentEvent) => {
+                dispatch(BuilderMethods.ACTIONS.DELETE_COMPONENT, event)
+            })
+        },
+        [BuilderMethods.ACTIONS.DELETE_COMPONENT]({state}, event: DeletedComponentEvent){
+            const {component} = event;
+            socketConnection.emit("remove_component", {
+                component: component.getEntity().name
+            }, (result: boolean)=>{
+                if (result) {
+                    event.onDeleted()
+                }
+            });
         },
         [BuilderMethods.ACTIONS.CREATE_PATH]({state}, event: PathCreatedEvent){
             const {path} = event;
@@ -73,7 +87,9 @@ export const builderStore: Module<BuilderState, undefined> = {
                 from: path.fromNode.getEntity().name,
                 to: (path.toNode as any).getEntity().name
             }, (properties: EntityProperty[])=>{
-                path.getEntity().properties = properties
+                path.entity.properties = properties;
+                path.entity.name = properties[0].propertyValue
+                event.onCreated(path)
             });
         },
         [BuilderMethods.ACTIONS.CHANGE_MODE]({state}, mode: BoardMode){
