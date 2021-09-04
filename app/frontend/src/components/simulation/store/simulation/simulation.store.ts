@@ -4,6 +4,8 @@ import {SimulationStatus} from "@/components/simulation/domain/simulation-status
 import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
 import {SimulationStats} from "@/components/simulation/domain/simulation-stats";
 import {SimulationParams} from "@/components/simulation/domain/simulation-params";
+import {socketConnection} from "@/main";
+import {millisConverter} from "@/components/shared/domain/millis-converter";
 
 export const simulationStore: Module<SimulationState, undefined> = {
     namespaced: true,
@@ -42,5 +44,21 @@ export const simulationStore: Module<SimulationState, undefined> = {
         [SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS](state, simulationStatus: SimulationStatus): void {
             state.simulatorStatus = simulationStatus
         }
+    },
+
+    actions: {
+        [SimulationMethods.ACTIONS.START_SIMULATION]({state}): void {
+            const params = state.simulationParams;
+            const startTime = millisConverter(params.startingTime);
+            const endingTime = millisConverter(params.endingTime, startTime);
+            const stopTime = Math.max(endingTime - startTime, 0) / 1000;
+            socketConnection.emit("start_simulation", {
+                stopTime
+            })
+        },
+        [SimulationMethods.ACTIONS.SOCKET_SIMULATION_STATUS]({state}, data): void {
+            console.log("entro")
+            console.log({data})
+        },
     },
 }

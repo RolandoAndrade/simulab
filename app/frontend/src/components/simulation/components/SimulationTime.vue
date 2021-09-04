@@ -75,7 +75,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import {Prop} from 'vue-property-decorator';
+import {Prop, Watch} from 'vue-property-decorator';
 import {Time} from "@/components/shared/domain/time";
 import {simulation} from "@/components/simulation/store/namespaces";
 import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
@@ -106,6 +106,11 @@ export default class SimulationTime extends Vue {
       return this.endDate;
     }
     return this.time.toString()
+  }
+
+  @Watch("endingDate")
+  onEndingDateChange(value: string){
+    this.params.endingTime = this.endingDate;
   }
 
   @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_PARAMS)

@@ -31,7 +31,7 @@
         </v-card>
 
         <v-divider vertical class="mx-2"></v-divider>
-        <hint-button tip-color="primary" color="primary" tip-text="Play" outlined :disabled="simulationRunning" fab x-small class-style="mx-1">
+        <hint-button tip-color="primary" color="primary" tip-text="Play" outlined :disabled="simulationRunning" fab x-small class-style="mx-1" @click="startSimulation">
           <v-icon color="primary">
             mdi-play
           </v-icon>
@@ -82,6 +82,9 @@ export default class SimulationBar extends Vue {
 
   @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_PARAMS)
   params!: SimulationParams;
+
+  @simulation.Action(SimulationMethods.ACTIONS.START_SIMULATION)
+  startSimulation!: () => void;
 }
 </script>
 
