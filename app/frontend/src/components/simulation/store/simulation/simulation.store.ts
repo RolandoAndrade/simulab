@@ -56,9 +56,8 @@ export const simulationStore: Module<SimulationState, undefined> = {
                 stopTime
             })
         },
-        [SimulationMethods.ACTIONS.SOCKET_SIMULATION_STATUS]({state}, data): void {
-            console.log("entro")
-            console.log({data})
+        [SimulationMethods.ACTIONS.SOCKET_SIMULATION_STATUS]({state, commit}, data): void {
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATION_STATS, data)
         },
     },
 }
