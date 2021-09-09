@@ -1,22 +1,23 @@
 import {Entity, Point} from "../../../../../shared";
 import {CanvasNode} from "../../canvas-node";
+import {CanvasQueue} from "../../queues/canvas-queue";
 
 export class CanvasEntity extends CanvasNode {
-    constructor(entity: Entity, private node: CanvasNode) {
+    constructor(entity: Entity, private queue: CanvasQueue) {
         super({
             width: Math.sqrt(3) * 30 /2,
             height: 30,
             entity,
             id: entity.name, padding: 0,
-            x: node.position.x,
-            y: node.position.y,
-            ctx: node.ctx,
+            x: queue.position.x,
+            y: queue.position.y,
+            ctx: queue.ctx,
             color: "#888"
         });
     }
 
     get position(): Point {
-        return this.node.position
+        return this.queue.position
     }
 
     draw(): void {
