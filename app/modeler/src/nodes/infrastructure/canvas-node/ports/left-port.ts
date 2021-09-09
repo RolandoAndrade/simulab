@@ -1,6 +1,7 @@
 import { CanvasPort } from "./index";
 import { CanvasNode } from "../canvas-node";
 import {Point} from "../../../../shared";
+import {InputQueue} from "../queues";
 
 export class LeftPort extends CanvasPort {
     constructor(node: CanvasNode) {
@@ -8,6 +9,7 @@ export class LeftPort extends CanvasPort {
             x: node.position.x - 2 * CanvasPort.MARGIN,
             y: node.position.y + node.dimensions.height / 2,
         });
+        this.queue = new InputQueue(this);
     }
 
     contains(x: number, y: number): boolean {

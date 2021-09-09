@@ -1,6 +1,7 @@
 import { CanvasPort } from "./index";
 import { CanvasNode } from "../canvas-node";
 import {Point} from "../../../../shared";
+import {OutputQueue} from "../queues/";
 
 export class RightPort extends CanvasPort {
     constructor(node: CanvasNode) {
@@ -8,6 +9,7 @@ export class RightPort extends CanvasPort {
             x: node.position.x + node.dimensions.width + 2 * CanvasPort.MARGIN,
             y: node.position.y + node.dimensions.height / 2,
         });
+        this.queue = new OutputQueue(this);
     }
 
     public get position(): Point {

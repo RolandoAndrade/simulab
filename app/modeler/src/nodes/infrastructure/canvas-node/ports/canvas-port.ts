@@ -1,6 +1,7 @@
 import { CanvasNode } from "../canvas-node";
 import {Point} from "../../../../shared";
 import {GraphNode, NodeProperties} from "../../../domain";
+import {CanvasQueue} from "../queues";
 
 export abstract class CanvasPort extends GraphNode {
     protected static readonly COLOR = "#000000";
@@ -12,6 +13,9 @@ export abstract class CanvasPort extends GraphNode {
     protected static readonly PADDING = 5;
     protected static readonly SELECTION_RADIUS = CanvasPort.RADIUS * 1.5;
     public static readonly MARGIN = 10;
+
+
+    protected queue: CanvasQueue
 
     protected constructor(public readonly node: CanvasNode,  position: Point) {
         super({
@@ -43,7 +47,12 @@ export abstract class CanvasPort extends GraphNode {
         return contained;
     }
 
+    public get ctx(): CanvasRenderingContext2D {
+        return this.node.ctx;
+    }
+
     public draw(): void {
+        if (!!this.queue) this.queue.draw();
         this.node.ctx.save();
         this.node.ctx.translate(this.position.x, this.position.y);
         this.node.ctx.rotate(Math.PI / 4);
