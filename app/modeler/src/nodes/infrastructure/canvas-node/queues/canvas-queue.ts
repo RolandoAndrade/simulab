@@ -21,7 +21,9 @@ export abstract class CanvasQueue {
     }
 
     addEntity(entity: Entity) {
-        this.entities.push(new CanvasEntity(entity, this));
+        const e = new CanvasEntity(entity, this);
+        e.move(CanvasQueue.WIDTH - (e.dimensions.width + 10) * this.entities.length, - e.dimensions.height / 2)
+        this.entities.push(e);
     }
 
     removeEntity(id: string) {
