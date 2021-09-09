@@ -30,5 +30,11 @@ export abstract class CanvasQueue {
         this.entities = this.entities.filter((e)=>e.getEntity().name != id)
     }
 
+    protected drawEntities() {
+        for (let i = 0; i < 3 && i < this.entities.length; i++) {
+            this.entities[i].draw();
+        }
+    }
+
     abstract draw(): void;
 }

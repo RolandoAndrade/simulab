@@ -12,10 +12,4 @@ export class OutputQueue extends CanvasQueue {
             CanvasQueue.WIDTH, CanvasQueue.HEIGHT);
         this.drawEntities();
     }
-
-    private drawEntities() {
-        for (let i = 0; i < 3 && i < this.entities.length; i++) {
-            this.entities[i].draw();
-        }
-    }
 }

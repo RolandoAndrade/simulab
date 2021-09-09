@@ -10,5 +10,6 @@ export class InputQueue extends CanvasQueue {
         this.ctx.fillStyle = 'cyan';
         this.ctx.fillRect(this.position.x - CanvasQueue.WIDTH, this.position.y - CanvasQueue.HEIGHT / 2,
             CanvasQueue.WIDTH, CanvasQueue.HEIGHT);
+        this.drawEntities()
     }
 }
