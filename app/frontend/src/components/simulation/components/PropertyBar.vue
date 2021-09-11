@@ -108,21 +108,21 @@ export default class PropertyBar extends Vue {
   @Watch("selectedNode")
   onSelectedNodeChanged() {
     if (!!this.selectedNode) {
-      this.properties = this.selectedNode.getEntity().properties
+      this.properties = this.selectedNode.getEntity().properties.map(e=>({...e}))
     } else {
       this.properties = [];
     }
   }
 
   propertyChanged(property: EntityProperty){
-    console.log(property)
+    this.changeProperty({component: this.selectedNode!, property})
   }
 
   @builder.Getter(BuilderMethods.GETTERS.GET_SELECTED)
   selectedNode!: Edge | GraphNode | undefined;
 
-  @builder.Getter(BuilderMethods.ACTIONS.CHANGE_PROPERTY)
-  changeProperty!: (property: EntityProperty) => void;
+  @builder.Action(BuilderMethods.ACTIONS.CHANGE_PROPERTY)
+  changeProperty!: (data: {component: Edge | GraphNode, property: EntityProperty}) => void;
 }
 </script>
 

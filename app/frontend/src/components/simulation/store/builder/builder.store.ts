@@ -11,7 +11,7 @@ import {
     Path,
     SelectedNodeEvent,
     PathCreatedEvent,
-    DeletedComponentEvent
+    DeletedComponentEvent, Edge, GraphNode
 } from "modeler";
 import {BoardMode} from "modeler/boards/domain/board-mode";
 import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
@@ -104,6 +104,14 @@ export const builderStore: Module<BuilderState, undefined> = {
                     name: properties[0].propertyValue,
                     properties
                 }), event.x, event.y)
+            });
+        },
+        [BuilderMethods.ACTIONS.CHANGE_PROPERTY]({state}, data: {component: Edge | GraphNode, property: EntityProperty}){
+            socketConnection.emit("edit_property", {
+                component: data.component.getEntity().name,
+                property: data.property
+            }, (res: EntityProperty[])=>{
+                data.component.getEntity().properties = res
             });
         }
     }
