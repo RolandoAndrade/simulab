@@ -6,12 +6,13 @@ import {SimulationStats} from "@/components/simulation/domain/simulation-stats";
 import {SimulationParams} from "@/components/simulation/domain/simulation-params";
 import {socketConnection} from "@/main";
 import {millisConverter} from "@/components/shared/domain/millis-converter";
+import {simulation} from "@/components/simulation/store/namespaces";
 
 export const simulationStore: Module<SimulationState, undefined> = {
     namespaced: true,
 
     state: {
-        simulatorStatus: SimulationStatus.FINISHED,
+        simulatorStatus: SimulationStatus.STOPPED,
         simulationStats: {
             time: 0,
             stopTime: 0,
@@ -59,6 +60,15 @@ export const simulationStore: Module<SimulationState, undefined> = {
         },
         [SimulationMethods.ACTIONS.SOCKET_SIMULATION_STATUS]({state, commit}, data): void {
             commit(SimulationMethods.MUTATIONS.SET_SIMULATION_STATS, data)
+        },
+        [SimulationMethods.ACTIONS.SOCKET_SIMULATION_FINISHED]({state, commit}, data): void {
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.FINISHED)
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATION_STATS, {
+                time: state.simulationStats.stopTime,
+                stopTime: state.simulationStats.stopTime,
+                isPaused: true,
+                frequency: state.simulationStats.frequency,
+            })
         },
     },
 }

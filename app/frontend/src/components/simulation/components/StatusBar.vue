@@ -29,12 +29,13 @@
 
 
     <v-divider vertical class="mx-1"></v-divider>
-    <v-col v-if="showRunning || showPaused" :key="progress">
+    <v-col v-if="showRunning || showPaused || showFinished">
       <div class="progress-text">({{progress}}% completed)</div>
       <v-progress-linear
-          buffer-value="0"
+          :key="progress"
+          buffer-value="100"
           color="primary"
-          stream
+          background-color="#eee"
           :value="progress"
       ></v-progress-linear>
     </v-col>
