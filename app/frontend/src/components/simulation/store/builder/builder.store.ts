@@ -113,6 +113,25 @@ export const builderStore: Module<BuilderState, undefined> = {
             }, (res: EntityProperty[])=>{
                 data.component.getEntity().properties = res
             });
-        }
+        },
+        [BuilderMethods.ACTIONS.SAVE_EXPERIMENT]({state}){
+            socketConnection.emit("save_experiment", {}, (response: {data: string})=>{
+                const file = new Blob([response.data], {
+                    type: 'text/plain',
+                });
+                const fileURL = URL.createObjectURL(file);
+                const fileLink = document.createElement('a');
+                fileLink.href = fileURL;
+                fileLink.download = 'model.sim';
+                fileLink.click();
+                fileLink.remove();
+            });
+        },
+        [BuilderMethods.ACTIONS.LOAD_EXPERIMENT]({state}){
+            const fileReader = new FileReader();
+            /*socketConnection.emit("load_experiment", {}, (experimentData: {data: string})=>{
+                console.log(experimentData.data)
+            });*/
+        },
     }
 }

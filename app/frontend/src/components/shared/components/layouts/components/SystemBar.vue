@@ -22,7 +22,7 @@
       <v-spacer></v-spacer>
       <v-divider vertical dark class="mr-2"></v-divider>
       <hint-button tip-text="Save Model" tip-color="primary" icon color="white">
-        <v-icon color="white" small class="mx-auto">mdi-floppy</v-icon>
+        <v-icon color="white" small class="mx-auto" @click="save">mdi-floppy</v-icon>
       </hint-button>
       <hint-button tip-text="Import Model" tip-color="primary" icon color="white">
         <v-icon color="white" small class="mx-auto">mdi-upload</v-icon>
@@ -62,6 +62,8 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import HintButton from "@/components/shared/components/buttons/HintButton.vue";
+import {builder} from "@/components/simulation/store/namespaces";
+import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
 
 @Component({
   name: 'system-bar',
@@ -74,6 +76,9 @@ export default class SystemBar extends Vue {
   private changeView(view: number){
     this.selectedView = view
   }
+
+  @builder.Action(BuilderMethods.ACTIONS.SAVE_EXPERIMENT)
+  save!: ()=>void;
 }
 </script>
 
