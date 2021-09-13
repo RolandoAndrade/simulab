@@ -29,8 +29,8 @@
 
 
     <v-divider vertical class="mx-1"></v-divider>
-    <v-col v-if="showRunning || showPaused">
-      <div class="progress-text">{{new Date().toISOString()}} ({{progress}}% completed)</div>
+    <v-col v-if="showRunning || showPaused" :key="progress">
+      <div class="progress-text">({{progress}}% completed)</div>
       <v-progress-linear
           buffer-value="0"
           color="primary"
@@ -44,14 +44,16 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import {Prop} from 'vue-property-decorator';
+import {Prop, Watch} from 'vue-property-decorator';
+import {simulation} from "@/components/simulation/store/namespaces";
+import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
+import {SimulationStatus} from "@/components/simulation/domain/simulation-status";
+import {SimulationStats} from "@/components/simulation/domain/simulation-stats";
 
 @Component({
   name: 'status-bar',
 })
 export default class StatusBar extends Vue {
-  progress: number = 30
-  status: string = "STOPPED";
 
   get showPaused(): boolean{
     return this.status === "PAUSED"
@@ -68,6 +70,21 @@ export default class StatusBar extends Vue {
   get showFinished(): boolean{
     return this.status === "FINISHED"
   }
+
+  get progress(): number {
+    if (this.stats.stopTime <= 0){
+      return 0;
+    }
+    return parseFloat(""+((this.stats.time / this.stats.stopTime) * 100).toFixed(2))
+  }
+
+  @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATOR_STATUS)
+  status!: SimulationStatus;
+
+  @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_STATS)
+  stats!: SimulationStats;
+
+
 }
 </script>
 
@@ -93,5 +110,9 @@ export default class StatusBar extends Vue {
   border-left: rgb(224,224,224) 1px solid !important;
   background: white;
   z-index: 1 !important;
+}
+
+.v-progress-linear__bar, .v-progress-linear__bar__determinate {
+  transition: none;
 }
 </style>

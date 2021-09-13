@@ -47,11 +47,12 @@ export const simulationStore: Module<SimulationState, undefined> = {
     },
 
     actions: {
-        [SimulationMethods.ACTIONS.START_SIMULATION]({state}): void {
+        [SimulationMethods.ACTIONS.START_SIMULATION]({state, commit}): void {
             const params = state.simulationParams;
             const startTime = millisConverter(params.startingTime);
             const endingTime = millisConverter(params.endingTime, startTime);
             const stopTime = Math.max(endingTime - startTime, 0) / 1000;
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
             socketConnection.emit("start_simulation", {
                 stopTime
             })
