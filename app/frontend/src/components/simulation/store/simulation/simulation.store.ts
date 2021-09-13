@@ -58,6 +58,16 @@ export const simulationStore: Module<SimulationState, undefined> = {
                 stopTime
             })
         },
+        [SimulationMethods.ACTIONS.PAUSE_SIMULATION]({state, commit}): void {
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
+            socketConnection.emit("pause_simulation");
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.PAUSED);
+        },
+        [SimulationMethods.ACTIONS.STOP_SIMULATION]({state, commit}): void {
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
+            socketConnection.emit("stop_simulation");
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.STOPPED)
+        },
         [SimulationMethods.ACTIONS.SOCKET_SIMULATION_STATUS]({state, commit}, data): void {
             commit(SimulationMethods.MUTATIONS.SET_SIMULATION_STATS, data)
         },

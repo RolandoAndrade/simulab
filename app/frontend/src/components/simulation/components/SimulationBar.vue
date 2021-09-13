@@ -46,12 +46,12 @@
             mdi-fast-forward
           </v-icon>
         </hint-button>
-        <hint-button tip-color="red" color="red" tip-text="Pause" outlined :disabled="!simulationRunning" fab x-small class-style="mx-1">
+        <hint-button tip-color="red" color="red" tip-text="Pause" outlined :disabled="!simulationRunning" fab x-small class-style="mx-1" @click="pauseSimulation">
           <v-icon color="stop">
             mdi-pause
           </v-icon>
         </hint-button>
-        <hint-button tip-color="red" color="red" tip-text="Stop" outlined :disabled="!simulationRunning" fab x-small class-style="mx-1">
+        <hint-button tip-color="red" color="red" tip-text="Stop" outlined :disabled="!simulationRunning && !simulationPaused" fab x-small class-style="mx-1" @click="stopSimulation">
           <v-icon color="stop">
             mdi-stop
           </v-icon>
@@ -72,19 +72,35 @@ import SimulationTime from "@/components/simulation/components/SimulationTime.vu
 import {simulation} from "@/components/simulation/store/namespaces";
 import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
 import {SimulationParams} from "@/components/simulation/domain/simulation-params";
+import {SimulationStatus} from "@/components/simulation/domain/simulation-status";
 
 @Component({
   name: 'simulation-bar',
   components: {SimulationTime, HintButton, TooltipButton},
 })
 export default class SimulationBar extends Vue {
-  private simulationRunning = false;
+  get simulationRunning(): boolean {
+    return SimulationStatus.RUNNING == this.status;
+  }
+
+  get simulationPaused(): boolean {
+    return SimulationStatus.PAUSED == this.status;
+  }
 
   @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_PARAMS)
   params!: SimulationParams;
 
+  @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATOR_STATUS)
+  status!: SimulationStatus;
+
   @simulation.Action(SimulationMethods.ACTIONS.START_SIMULATION)
   startSimulation!: () => void;
+
+  @simulation.Action(SimulationMethods.ACTIONS.STOP_SIMULATION)
+  stopSimulation!: () => void;
+
+  @simulation.Action(SimulationMethods.ACTIONS.PAUSE_SIMULATION)
+  pauseSimulation!: () => void;
 }
 </script>
 
