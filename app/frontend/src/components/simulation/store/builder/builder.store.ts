@@ -127,8 +127,10 @@ export const builderStore: Module<BuilderState, undefined> = {
                 fileLink.remove();
             });
         },
-        [BuilderMethods.ACTIONS.LOAD_EXPERIMENT]({state}){
+        [BuilderMethods.ACTIONS.LOAD_EXPERIMENT]({state}, file: File){
             const fileReader = new FileReader();
+            fileReader.readAsArrayBuffer(file)
+            console.log(fileReader.result)
             /*socketConnection.emit("load_experiment", {}, (experimentData: {data: string})=>{
                 console.log(experimentData.data)
             });*/

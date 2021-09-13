@@ -24,9 +24,16 @@
       <hint-button tip-text="Save Model" tip-color="primary" icon color="white">
         <v-icon color="white" small class="mx-auto" @click="save">mdi-floppy</v-icon>
       </hint-button>
-      <hint-button tip-text="Import Model" tip-color="primary" icon color="white">
-        <v-icon color="white" small class="mx-auto">mdi-upload</v-icon>
+      <hint-button tip-text="Import Model" tip-color="primary" icon color="white" type="file">
+        <v-icon color="white" small class="mx-auto" @click="selectFile">mdi-upload</v-icon>
       </hint-button>
+      <input
+          ref="uploader"
+          class="d-none"
+          type="file"
+          accept=".sim"
+          @change="onFileChanged"
+      >
       <hint-button tip-text="Settings" tip-color="primary" icon color="white">
         <v-icon color="white" small class="mx-auto">mdi-cog</v-icon>
       </hint-button>
@@ -79,6 +86,30 @@ export default class SystemBar extends Vue {
 
   @builder.Action(BuilderMethods.ACTIONS.SAVE_EXPERIMENT)
   save!: ()=>void;
+
+  @builder.Action(BuilderMethods.ACTIONS.LOAD_EXPERIMENT)
+  load!: (file: File)=>void;
+
+  selectedFile: File | null = null
+  isSelecting = false
+
+  $refs!: {
+    uploader: any
+  }
+
+  selectFile() {
+    this.isSelecting = true
+    window.addEventListener('focus', () => {
+      this.isSelecting = false
+    }, { once: true })
+
+    this.$refs.uploader.click()
+  }
+
+  onFileChanged(e: any) {
+    this.selectedFile = e.target.files[0]
+    this.load(this.selectedFile!)
+  }
 }
 </script>
 
