@@ -7,14 +7,14 @@
         </tr>
         </thead>
         <tbody>
-        <template v-for="item in items">
+        <template v-for="(item, kkkk) in items">
           <template v-for="(dataSource, kkk) in item.dataSources">
             <template v-for="(itemStat, kk) in dataSource.itemStats">
-              <tr v-for="(stat, k) in itemStat.stats" :key="itemStat + k">
-                <td class="caption result-cell" :rowspan="12" v-if="(k==0&&k==kk&&kk==kkk)">{{ item.objectType}}</td>
-                <td class="caption result-cell" :rowspan="12" v-if="(k==0&&k==kk&&kk==kkk)">{{ item.name}}</td>
-                <td class="caption result-cell" :rowspan="6" v-if="(k==0&&kk==0)">{{ dataSource.name}}</td>
-                <td class="caption result-cell" :rowspan="3" v-if="(k==0)">{{itemStat.name}}</td>
+              <tr v-for="(stat, k) in itemStat.stats" :key="`(${k}, ${kk}, ${kkk} ${kkkk})`">
+                <td class="caption result-cell" :rowspan="getObjectRowspan(item)" v-if="(k==0&&k==kk&&kk==kkk)">{{ item.objectType}}</td>
+                <td class="caption result-cell" :rowspan="getObjectRowspan(item)" v-if="(k==0&&k==kk&&kk==kkk)">{{ item.name}}</td>
+                <td class="caption result-cell" :rowspan="getDatasourceRowspan(dataSource)" v-if="(k==0&&kk==0)">{{ dataSource.name}}</td>
+                <td class="caption result-cell" :rowspan="getItemStatsRowspan(itemStat)" v-if="(k==0)">{{itemStat.name}}</td>
                 <td class="caption result-cell">{{stat.name}}</td>
                 <td class="caption result-cell">{{stat.value}}</td>
               </tr>
@@ -35,6 +35,9 @@ import ItemsBar from "@/components/simulation/components/ItemsBar.vue";
 import PropertyBar from "@/components/simulation/components/PropertyBar.vue";
 import Board from "@/components/simulation/components/Board.vue";
 import StatusBar from "@/components/simulation/components/StatusBar.vue";
+import {ResultStats} from "@/components/results/domain/result-stats";
+import {DatasourceStats} from "@/components/results/domain/datasource-stats";
+import {ItemStats} from "@/components/results/domain/item-stats";
 
 @Component({
   name: 'results-view',
@@ -42,7 +45,7 @@ import StatusBar from "@/components/simulation/components/StatusBar.vue";
 })
 export default class SimulationView extends Vue {
   headers = ["Object Type", "Object Name", "Data Source", "Data Item", "Statistic", "Value"]
-  items = [{
+  items: ResultStats[] = [{
     objectType: "Source",
     name: "Source1",
     dataSources: [
@@ -210,6 +213,26 @@ export default class SimulationView extends Vue {
         }
       ]
     }]
+
+  getObjectRowspan(object: ResultStats){
+    let rowspan = 0;
+    for (const dataSource of object.dataSources) {
+      rowspan += this.getDatasourceRowspan(dataSource);
+    }
+    return rowspan;
+  }
+
+  getDatasourceRowspan(datasourceStats: DatasourceStats){
+    let rowspan = 0;
+    for (const itemStats of datasourceStats.itemStats) {
+      rowspan += this.getItemStatsRowspan(itemStats);
+    }
+    return rowspan;
+  }
+
+  getItemStatsRowspan(item: ItemStats){
+    return item.stats.length;
+  }
 }
 </script>
 
