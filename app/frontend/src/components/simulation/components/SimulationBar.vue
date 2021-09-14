@@ -31,27 +31,27 @@
         </v-card>
 
         <v-divider vertical class="mx-2"></v-divider>
-        <hint-button tip-color="primary" color="primary" tip-text="Play" outlined :disabled="simulationRunning" fab x-small class-style="mx-1" @click="startSimulation">
+        <hint-button tip-color="primary" color="primary" tip-text="Play" outlined :disabled="simulationRunning || simulationFinished" fab x-small class-style="mx-1" @click="startSimulation">
           <v-icon color="primary">
             mdi-play
           </v-icon>
         </hint-button>
-        <hint-button tip-color="primary" color="primary" tip-text="Next Step" :disabled="simulationRunning" outlined fab x-small class-style="mx-1">
+        <hint-button tip-color="primary" color="primary" tip-text="Next Step" :disabled="simulationRunning || simulationFinished" outlined fab x-small class-style="mx-1">
           <v-icon color="primary">
             mdi-arrow-right
           </v-icon>
         </hint-button>
-        <hint-button tip-color="primary" color="primary" tip-text="Fast Forward" :disabled="simulationRunning" outlined fab x-small class-style="mx-1">
+        <hint-button tip-color="primary" color="primary" tip-text="Fast Forward" :disabled="simulationRunning || simulationFinished" outlined fab x-small class-style="mx-1">
           <v-icon color="primary">
             mdi-fast-forward
           </v-icon>
         </hint-button>
-        <hint-button tip-color="red" color="red" tip-text="Pause" outlined :disabled="!simulationRunning" fab x-small class-style="mx-1" @click="pauseSimulation">
+        <hint-button tip-color="red" color="red" tip-text="Pause" outlined :disabled="!simulationRunning || simulationFinished" fab x-small class-style="mx-1" @click="pauseSimulation">
           <v-icon color="stop">
             mdi-pause
           </v-icon>
         </hint-button>
-        <hint-button tip-color="red" color="red" tip-text="Stop" outlined :disabled="!simulationRunning && !simulationPaused" fab x-small class-style="mx-1" @click="stopSimulation">
+        <hint-button tip-color="red" color="red" tip-text="Stop" outlined :disabled="!simulationRunning && !simulationPaused && !simulationFinished" fab x-small class-style="mx-1" @click="stopSimulation">
           <v-icon color="stop">
             mdi-stop
           </v-icon>
@@ -85,6 +85,10 @@ export default class SimulationBar extends Vue {
 
   get simulationPaused(): boolean {
     return SimulationStatus.PAUSED == this.status;
+  }
+
+  get simulationFinished(): boolean {
+    return SimulationStatus.FINISHED == this.status;
   }
 
   @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_PARAMS)

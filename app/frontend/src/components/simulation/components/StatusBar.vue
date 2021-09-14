@@ -30,7 +30,7 @@
 
     <v-divider vertical class="mx-1"></v-divider>
     <v-col v-if="showRunning || showPaused || showFinished">
-      <div class="progress-text">({{progress}}% completed)</div>
+      <div class="progress-text">{{time}} ({{progress}}% completed)</div>
       <v-progress-linear
           :key="progress"
           buffer-value="100"
@@ -50,6 +50,7 @@ import {simulation} from "@/components/simulation/store/namespaces";
 import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
 import {SimulationStatus} from "@/components/simulation/domain/simulation-status";
 import {SimulationStats} from "@/components/simulation/domain/simulation-stats";
+import {SimulationParams} from "@/components/simulation/domain/simulation-params";
 
 @Component({
   name: 'status-bar',
@@ -79,11 +80,21 @@ export default class StatusBar extends Vue {
     return parseFloat(""+((this.stats.time / this.stats.stopTime) * 100).toFixed(2))
   }
 
+  get time(){
+    const date = new Date(this.params.startingTime).getTime();
+    const add = this.stats.time * 1000
+    return new Date(date + add).toLocaleString();
+  }
+
   @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATOR_STATUS)
   status!: SimulationStatus;
 
   @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_STATS)
   stats!: SimulationStats;
+
+
+  @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_PARAMS)
+  params!: SimulationParams;
 
 
 }

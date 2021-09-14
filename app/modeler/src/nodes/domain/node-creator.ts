@@ -8,7 +8,7 @@ export enum NodeCreatorType {
     COMBINER = "COMBINER",
     SEPARATOR = "SEPARATOR",
     LABEL = "LABEL",
-    ENTITY_EMITTER = "ENTITY_EMITTER"
+    ENTITY_EMITTER = "EMITTER"
 }
 
 export abstract class NodeCreator {
