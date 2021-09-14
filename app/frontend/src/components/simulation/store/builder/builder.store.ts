@@ -17,6 +17,7 @@ import {BoardMode} from "modeler/boards/domain/board-mode";
 import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
 import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 import {socketConnection} from "@/main";
+import {readFile} from "@/components/shared/domain/read-file";
 
 export const builderStore: Module<BuilderState, undefined> = {
     namespaced: true,
@@ -128,12 +129,13 @@ export const builderStore: Module<BuilderState, undefined> = {
             });
         },
         [BuilderMethods.ACTIONS.LOAD_EXPERIMENT]({state}, file: File){
-            const fileReader = new FileReader();
-            fileReader.readAsArrayBuffer(file)
-            console.log(fileReader.result)
-            /*socketConnection.emit("load_experiment", {}, (experimentData: {data: string})=>{
-                console.log(experimentData.data)
-            });*/
+            readFile(file, (result)=>{
+                socketConnection.emit("load_experiment", {
+                    experiment: result
+                }, (experimentData: {data: string})=>{
+                    console.log(experimentData.data)
+                })
+            })
         },
     }
 }
