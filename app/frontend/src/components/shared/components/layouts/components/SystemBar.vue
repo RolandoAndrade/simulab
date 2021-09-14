@@ -10,11 +10,11 @@
                    tile elevation="0" @click="()=>changeView(1)" x-small height="40px">
         <v-icon :color="selectedView === 1?'primary':'white'" small class="px-1 mx-auto">mdi-file-chart-outline</v-icon>
       </hint-button>
-      <hint-button tip-text="Data View" tip-color="primary" :color="selectedView === 2?'white':'primary'"
+      <hint-button v-if="false" tip-text="Data View" tip-color="primary" :color="selectedView === 2?'white':'primary'"
                    tile elevation="0" @click="()=>changeView(2)" x-small height="40px">
         <v-icon :color="selectedView === 2?'primary':'white'" small class="px-1 mx-auto">mdi-database</v-icon>
       </hint-button>
-      <hint-button tip-text="Definitions View" tip-color="primary" :color="selectedView === 3?'white':'primary'"
+      <hint-button v-if="false" tip-text="Definitions View" tip-color="primary" :color="selectedView === 3?'white':'primary'"
                    tile elevation="0" @click="()=>changeView(3)" x-small height="40px">
         <v-icon :color="selectedView === 3?'primary':'white'" small class="px-1 mx-auto">mdi-variable</v-icon>
       </hint-button>

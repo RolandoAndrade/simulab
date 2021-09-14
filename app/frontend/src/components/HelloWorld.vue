@@ -5,7 +5,7 @@
         <simulation-view></simulation-view>
       </template>
       <template slot="reports">
-        <simulation-bar></simulation-bar>
+        <results-view></results-view>
       </template>
     </system-bar>
   </div>
@@ -16,10 +16,11 @@
   import SystemBar from "@/components/shared/components/layouts/components/SystemBar.vue";
   import SimulationView from "@/components/simulation/views/SimulationView.vue";
   import SimulationBar from "@/components/simulation/components/SimulationBar.vue";
+  import ResultsView from "@/components/results/views/ResultsView.vue";
 
   export default Vue.extend({
     name: 'HelloWorld',
-    components: {SimulationBar, SimulationView, SystemBar},
+    components: {ResultsView, SimulationBar, SimulationView, SystemBar},
     data: () => ({
       opened: true,
       tab: null
