@@ -1,5 +1,6 @@
 <template>
   <div class="screen-height">
+    <v-progress-linear indeterminate v-if="view.isFetching"></v-progress-linear>
     <table class="results-table">
         <thead>
         <tr>
@@ -16,7 +17,7 @@
                 <td class="caption result-cell" :rowspan="getDatasourceRowspan(dataSource)" v-if="(k==0&&kk==0)">{{ dataSource.name}}</td>
                 <td class="caption result-cell" :rowspan="getItemStatsRowspan(itemStat)" v-if="(k==0)">{{itemStat.name}}</td>
                 <td class="caption result-cell">{{stat.name}}</td>
-                <td class="caption result-cell">{{stat.value}}</td>
+                <td class="caption result-cell text-right">{{parseFloat(stat.value).toFixed(6)}}</td>
               </tr>
             </template>
           </template>
@@ -88,7 +89,7 @@ export default class SimulationView extends Vue {
 .results-table{
   width: 100%;
   color:#333333;
-  background-color: #fafafa;
+  background-color: #fcfcfc;
   text-align:right;
   vertical-align:middle;
   border-collapse: collapse;
@@ -115,17 +116,7 @@ export default class SimulationView extends Vue {
 
 .result-cell {
   text-align: left;
-  font-weight: 300;
-  border-color: #eee;
-  border-right: transparent;
-  border-left: #eee solid 1px;
-  border-bottom: #eee solid 1px;
-  padding:10px 5px;word-break:normal;
-}
 
-.result-cell {
-  text-align: left;
-  font-weight: 300;
   border-color: #eee;
   border-right: transparent;
   border-left: #eee solid 1px;

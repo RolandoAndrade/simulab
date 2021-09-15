@@ -13,9 +13,9 @@
           no-data-text="No properties available"
       >
         <template v-slot:item.propertyValue="{ item }">
-          <v-text-field @change="()=>propertyChanged(item)" v-model="item.propertyValue"  :placeholder="item.propertyName" outlined dense hide-details v-if="item.propertyType === 'STRING' || item.propertyType === 'ANY'"></v-text-field>
-          <v-combobox @change="()=>propertyChanged(item)" v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.propertyType === 'EXPRESSION'"></v-combobox>
-          <v-select @change="()=>propertyChanged(item)" v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.propertyType === 'BOOLEAN'" :items="['True', 'False']"></v-select>
+          <v-text-field :readonly="isSimulationRunning" @change="()=>propertyChanged(item)" v-model="item.propertyValue"  :placeholder="item.propertyName" outlined dense hide-details v-if="item.propertyType === 'STRING' || item.propertyType === 'ANY'"></v-text-field>
+          <v-combobox :readonly="isSimulationRunning" @change="()=>propertyChanged(item)" v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.propertyType === 'EXPRESSION'"></v-combobox>
+          <v-select :readonly="isSimulationRunning" @change="()=>propertyChanged(item)" v-model="item.propertyValue" :placeholder="item.propertyName" outlined dense hide-details v-else-if="item.propertyType === 'BOOLEAN'" :items="['True', 'False']"></v-select>
         </template>
       </v-data-table>
   </v-navigation-drawer>
@@ -24,13 +24,12 @@
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import {ModelerEvents} from "modeler/shared/events/modeler.events";
-import {SelectedNodeEvent} from "modeler/shared/events/selected-node.event";
-import {SelectedPathEvent} from "modeler/shared/events/selected-path.event";
 import {Edge, EntityProperty, GraphNode} from "modeler";
-import {builder} from "@/components/simulation/store/namespaces";
+import {builder, simulation} from "@/components/simulation/store/namespaces";
 import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
 import {Watch} from "vue-property-decorator";
+import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
+import {SimulationStatus} from "@/components/simulation/domain/simulation-status";
 
 
 @Component({
@@ -114,6 +113,10 @@ export default class PropertyBar extends Vue {
     }
   }
 
+  get isSimulationRunning(): boolean{
+    return this.status === SimulationStatus.RUNNING
+  }
+
   propertyChanged(property: EntityProperty){
     this.changeProperty({component: this.selectedNode!, property})
   }
@@ -123,6 +126,9 @@ export default class PropertyBar extends Vue {
 
   @builder.Action(BuilderMethods.ACTIONS.CHANGE_PROPERTY)
   changeProperty!: (data: {component: Edge | GraphNode, property: EntityProperty}) => void;
+
+  @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATOR_STATUS)
+  status!: SimulationStatus;
 }
 </script>
 

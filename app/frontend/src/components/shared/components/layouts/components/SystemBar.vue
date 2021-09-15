@@ -48,7 +48,7 @@
       </v-tab-item>
       <v-tab-item class="fill-height">
         <div class="fill-height" key="reports">
-          <slot name="reports">
+          <slot name="reports" v-if="selectedView===1">
 
           </slot>
         </div>
