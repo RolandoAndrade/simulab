@@ -1,8 +1,7 @@
-import {NodeCreatorType} from "modeler";
-
+import { NodeCreatorType } from "modeler";
 
 export interface DropItemEvent {
-    node: NodeCreatorType
+    node: NodeCreatorType;
     x?: number;
     y?: number;
 }

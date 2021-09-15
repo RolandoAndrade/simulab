@@ -2,12 +2,12 @@ export const BuilderMethods = {
     GETTERS: {
         GET_BOARD: "GET_BOARD",
         GET_BOARD_MODE: "GET_BOARD_MODE",
-        GET_SELECTED: "GET_SELECTED"
+        GET_SELECTED: "GET_SELECTED",
     },
     MUTATIONS: {
         SET_CONTAINER: "SET_CONTAINER",
         SET_SELECTED: "SET_SELECTED",
-        SET_PROPERTY: "SET_PROPERTY"
+        SET_PROPERTY: "SET_PROPERTY",
     },
     ACTIONS: {
         START_BOARD: "START_BOARD",
@@ -17,6 +17,6 @@ export const BuilderMethods = {
         CHANGE_PROPERTY: "CHANGE_PROPERTY",
         CREATE_PATH: "CREATE_PATH",
         SAVE_EXPERIMENT: "SAVE_EXPERIMENT",
-        LOAD_EXPERIMENT: "LOAD_EXPERIMENT"
-    }
-}
+        LOAD_EXPERIMENT: "LOAD_EXPERIMENT",
+    },
+};

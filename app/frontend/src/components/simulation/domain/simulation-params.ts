@@ -1,5 +1,5 @@
 export interface SimulationParams {
-    speed: number,
-    startingTime: string,
-    endingTime: string,
+    speed: number;
+    startingTime: string;
+    endingTime: string;
 }

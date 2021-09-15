@@ -1,7 +1,7 @@
-import {Board, CanvasNode, Path} from "modeler";
+import { Board, CanvasNode, Path } from "modeler";
 
 export interface BuilderState {
     boardContainer?: HTMLCanvasElement;
     board?: Board;
-    selected?: Path | CanvasNode
+    selected?: Path | CanvasNode;
 }
