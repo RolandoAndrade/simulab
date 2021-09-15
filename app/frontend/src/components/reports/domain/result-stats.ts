@@ -1,4 +1,4 @@
-import {DatasourceStats} from "@/components/results/domain/datasource-stats";
+import {DatasourceStats} from "@/components/reports/domain/datasource-stats";
 
 export interface ResultStats {
     objectType: string,

@@ -16,7 +16,7 @@
   import SystemBar from "@/components/shared/components/layouts/components/SystemBar.vue";
   import SimulationView from "@/components/simulation/views/SimulationView.vue";
   import SimulationBar from "@/components/simulation/components/SimulationBar.vue";
-  import ResultsView from "@/components/results/views/ResultsView.vue";
+  import ResultsView from "@/components/reports/views/ResultsView.vue";
 
   export default Vue.extend({
     name: 'HelloWorld',
