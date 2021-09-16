@@ -31,6 +31,7 @@
                     @change="() => propertyChanged(item)"
                     v-model="item.propertyValue"
                     :placeholder="item.propertyName"
+                    :items="expressionInspector"
                     outlined
                     dense
                     hide-details
@@ -61,12 +62,16 @@ import { BuilderMethods } from "@/components/simulation/store/builder/builder.me
 import { Watch } from "vue-property-decorator";
 import { SimulationMethods } from "@/components/simulation/store/simulation/simulation.methods";
 import { SimulationStatus } from "@/components/simulation/domain/simulation-status";
+import {ExpressionManager} from "@/components/simulation/domain/expression-manager";
 
 @Component({
     name: "property-bar",
 })
 export default class PropertyBar extends Vue {
     private width = 280;
+
+    currentExpression: string = "";
+    currentOptions: string[] = []
 
     $refs!: {
         drawer: any;
@@ -146,11 +151,33 @@ export default class PropertyBar extends Vue {
     }
 
     propertyChanged(property: EntityProperty) {
-        this.changeProperty({ component: this.selectedNode!, property });
+        //this.changeProperty({ component: this.selectedNode!, property });
+        const beforeParams = property.propertyValue.split("(");
+        const keys = beforeParams[0].split(".");
+        let options = Object.keys(expressions);
+        console.log({
+          keys, options
+        })
+        for (const key of keys){
+          if (!!options[key]){
+            options = Object.keys(options[key]);
+          } else {
+            this.currentOptions = []
+          }
+        }
+        this.currentOptions = options
     }
+
+    get expressionInspector(){
+      return this.currentOptions
+    }
+
 
     @builder.Getter(BuilderMethods.GETTERS.GET_SELECTED)
     selectedNode!: Edge | GraphNode | undefined;
+
+    @builder.Getter(BuilderMethods.GETTERS.GET_AVAILABLE_EXPRESSIONS)
+    expressions!: ExpressionManager;
 
     @builder.Action(BuilderMethods.ACTIONS.CHANGE_PROPERTY)
     changeProperty!: (data: { component: Edge | GraphNode; property: EntityProperty }) => void;

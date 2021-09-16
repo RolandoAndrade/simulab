@@ -73,8 +73,8 @@ export const builderStore: Module<BuilderState, undefined> = {
         [BuilderMethods.ACTIONS.SELECT_NODE]({ state, commit }, event: SelectedNodeEvent) {
             commit(BuilderMethods.MUTATIONS.SET_SELECTED, event.node);
             if (!!event.node) {
-                socketConnection.emit("get_expressions", {}, (expressions: ExpressionManager) => {
-                    commit(BuilderMethods.MUTATIONS.SET_AVAILABLE_EXPRESSIONS, expressions);
+                socketConnection.emit("get_expressions", {}, (expressions: {data: string }) => {
+                    commit(BuilderMethods.MUTATIONS.SET_AVAILABLE_EXPRESSIONS, JSON.parse(expressions.data));
                 });
             }
         },
