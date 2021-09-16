@@ -152,7 +152,7 @@ export default class PropertyBar extends Vue {
 
     propertyChanged(property: EntityProperty) {
         //this.changeProperty({ component: this.selectedNode!, property });
-        const beforeParams = property.propertyValue.split("(");
+        /*const beforeParams = property.propertyValue.split("(");
         const keys = beforeParams[0].split(".");
         let options = Object.keys(expressions);
         console.log({
@@ -165,7 +165,7 @@ export default class PropertyBar extends Vue {
             this.currentOptions = []
           }
         }
-        this.currentOptions = options
+        this.currentOptions = options*/
     }
 
     get expressionInspector(){
