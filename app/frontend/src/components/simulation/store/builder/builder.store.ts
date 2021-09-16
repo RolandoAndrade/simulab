@@ -20,6 +20,7 @@ import { DropItemEvent } from "@/components/shared/domain/drop-item-event";
 import { graphFactory } from "@/components/shared/infrastructure/graph-factory";
 import { socketConnection } from "@/main";
 import { readFile } from "@/components/shared/domain/read-file";
+import { ExpressionManager } from "@/components/simulation/domain/expression-manager";
 
 export const builderStore: Module<BuilderState, undefined> = {
     namespaced: true,
@@ -27,6 +28,7 @@ export const builderStore: Module<BuilderState, undefined> = {
         board: undefined,
         boardContainer: undefined,
         selected: undefined,
+        expressionManager: {},
     },
     getters: {
         [BuilderMethods.GETTERS.GET_BOARD](state): Board {
@@ -41,6 +43,9 @@ export const builderStore: Module<BuilderState, undefined> = {
         },
         [BuilderMethods.GETTERS.GET_SELECTED](state): Path | CanvasNode | undefined {
             return state.selected;
+        },
+        [BuilderMethods.GETTERS.GET_AVAILABLE_EXPRESSIONS](state): ExpressionManager {
+            return state.expressionManager;
         },
     },
     mutations: {
@@ -60,12 +65,23 @@ export const builderStore: Module<BuilderState, undefined> = {
                 }
             }
         },
+        [BuilderMethods.MUTATIONS.SET_AVAILABLE_EXPRESSIONS](state, manager: ExpressionManager) {
+            state.expressionManager = manager;
+        },
     },
     actions: {
+        [BuilderMethods.ACTIONS.SELECT_NODE]({ state, commit }, event: SelectedNodeEvent) {
+            commit(BuilderMethods.MUTATIONS.SET_SELECTED, event.node);
+            if (!!event.node) {
+                socketConnection.emit("get_expressions", {}, (expressions: ExpressionManager) => {
+                    commit(BuilderMethods.MUTATIONS.SET_AVAILABLE_EXPRESSIONS, expressions);
+                });
+            }
+        },
         [BuilderMethods.ACTIONS.START_BOARD]({ state, commit, dispatch }, container: HTMLCanvasElement) {
             commit(BuilderMethods.MUTATIONS.SET_CONTAINER, container);
             state.board!.onEvent(ModelerEvents.SELECTED_NODE, (event: SelectedNodeEvent) => {
-                commit(BuilderMethods.MUTATIONS.SET_SELECTED, event.node);
+                dispatch(BuilderMethods.ACTIONS.SELECT_NODE, event);
             });
             state.board!.onEvent(ModelerEvents.PATH_CREATED, (event: PathCreatedEvent) => {
                 dispatch(BuilderMethods.ACTIONS.CREATE_PATH, event);
