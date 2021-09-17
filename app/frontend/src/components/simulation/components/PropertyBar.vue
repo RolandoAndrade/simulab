@@ -32,6 +32,9 @@
                     v-model="item.propertyValue"
                     :placeholder="item.propertyName"
                     :items="expressionInspector"
+                    item-text="text"
+                    item-value="value"
+                    :filter="customFilter"
                     outlined
                     dense
                     hide-details
@@ -80,6 +83,7 @@ export default class PropertyBar extends Vue {
     mounted() {
         this.setBorderWidth();
         this.setEvents();
+        this.currentOptions = Object.keys(this.expressions)
     }
 
     setBorderWidth() {
@@ -152,26 +156,49 @@ export default class PropertyBar extends Vue {
 
     propertyChanged(property: EntityProperty) {
         //this.changeProperty({ component: this.selectedNode!, property });
-        /*const beforeParams = property.propertyValue.split("(");
-        const keys = beforeParams[0].split(".");
-        let options = Object.keys(expressions);
-        console.log({
-          keys, options
-        })
-        for (const key of keys){
-          if (!!options[key]){
-            options = Object.keys(options[key]);
-          } else {
-            this.currentOptions = []
+    }
+
+    getValues(object: {[key: string]: any}) {
+
+      if (object.hasOwnProperty("value")){
+        let params = "";
+        let rParams = "";
+        if (object.hasOwnProperty("params")){
+          const p: string[] = object.params;
+          if (p.length>0){
+            params += "(";
+            rParams += "(";
+            p.forEach((s)=>{
+              params += s + ","
+              rParams += 0 + ","
+            })
+            params = params.substring(0, params.length - 1) + ")";
+            rParams = rParams.substring(0, rParams.length - 1) + ")";
           }
         }
-        this.currentOptions = options*/
+        return [{text: object.value + params, value: object.value + rParams, keys: object.value.split(".")}];
+      }
+      let keys: { text: string, value: string, keys: string[] }[] = [];
+      for (const key in object){
+        keys = keys.concat(this.getValues(object[key]))
+      }
+      return keys
+    }
+
+    changeOptions(keys: string[]){
+
     }
 
     get expressionInspector(){
-      return this.currentOptions
+      return this.getValues(this.expressions);
     }
 
+    customFilter (item: { text: string, value: string, keys: string[] }, queryText: string, itemText: string) {
+      const dotsQuery = (queryText.match(/\./g) || []).length;
+      const dotsItem = (itemText.match(/\./g) || []).length;
+      console.log({item, queryText, itemText, dotsQuery, dotsItem, a: queryText.match(/\./g)})
+      return `${itemText}`.includes(queryText);
+    }
 
     @builder.Getter(BuilderMethods.GETTERS.GET_SELECTED)
     selectedNode!: Edge | GraphNode | undefined;
