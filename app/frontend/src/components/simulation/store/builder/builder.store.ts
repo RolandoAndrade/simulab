@@ -149,6 +149,7 @@ export const builderStore: Module<BuilderState, undefined> = {
                 },
                 (res: EntityProperty[]) => {
                     data.component.getEntity().properties = res;
+                    data.component.getEntity().name = res[0].propertyValue
                 }
             );
         },

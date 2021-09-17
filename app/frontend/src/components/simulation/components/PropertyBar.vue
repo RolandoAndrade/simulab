@@ -33,12 +33,12 @@
                     :placeholder="item.propertyName"
                     :items="expressionInspector"
                     item-text="text"
-                    item-value="value"
                     :filter="customFilter"
                     outlined
                     dense
                     hide-details
                     v-else-if="item.propertyType === 'EXPRESSION'"
+                    :return-object="false"
                 ></v-combobox>
                 <v-select
                     :readonly="isSimulationRunning"
@@ -155,7 +155,7 @@ export default class PropertyBar extends Vue {
     }
 
     propertyChanged(property: EntityProperty) {
-        //this.changeProperty({ component: this.selectedNode!, property });
+        this.changeProperty({ component: this.selectedNode!, property });
     }
 
     getValues(object: {[key: string]: any}) {
@@ -196,7 +196,6 @@ export default class PropertyBar extends Vue {
     customFilter (item: { text: string, value: string, keys: string[] }, queryText: string, itemText: string) {
       const dotsQuery = (queryText.match(/\./g) || []).length;
       const dotsItem = (itemText.match(/\./g) || []).length;
-      console.log({item, queryText, itemText, dotsQuery, dotsItem, a: queryText.match(/\./g)})
       return `${itemText}`.includes(queryText);
     }
 
