@@ -24,7 +24,7 @@
                     outlined
                     dense
                     hide-details
-                    v-if="item.propertyType === 'STRING' || item.propertyType === 'ANY'"
+                    v-if="item.propertyType === 'STRING' || item.propertyType === 'ANY' || item.propertyType === 'NUMBER'"
                 ></v-text-field>
                 <v-combobox
                     :readonly="isSimulationRunning"
