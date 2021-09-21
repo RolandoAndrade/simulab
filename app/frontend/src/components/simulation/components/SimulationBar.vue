@@ -60,6 +60,7 @@
                     fab
                     x-small
                     class-style="mx-1"
+                    @click="fastForward"
                 >
                     <v-icon color="primary"> mdi-fast-forward </v-icon>
                 </hint-button>
@@ -137,6 +138,9 @@ export default class SimulationBar extends Vue {
 
     @simulation.Action(SimulationMethods.ACTIONS.STOP_SIMULATION)
     stopSimulation!: () => void;
+
+    @simulation.Action(SimulationMethods.ACTIONS.FAST_FORWARD)
+    fastForward!: () => void;
 
     @simulation.Action(SimulationMethods.ACTIONS.PAUSE_SIMULATION)
     pauseSimulation!: () => void;

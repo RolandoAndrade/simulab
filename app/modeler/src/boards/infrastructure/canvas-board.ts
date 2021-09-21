@@ -155,7 +155,10 @@ export class CanvasBoard extends Board {
                         component: this.selectedPath,
                         onDeleted: () => {
                             this.paths = this.paths.filter((path)=>path!=this.selectedPath)
-                            this.selectedPath = undefined;
+                            this.selectedPath.getEntity().properties = [];
+                            this.emit(ModelerEvents.SELECTED_NODE, {
+                                node: undefined
+                            })
                             this.draw();
                         }
                     });
@@ -167,6 +170,9 @@ export class CanvasBoard extends Board {
                         this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);
                         this.paths = this.paths.filter((path)=>path.fromNode!=this.selectedNode && path.toNode!=this.selectedNode)
                         this.selectedNode = undefined;
+                        this.emit(ModelerEvents.SELECTED_NODE, {
+                            node: undefined
+                        })
                         this.draw();
                     }
                 });

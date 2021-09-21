@@ -84,6 +84,19 @@ export const simulationStore: Module<SimulationState, undefined> = {
 
             });
         },
+        [SimulationMethods.ACTIONS.FAST_FORWARD]({ state, commit }): void {
+            const params = state.simulationParams;
+            const startTime = millisConverter(params.startingTime);
+            const endingTime = millisConverter(params.endingTime, startTime);
+            const stopTime = Math.max(endingTime - startTime, 0) / 1000;
+            const init = SimulationStatus.STOPPED == state.simulatorStatus;
+
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
+            socketConnection.emit("fast_forward", {
+                stopTime,
+                init
+            });
+        },
         [SimulationMethods.ACTIONS.PAUSE_SIMULATION]({ state, commit }): void {
             commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
             socketConnection.emit("pause_simulation");
