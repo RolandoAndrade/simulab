@@ -9,6 +9,8 @@
                 label="Starting time"
                 type="datetime-local"
                 v-model="params.startingTime"
+                :readonly="isCurrentlySimulating"
+                :disabled="isCurrentlySimulating"
             ></v-text-field>
         </div>
 
@@ -26,6 +28,7 @@
                         label="Ending time"
                         v-on="on"
                         readonly
+                        :disabled="isCurrentlySimulating"
                     ></v-text-field>
                 </template>
                 <v-card width="300px" class="pt-2">
@@ -100,11 +103,12 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator";
-import { Time } from "@/components/shared/domain/time";
-import { simulation } from "@/components/simulation/store/namespaces";
-import { SimulationMethods } from "@/components/simulation/store/simulation/simulation.methods";
-import { SimulationParams } from "@/components/simulation/domain/simulation-params";
+import {Watch} from "vue-property-decorator";
+import {Time} from "@/components/shared/domain/time";
+import {simulation} from "@/components/simulation/store/namespaces";
+import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
+import {SimulationParams} from "@/components/simulation/domain/simulation-params";
+import {SimulationStatus} from "@/components/simulation/domain/simulation-status";
 
 @Component({
     name: "simulation-time",
@@ -138,8 +142,15 @@ export default class SimulationTime extends Vue {
         this.params.endingTime = this.endingDate;
     }
 
+    get isCurrentlySimulating(): boolean {
+      return this.status != SimulationStatus.STOPPED
+    }
+
     @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATION_PARAMS)
     params!: SimulationParams;
+
+    @simulation.Getter(SimulationMethods.GETTERS.GET_SIMULATOR_STATUS)
+    status!: SimulationStatus;
 }
 </script>
 

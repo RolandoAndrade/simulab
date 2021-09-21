@@ -21,6 +21,7 @@
                         ticks
                         hide-details
                         v-model="params.speed"
+                        :disabled="simulationRunning"
                     ></v-slider>
                 </v-card>
 
