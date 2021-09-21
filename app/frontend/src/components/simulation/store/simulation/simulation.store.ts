@@ -54,9 +54,34 @@ export const simulationStore: Module<SimulationState, undefined> = {
             const startTime = millisConverter(params.startingTime);
             const endingTime = millisConverter(params.endingTime, startTime);
             const stopTime = Math.max(endingTime - startTime, 0) / 1000;
+            const step = state.simulationParams.speed * 1000;
+            const waitTime = 2 - state.simulationParams.speed;
+            const init = SimulationStatus.STOPPED == state.simulatorStatus;
             commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
             socketConnection.emit("start_simulation", {
                 stopTime,
+                step,
+                waitTime,
+                init
+            });
+        },
+        [SimulationMethods.ACTIONS.NEXT_STEP]({ state, commit }): void {
+            const params = state.simulationParams;
+            const startTime = millisConverter(params.startingTime);
+            const endingTime = millisConverter(params.endingTime, startTime);
+            const stopTime = Math.max(endingTime - startTime, 0) / 1000;
+            const step = state.simulationParams.speed * 1000;
+            const init = SimulationStatus.STOPPED == state.simulatorStatus;
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
+            socketConnection.emit("next_step", {
+                stopTime,
+                step,
+                init
+            }, ()=>{
+                if (state.simulationStats.time < state.simulationStats.stopTime) {
+                    commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.PAUSED);
+                }
+
             });
         },
         [SimulationMethods.ACTIONS.PAUSE_SIMULATION]({ state, commit }): void {

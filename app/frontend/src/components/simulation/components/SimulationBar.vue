@@ -43,6 +43,7 @@
                     color="primary"
                     tip-text="Next Step"
                     :disabled="simulationRunning || simulationFinished"
+                    @click="nextStep"
                     outlined
                     fab
                     x-small
@@ -130,6 +131,9 @@ export default class SimulationBar extends Vue {
 
     @simulation.Action(SimulationMethods.ACTIONS.START_SIMULATION)
     startSimulation!: () => void;
+
+    @simulation.Action(SimulationMethods.ACTIONS.NEXT_STEP)
+    nextStep!: () => void;
 
     @simulation.Action(SimulationMethods.ACTIONS.STOP_SIMULATION)
     stopSimulation!: () => void;
