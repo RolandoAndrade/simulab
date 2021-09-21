@@ -110,8 +110,11 @@
                     plain
                     block
                     :disabled="isSimulationRunning"
+                    @click="() => createNode(nodeCreatorType.LABEL)"
                 >
-                    <v-img :src="require('@/assets/queue-components/label.png')" width="30px"></v-img>
+                    <v-img :src="require('@/assets/queue-components/label.png')" width="30px"
+                           draggable
+                           @dragstart="(event) => this.dragStart(event, nodeCreatorType.LABEL)"></v-img>
                 </hint-button>
             </v-list-item>
             <v-list-item class="pa-2">

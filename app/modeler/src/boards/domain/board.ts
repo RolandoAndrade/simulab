@@ -55,4 +55,22 @@ export abstract class Board extends EventHandler {
      * @param y Start position y
      * */
     public abstract createNode(nodeCreator: NodeCreator, x?: number, y?: number): void;
+
+    public getNode(entityName: string): GraphNode {
+        for (let i = 0; i < this.nodes.length; i++) {
+            if (this.nodes[i].getEntity().name == entityName){
+                return this.nodes[i];
+            }
+        }
+        return undefined;
+    }
+
+    public getPath(entityName: string): Edge {
+        for (let i = 0; i < this.nodes.length; i++) {
+            if (this.paths[i].getEntity().name == entityName){
+                return this.paths[i];
+            }
+        }
+        return undefined;
+    }
 }

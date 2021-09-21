@@ -1,26 +1,26 @@
-import { Module } from "vuex";
-import { BuilderState } from "@/components/simulation/store/builder/builder.state";
-import { BuilderMethods } from "@/components/simulation/store/builder/builder.methods";
+import {Module} from "vuex";
+import {BuilderState} from "@/components/simulation/store/builder/builder.state";
+import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
 import {
     Board,
     CanvasBoard,
     CanvasNode,
-    EntityProperty,
+    DeletedComponentEvent,
+    Edge,
+    EntityProperty, GraphLabel,
+    GraphNode,
     ModelerEvents,
     NodeCreatorType,
     Path,
-    SelectedNodeEvent,
     PathCreatedEvent,
-    DeletedComponentEvent,
-    Edge,
-    GraphNode,
+    SelectedNodeEvent,
 } from "modeler";
-import { BoardMode } from "modeler/boards/domain/board-mode";
-import { DropItemEvent } from "@/components/shared/domain/drop-item-event";
-import { graphFactory } from "@/components/shared/infrastructure/graph-factory";
-import { socketConnection } from "@/main";
-import { readFile } from "@/components/shared/domain/read-file";
-import { ExpressionManager } from "@/components/simulation/domain/expression-manager";
+import {BoardMode} from "modeler/boards/domain/board-mode";
+import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
+import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
+import {socketConnection} from "@/main";
+import {readFile} from "@/components/shared/domain/read-file";
+import {ExpressionManager} from "@/components/simulation/domain/expression-manager";
 
 export const builderStore: Module<BuilderState, undefined> = {
     namespaced: true,
@@ -28,7 +28,7 @@ export const builderStore: Module<BuilderState, undefined> = {
         board: undefined,
         boardContainer: undefined,
         selected: undefined,
-        expressionManager: {},
+        expressionManager: {}
     },
     getters: {
         [BuilderMethods.GETTERS.GET_BOARD](state): Board {
@@ -126,7 +126,11 @@ export const builderStore: Module<BuilderState, undefined> = {
             commit(BuilderMethods.MUTATIONS.SET_PROPERTY, property);
         },
         [BuilderMethods.ACTIONS.CREATE_NODE]({ state }, event: DropItemEvent) {
-            socketConnection.emit("create_node", event, (properties: EntityProperty[]) => {
+            let message = "create_node"
+            if (event.node == NodeCreatorType.LABEL) {
+                message = "create_label"
+            }
+            socketConnection.emit(message, event, (properties: EntityProperty[]) => {
                 state.board!.createNode(
                     graphFactory.createNodeCreator(event.node, {
                         name: properties[0].propertyValue,
@@ -141,8 +145,12 @@ export const builderStore: Module<BuilderState, undefined> = {
             { state },
             data: { component: Edge | GraphNode; property: EntityProperty }
         ) {
+            let message = "edit_property"
+            if (data.component instanceof GraphLabel) {
+                message = "edit_label"
+            }
             socketConnection.emit(
-                "edit_property",
+                message,
                 {
                     component: data.component.getEntity().name,
                     property: data.property,
