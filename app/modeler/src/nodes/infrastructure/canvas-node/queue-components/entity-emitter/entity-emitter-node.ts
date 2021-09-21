@@ -28,6 +28,6 @@ export class CanvasEntityEmitterNode extends CanvasNode {
         this.ctx.fillStyle = "black";
         this.ctx.font = "12px Arial";
         this.ctx.textAlign = "center";
-        this.ctx.fillText(this.properties.id, this.position.x + this.dimensions.width / 2, this.position.y + this.dimensions.height + 25);
+        this.ctx.fillText(this.getEntity().name, this.position.x + this.dimensions.width / 2, this.position.y + this.dimensions.height + 25);
     }
 }

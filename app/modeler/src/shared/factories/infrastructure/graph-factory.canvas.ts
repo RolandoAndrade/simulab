@@ -1,7 +1,13 @@
 import { CanvasBoard } from "../../../boards/infrastructure";
 import {GraphFactory} from "../domain/graph-factory";
 import {NodeCreator, NodeCreatorType} from "../../../nodes/domain/node-creator";
-import {EntityEmitterNodeCreator, ServerNodeCreator, SinkNodeCreator, SourceNodeCreator} from "../../../nodes";
+import {
+    EntityEmitterNodeCreator,
+    LabelNodeCreator,
+    ServerNodeCreator,
+    SinkNodeCreator,
+    SourceNodeCreator
+} from "../../../nodes";
 import {Entity} from "../../types/entity";
 
 export class GraphFactoryCanvas implements GraphFactory {
@@ -13,7 +19,7 @@ export class GraphFactoryCanvas implements GraphFactory {
         [NodeCreatorType.SINK]: SinkNodeCreator,
         [NodeCreatorType.COMBINER]: SinkNodeCreator,
         [NodeCreatorType.SEPARATOR]: SinkNodeCreator,
-        [NodeCreatorType.LABEL]: SinkNodeCreator,
+        [NodeCreatorType.LABEL]: LabelNodeCreator,
         [NodeCreatorType.ENTITY_EMITTER]: EntityEmitterNodeCreator,
     }
 
