@@ -7,7 +7,8 @@ import { SimulationParams } from "@/components/simulation/domain/simulation-para
 import { socketConnection } from "@/main";
 import { millisConverter } from "@/components/shared/domain/millis-converter";
 import { simulation } from "@/components/simulation/store/namespaces";
-
+import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
+import {Board, GraphLabel} from "modeler"
 export const simulationStore: Module<SimulationState, undefined> = {
     namespaced: true,
 
@@ -80,5 +81,14 @@ export const simulationStore: Module<SimulationState, undefined> = {
                 frequency: state.simulationStats.frequency,
             });
         },
+        [SimulationMethods.ACTIONS.SOCKET_LABEL_CHANGED]({rootGetters}, new_labels: {[key: string]: number}): void {
+            for (const key in new_labels) {
+                const board: Board = rootGetters["simulationModule/builderStore/"+BuilderMethods.GETTERS.GET_BOARD];
+                const node = board.getNode(key);
+                if (!!node) {
+                    (node as GraphLabel).setValue(new_labels[key]);
+                }
+            }
+        }
     },
 };

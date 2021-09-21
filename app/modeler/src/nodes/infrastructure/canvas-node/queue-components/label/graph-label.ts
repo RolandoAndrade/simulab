@@ -2,7 +2,7 @@ import { CanvasNode } from "../../canvas-node";
 import { QueueCanvasComponentProperties } from "../../queue-canvas-component-properties";
 
 export class GraphLabel extends CanvasNode {
-    public value: number;
+    protected value: number;
     constructor(properties: QueueCanvasComponentProperties) {
         super({
             ...properties,
@@ -11,6 +11,11 @@ export class GraphLabel extends CanvasNode {
             padding: 0,
         });
         this.value = 0;
+    }
+
+    setValue(value: number) {
+        this.value = value;
+        this.draw();
     }
 
     draw() {
