@@ -5,3 +5,10 @@ export class Time {
         return `${this.time} ${this.unit}`;
     }
 }
+
+export enum TimeUnits {
+    SECONDS = "Seconds",
+    MINUTES = 'Minutes',
+    HOURS = 'Hours',
+    DAYS = 'Days'
+}

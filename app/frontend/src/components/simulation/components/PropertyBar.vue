@@ -51,6 +51,16 @@
                     v-else-if="item.propertyType === 'BOOLEAN'"
                     :items="['True', 'False']"
                 ></v-select>
+              <v-select
+                  :readonly="isSimulationRunning"
+                  @change="() => propertyChanged(item)"
+                  v-model="item.unit"
+                  outlined
+                  dense
+                  hide-details
+                  v-if="!!item.unit"
+                  :items="timeUnits"
+              ></v-select>
             </template>
         </v-data-table>
     </v-navigation-drawer>
@@ -59,13 +69,14 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Edge, EntityProperty, GraphNode } from "modeler";
-import { builder, simulation } from "@/components/simulation/store/namespaces";
-import { BuilderMethods } from "@/components/simulation/store/builder/builder.methods";
-import { Watch } from "vue-property-decorator";
-import { SimulationMethods } from "@/components/simulation/store/simulation/simulation.methods";
-import { SimulationStatus } from "@/components/simulation/domain/simulation-status";
+import {Edge, EntityProperty, GraphNode} from "modeler";
+import {builder, simulation} from "@/components/simulation/store/namespaces";
+import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
+import {Watch} from "vue-property-decorator";
+import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
+import {SimulationStatus} from "@/components/simulation/domain/simulation-status";
 import {ExpressionManager} from "@/components/simulation/domain/expression-manager";
+import {TimeUnits} from "@/components/shared/domain/time";
 
 @Component({
     name: "property-bar",
@@ -141,10 +152,13 @@ export default class PropertyBar extends Vue {
     ];
     properties: EntityProperty[] = [];
 
+    timeUnits = [TimeUnits.SECONDS, TimeUnits.MINUTES, TimeUnits.HOURS, TimeUnits.DAYS]
+
     @Watch("selectedNode")
     onSelectedNodeChanged() {
         if (!!this.selectedNode) {
-            this.properties = this.selectedNode.getEntity().properties.map((e) => ({ ...e }));
+            this.properties = this.selectedNode.getEntity().properties.map((e) => ({...e}));
+            console.log(this.properties)
         } else {
             this.properties = [];
         }
