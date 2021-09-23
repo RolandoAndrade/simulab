@@ -22,7 +22,7 @@ export abstract class CanvasQueue {
 
     addEntity(entity: Entity) {
         const e = new CanvasEntity(entity, this);
-        e.move(CanvasQueue.WIDTH - (e.dimensions.width + 10) * this.entities.length, - e.dimensions.height / 2)
+        e.move(- (e.dimensions.width + 10) * this.entities.length, - e.dimensions.height / 2)
         this.entities.push(e);
     }
 
@@ -30,8 +30,12 @@ export abstract class CanvasQueue {
         this.entities = this.entities.filter((e)=>e.getEntity().name != id)
     }
 
+    clear() {
+        this.entities = []
+    }
+
     protected drawEntities() {
-        for (let i = 0; i < 3 && i < this.entities.length; i++) {
+        for (let i = 0; i < 10 && i < this.entities.length; i++) {
             this.entities[i].draw();
         }
     }

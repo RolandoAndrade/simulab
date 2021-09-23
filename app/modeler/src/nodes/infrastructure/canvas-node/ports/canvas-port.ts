@@ -15,7 +15,7 @@ export abstract class CanvasPort extends GraphNode {
     public static readonly MARGIN = 10;
 
 
-    protected queue: CanvasQueue
+    public queue: CanvasQueue
 
     protected constructor(public readonly node: CanvasNode,  position: Point) {
         super({

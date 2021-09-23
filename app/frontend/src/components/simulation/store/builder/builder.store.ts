@@ -139,9 +139,6 @@ export const builderStore: Module<BuilderState, undefined> = {
         [BuilderMethods.ACTIONS.CHANGE_MODE]({ state }, mode: BoardMode) {
             state.board!.setMode(mode);
         },
-        [BuilderMethods.ACTIONS.CHANGE_PROPERTY]({ commit }, property: EntityProperty) {
-            commit(BuilderMethods.MUTATIONS.SET_PROPERTY, property);
-        },
         [BuilderMethods.ACTIONS.CREATE_NODE]({ state }, event: DropItemEvent) {
             let message = "create_node"
             if (event.node == NodeCreatorType.LABEL) {
@@ -172,9 +169,9 @@ export const builderStore: Module<BuilderState, undefined> = {
                     component: data.component.getEntity().name,
                     property: data.property,
                 },
-                (res: EntityProperty[]) => {
-                    data.component.getEntity().properties = res;
-                    data.component.getEntity().name = res[0].propertyValue
+                (res: {properties: EntityProperty[]}) => {
+                    data.component.getEntity().properties = res.properties;
+                    data.component.getEntity().name = res.properties[0].propertyValue
                 }
             );
         },

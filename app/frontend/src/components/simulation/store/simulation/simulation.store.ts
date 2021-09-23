@@ -8,7 +8,7 @@ import { socketConnection } from "@/main";
 import { millisConverter } from "@/components/shared/domain/millis-converter";
 import { simulation } from "@/components/simulation/store/namespaces";
 import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
-import {Board, GraphLabel} from "modeler"
+import {Board, CanvasBoard, CanvasNode, GraphLabel} from "modeler"
 export const simulationStore: Module<SimulationState, undefined> = {
     namespaced: true,
 
@@ -127,6 +127,37 @@ export const simulationStore: Module<SimulationState, undefined> = {
                     (node as GraphLabel).setValue(new_labels[key]);
                 }
             }
+        },
+        [SimulationMethods.ACTIONS.SOCKET_STATE_CHANGED]({rootGetters}, data: {
+            name: string, state: {
+                inputBuffer: string,
+                processBuffer: string,
+                outputBuffer: string
+            }
+        }): void {
+            const board: CanvasBoard = rootGetters["simulationModule/builderStore/"+BuilderMethods.GETTERS.GET_BOARD];
+            const node = board.getNode(data.name) as CanvasNode;
+            if (!!node) {
+                const entitiesInsideInputBuffer = parseInt(data.state.inputBuffer);
+                const entitiesInsideOutputBuffer = parseInt(data.state.outputBuffer);
+                const entitiesInsideProcessBuffer = parseInt(data.state.processBuffer);
+
+                // input buffer
+                if(node.portManager.destinationPorts.length){
+                    node.portManager.destinationPorts[0].queue.clear();
+                    for (let i = 0; i < entitiesInsideInputBuffer; i++) {
+                        node.portManager.destinationPorts[0].queue.addEntity({name: "", properties: []})
+                    }
+                }
+                // output buffer
+                if(node.portManager.sourcePorts.length){
+                    node.portManager.sourcePorts[0].queue.clear();
+                    for (let i = 0; i < entitiesInsideOutputBuffer; i++) {
+                        node.portManager.sourcePorts[0].queue.addEntity({name: "", properties: []})
+                    }
+                }
+            }
+            board.draw()
         }
     },
 };
