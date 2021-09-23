@@ -60,7 +60,6 @@ export class CanvasBoard extends Board {
         }
     }
 
-    importModel(model: object) {}
 
     private onResize(event: UIEvent) {
         this.setSize(this.container.offsetWidth, this.container.offsetHeight);
@@ -308,5 +307,12 @@ export class CanvasBoard extends Board {
             }
         }
         this.draw();
+    }
+
+    importModel(model: object) {
+        this.selectedNode = undefined;
+        this.selectedPath = undefined;
+        this.nodes = []
+        this.paths = [];
     }
 }

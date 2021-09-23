@@ -191,7 +191,7 @@ export const builderStore: Module<BuilderState, undefined> = {
                 fileLink.remove();
             });
         },
-        [BuilderMethods.ACTIONS.LOAD_EXPERIMENT]({ state }, file: File) {
+        [BuilderMethods.ACTIONS.LOAD_EXPERIMENT]({ state, dispatch }, file: File) {
             readFile(file, (result) => {
                 socketConnection.emit(
                     "load_experiment",
@@ -200,6 +200,7 @@ export const builderStore: Module<BuilderState, undefined> = {
                     },
                     (result: { data: RecoveredBoard
                     }) => {
+                        state.board!.importModel({})
                         const models = result.data.models;
                         const paths = result.data.paths;
                         for (const model of models){
