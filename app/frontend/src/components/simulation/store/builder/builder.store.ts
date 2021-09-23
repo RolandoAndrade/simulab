@@ -4,7 +4,7 @@ import {BuilderMethods} from "@/components/simulation/store/builder/builder.meth
 import {
     Board,
     CanvasBoard,
-    CanvasNode,
+    CanvasNode, CanvasPort,
     DeletedComponentEvent,
     Edge,
     EntityProperty, GraphLabel,
@@ -12,7 +12,7 @@ import {
     ModelerEvents,
     NodeCreatorType,
     Path,
-    PathCreatedEvent,
+    PathCreatedEvent, Point,
     SelectedNodeEvent,
 } from "modeler";
 import {BoardMode} from "modeler/boards/domain/board-mode";
@@ -21,6 +21,7 @@ import {graphFactory} from "@/components/shared/infrastructure/graph-factory";
 import {socketConnection} from "@/main";
 import {readFile} from "@/components/shared/domain/read-file";
 import {ExpressionManager} from "@/components/simulation/domain/expression-manager";
+import {RecoveredBoard} from "@/components/simulation/domain/recovered-board";
 
 export const builderStore: Module<BuilderState, undefined> = {
     namespaced: true,
@@ -89,6 +90,22 @@ export const builderStore: Module<BuilderState, undefined> = {
             state.board!.onEvent(ModelerEvents.DELETED_COMPONENT, (event: DeletedComponentEvent) => {
                 dispatch(BuilderMethods.ACTIONS.DELETE_COMPONENT, event);
             });
+            state.board!.onEvent(ModelerEvents.NODE_MOVED, (event: SelectedNodeEvent)=>{
+                dispatch(BuilderMethods.ACTIONS.MOVE_NODE, event);
+            })
+        },
+        [BuilderMethods.ACTIONS.MOVE_NODE]({ state }, event: SelectedNodeEvent) {
+            const { node } = event;
+            socketConnection.emit(
+                "move_node",
+                {
+                    component: node.getEntity().name,
+                    position: (node as any).position
+                },
+                (result: { data: {} }) => {
+
+                }
+            );
         },
         [BuilderMethods.ACTIONS.DELETE_COMPONENT]({ state }, event: DeletedComponentEvent) {
             const { component } = event;
@@ -112,9 +129,9 @@ export const builderStore: Module<BuilderState, undefined> = {
                     from: path.fromNode.getEntity().name,
                     to: (path.toNode as any).getEntity().name,
                 },
-                (properties: EntityProperty[]) => {
-                    path.entity.properties = properties;
-                    path.entity.name = properties[0].propertyValue;
+                (data: {properties: EntityProperty[]}) => {
+                    path.entity.properties = data.properties;
+                    path.entity.name = data.properties[0].propertyValue;
                     event.onCreated(path);
                 }
             );
@@ -130,11 +147,11 @@ export const builderStore: Module<BuilderState, undefined> = {
             if (event.node == NodeCreatorType.LABEL) {
                 message = "create_label"
             }
-            socketConnection.emit(message, event, (properties: EntityProperty[]) => {
+            socketConnection.emit(message, event, (data: { properties: EntityProperty[] }) => {
                 state.board!.createNode(
                     graphFactory.createNodeCreator(event.node, {
-                        name: properties[0].propertyValue,
-                        properties,
+                        name: data.properties[0].propertyValue,
+                        properties: data.properties,
                     }),
                     event.x,
                     event.y
@@ -181,8 +198,37 @@ export const builderStore: Module<BuilderState, undefined> = {
                     {
                         experiment: result,
                     },
-                    (experimentData: { data: string }) => {
-                        console.log(experimentData.data);
+                    (result: { data: RecoveredBoard
+                    }) => {
+                        const models = result.data.models;
+                        const paths = result.data.paths;
+                        for (const model of models){
+                            let node = null
+                            const lowerType = model.type.substring(model.type.indexOf('.') + 1).toLowerCase();
+                            if (lowerType.includes("source")){
+                                node = NodeCreatorType.SOURCE
+                            } else if (lowerType.includes("server")){
+                                node = NodeCreatorType.SERVER
+                            } else if (lowerType.includes("sink")) {
+                                node = NodeCreatorType.SINK
+                            }
+                            if (node){
+                                state.board!.createNode(
+                                    graphFactory.createNodeCreator(node, {
+                                        name: model.properties[0].propertyValue,
+                                        properties: model.properties,
+                                    }),
+                                    model.position.x,
+                                    model.position.y
+                                )
+                            }
+                        }
+                        for (const path of paths) {
+                            (state.board! as CanvasBoard).createPathBetween(path.properties[0].propertyValue,
+                                path.properties, path.origin, path.destination
+                            )
+                        }
+
                     }
                 );
             });

@@ -1,6 +1,6 @@
 import {Board} from "../domain";
 import {CanvasNode} from "../../nodes/infrastructure/canvas-node";
-import {Point} from "../../shared/types";
+import {EntityProperty, Point} from "../../shared/types";
 import {Path} from "../../edge";
 import {NodeCreator} from "../../nodes";
 //@ts-ignore
@@ -252,6 +252,10 @@ export class CanvasBoard extends Board {
             this.setMode(BoardMode.CREATING_PATH_MODE);
             this.finishPath(new Point(event.offsetX, event.offsetY))
         }
+
+        if (!!this.selectedNode) {
+            this.emit(ModelerEvents.NODE_MOVED, {node: this.selectedNode})
+        }
         this.setMode(BoardMode.DEFAULT_MODE);
     }
 
@@ -287,6 +291,22 @@ export class CanvasBoard extends Board {
             x: this.origin.x + x,
             y: this.origin.y + y
         }) as CanvasNode);
+        this.draw();
+    }
+
+    public createPathBetween(name: string, properties: EntityProperty[], origin: string, destination: string) {
+        const startNode = this.nodes.find((node)=>node.getEntity().name == origin);
+        if(!!startNode) {
+            const endNode = this.nodes.find((node)=>node.getEntity().name == destination);
+            if (!!endNode) {
+                const originPort = endNode.portManager.destinationPorts[0];
+                const destinationPort = startNode.portManager.sourcePorts[0];
+                const p = new Path(this.ctx, originPort, destinationPort);
+                p.getEntity().properties = properties
+                p.getEntity().name = name;
+                this.paths.push(p)
+            }
+        }
         this.draw();
     }
 }
