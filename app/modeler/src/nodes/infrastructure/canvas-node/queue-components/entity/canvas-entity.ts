@@ -7,14 +7,14 @@ export class CanvasEntity extends CanvasNode {
 
     constructor(entity: Entity, private queue: CanvasQueue) {
         super({
-            width: Math.sqrt(3) * 20 /2,
-            height: 20,
+            width: Math.sqrt(3) * 10 /2,
+            height: 10,
             entity,
             id: entity.name, padding: 0,
             x: queue.position.x,
             y: queue.position.y,
             ctx: queue.ctx,
-            color: "#888"
+            color: "#6df5bc"
         });
         this.offset = {
             x: 0,

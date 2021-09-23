@@ -5,7 +5,7 @@ import {CanvasImageNode} from "../../canvas-image-node";
 import {ProcessBuffer} from "../../queues";
 
 export class CanvasServerNode extends CanvasImageNode {
-    protected processBuffer: ProcessBuffer;
+    public processBuffer: ProcessBuffer;
 
     constructor(properties: QueueCanvasComponentProperties) {
         const image = require("assets/queue-components/server.png");
@@ -22,7 +22,7 @@ export class CanvasServerNode extends CanvasImageNode {
     }
 
     draw() {
-        this.processBuffer.draw();
         super.draw();
+        this.processBuffer.draw();
     }
 }

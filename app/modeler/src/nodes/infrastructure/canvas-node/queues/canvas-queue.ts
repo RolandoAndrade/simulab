@@ -13,7 +13,10 @@ export abstract class CanvasQueue {
     }
 
     get position(): Point {
-        return this.node.position
+        return {
+            x: this.node.position.x,
+            y: this.node.position.y + 30
+        }
     }
 
     get ctx(): CanvasRenderingContext2D {
@@ -22,7 +25,7 @@ export abstract class CanvasQueue {
 
     addEntity(entity: Entity) {
         const e = new CanvasEntity(entity, this);
-        e.move(- (e.dimensions.width + 10) * this.entities.length, - e.dimensions.height / 2)
+        e.move(CanvasQueue.WIDTH - (e.dimensions.width + 10) * this.entities.length, - e.dimensions.height / 2)
         this.entities.push(e);
     }
 
@@ -35,7 +38,7 @@ export abstract class CanvasQueue {
     }
 
     protected drawEntities() {
-        for (let i = 0; i < 10 && i < this.entities.length; i++) {
+        for (let i = 0; i < 5 && i < this.entities.length; i++) {
             this.entities[i].draw();
         }
     }

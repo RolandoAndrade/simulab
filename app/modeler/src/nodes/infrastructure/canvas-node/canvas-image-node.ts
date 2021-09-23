@@ -15,6 +15,7 @@ export abstract class CanvasImageNode extends CanvasNode {
     }
 
     public draw() {
+        super.draw();
         const BORDER_RADIUS = 8;
         const MARGIN = 2;
         if (this.isSelected) {
@@ -23,6 +24,5 @@ export abstract class CanvasImageNode extends CanvasNode {
                 this.dimensions.width + 2 * MARGIN, this.dimensions.height + 2 * MARGIN, BORDER_RADIUS).fill()
         }
         this.ctx.drawImage(this.image, this.position.x, this.position.y, this.dimensions.width, this.dimensions.height);
-        super.draw();
     }
 }

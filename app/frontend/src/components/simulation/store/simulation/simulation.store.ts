@@ -8,7 +8,7 @@ import { socketConnection } from "@/main";
 import { millisConverter } from "@/components/shared/domain/millis-converter";
 import { simulation } from "@/components/simulation/store/namespaces";
 import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
-import {Board, CanvasBoard, CanvasNode, GraphLabel} from "modeler"
+import {Board, CanvasBoard, CanvasNode, CanvasServerNode, GraphLabel} from "modeler"
 export const simulationStore: Module<SimulationState, undefined> = {
     namespaced: true,
 
@@ -154,6 +154,14 @@ export const simulationStore: Module<SimulationState, undefined> = {
                     node.portManager.sourcePorts[0].queue.clear();
                     for (let i = 0; i < entitiesInsideOutputBuffer; i++) {
                         node.portManager.sourcePorts[0].queue.addEntity({name: "", properties: []})
+                    }
+                }
+
+                // output buffer
+                if(node instanceof CanvasServerNode && node.processBuffer){
+                    node.processBuffer.clear();
+                    for (let i = 0; i < entitiesInsideProcessBuffer; i++) {
+                        node.processBuffer.addEntity({name: "", properties: []})
                     }
                 }
             }
