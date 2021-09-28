@@ -1,0 +1,9 @@
+{
+  "name": "simthesis-kernel",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+  }
+}
