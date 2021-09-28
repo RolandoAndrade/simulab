@@ -1,0 +1,11 @@
+{
+  "name": "simthesis",
+  "version": "1.0.0",
+  "scripts": {
+    "preinstall": "cd app/modeler && npm install && cd ../frontend && npm install && cd ../server && npm install",
+    "build": "cd app/modeler && npm run build && cd ../frontend && npm run build && cd ../server && npm run build",
+    "start": "cd app/server && npm run start"
+  },
+  "dependencies": {
+  }
+}
