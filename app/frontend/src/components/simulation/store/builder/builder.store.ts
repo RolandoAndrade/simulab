@@ -4,15 +4,16 @@ import {BuilderMethods} from "@/components/simulation/store/builder/builder.meth
 import {
     Board,
     CanvasBoard,
-    CanvasNode, CanvasPort,
+    CanvasNode,
     DeletedComponentEvent,
     Edge,
-    EntityProperty, GraphLabel,
+    EntityProperty,
+    GraphLabel,
     GraphNode,
     ModelerEvents,
     NodeCreatorType,
     Path,
-    PathCreatedEvent, Point,
+    PathCreatedEvent,
     SelectedNodeEvent,
 } from "modeler";
 import {BoardMode} from "modeler/boards/domain/board-mode";
@@ -197,9 +198,11 @@ export const builderStore: Module<BuilderState, undefined> = {
                     },
                     (result: { data: RecoveredBoard
                     }) => {
+                        console.log({result})
                         state.board!.importModel({})
-                        const models = result.data.models;
-                        const paths = result.data.paths;
+                        const models = result.data.dynamicSystem.models;
+                        const paths = result.data.dynamicSystem.paths;
+                        const labels = result.data.labels
                         for (const model of models){
                             let node = null
                             const lowerType = model.type.substring(model.type.indexOf('.') + 1).toLowerCase();
@@ -226,7 +229,16 @@ export const builderStore: Module<BuilderState, undefined> = {
                                 path.properties, path.origin, path.destination
                             )
                         }
-
+                        for (const label of labels) {
+                            state.board!.createNode(
+                                graphFactory.createNodeCreator(NodeCreatorType.LABEL, {
+                                    name: label.properties[0].propertyValue,
+                                    properties: label.properties,
+                                }),
+                                label.position.x,
+                                label.position.y
+                            )
+                        }
                     }
                 );
             });
