@@ -285,11 +285,14 @@ export class CanvasBoard extends Board {
     }
 
     public createNode(nodeCreator: NodeCreator, x: number = 120, y: number = 120) {
-        this.nodes.push(nodeCreator.create({
+        const node = nodeCreator.create({
             ctx: this.ctx,
             x: this.origin.x + x,
             y: this.origin.y + y
-        }) as CanvasNode);
+        }) as CanvasNode;
+        this.nodes.push(node);
+        this.selectedNode = node;
+        this.emit(ModelerEvents.NODE_MOVED, {node: this.selectedNode})
         this.draw();
     }
 
