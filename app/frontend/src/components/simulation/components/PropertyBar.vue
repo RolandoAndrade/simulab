@@ -165,7 +165,8 @@ export default class PropertyBar extends Vue {
     }
 
     get isSimulationRunning(): boolean {
-        return this.status === SimulationStatus.RUNNING;
+        return this.status === SimulationStatus.RUNNING ||
+            this.status === SimulationStatus.RUNNING_FAST_FORWARD || this.status === SimulationStatus.PAUSED;
     }
 
     propertyChanged(property: EntityProperty) {

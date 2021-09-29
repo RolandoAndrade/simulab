@@ -140,13 +140,13 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import TooltipButton from "@/components/shared/components/buttons/TooltipButton.vue";
 import HintButton from "@/components/shared/components/buttons/HintButton.vue";
-import { NodeCreatorType } from "modeler/nodes/domain/node-creator";
-import { BoardMode } from "../../../../../modeler/src/boards/domain/board-mode";
-import { builder, simulation } from "@/components/simulation/store/namespaces";
-import { BuilderMethods } from "@/components/simulation/store/builder/builder.methods";
-import { DropItemEvent } from "@/components/shared/domain/drop-item-event";
-import { SimulationMethods } from "@/components/simulation/store/simulation/simulation.methods";
-import { SimulationStatus } from "@/components/simulation/domain/simulation-status";
+import {NodeCreatorType} from "modeler/nodes/domain/node-creator";
+import {BoardMode} from "../../../../../modeler/src/boards/domain/board-mode";
+import {builder, simulation} from "@/components/simulation/store/namespaces";
+import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
+import {DropItemEvent} from "@/components/shared/domain/drop-item-event";
+import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
+import {SimulationStatus} from "@/components/simulation/domain/simulation-status";
 
 @Component({
     name: "items-bar",
@@ -184,7 +184,8 @@ export default class ItemsBar extends Vue {
     }
 
     get isSimulationRunning(): boolean {
-        return this.status === SimulationStatus.RUNNING || this.status === SimulationStatus.PAUSED;
+        return this.status === SimulationStatus.RUNNING || this.status === SimulationStatus.PAUSED ||
+            this.status === SimulationStatus.RUNNING_FAST_FORWARD;
     }
 
     @builder.Action(BuilderMethods.ACTIONS.CREATE_NODE)
