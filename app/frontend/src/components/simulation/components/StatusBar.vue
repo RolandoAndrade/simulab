@@ -28,6 +28,7 @@
                 color="primary"
                 background-color="#eee"
                 :value="progress"
+                :indeterminate="this.isRunningFast"
             ></v-progress-linear>
         </v-col>
     </v-app-bar>
@@ -36,12 +37,11 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator";
-import { simulation } from "@/components/simulation/store/namespaces";
-import { SimulationMethods } from "@/components/simulation/store/simulation/simulation.methods";
-import { SimulationStatus } from "@/components/simulation/domain/simulation-status";
-import { SimulationStats } from "@/components/simulation/domain/simulation-stats";
-import { SimulationParams } from "@/components/simulation/domain/simulation-params";
+import {simulation} from "@/components/simulation/store/namespaces";
+import {SimulationMethods} from "@/components/simulation/store/simulation/simulation.methods";
+import {SimulationStatus} from "@/components/simulation/domain/simulation-status";
+import {SimulationStats} from "@/components/simulation/domain/simulation-stats";
+import {SimulationParams} from "@/components/simulation/domain/simulation-params";
 
 @Component({
     name: "status-bar",
@@ -56,7 +56,11 @@ export default class StatusBar extends Vue {
     }
 
     get showRunning(): boolean {
-        return this.status === "RUNNING";
+        return this.status === "RUNNING" || this.status == SimulationStatus.RUNNING_FAST_FORWARD;
+    }
+
+    get isRunningFast(): boolean {
+      return this.status == SimulationStatus.RUNNING_FAST_FORWARD;
     }
 
     get showFinished(): boolean {

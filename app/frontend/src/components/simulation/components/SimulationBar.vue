@@ -21,7 +21,7 @@
                         ticks
                         hide-details
                         v-model="params.speed"
-                        :disabled="simulationRunning"
+                        :disabled="simulationRunning || simulationRunningFast"
                     ></v-slider>
                 </v-card>
 
@@ -31,7 +31,7 @@
                     color="primary"
                     tip-text="Play"
                     outlined
-                    :disabled="simulationRunning || simulationFinished"
+                    :disabled="simulationRunning || simulationFinished || simulationRunningFast"
                     fab
                     x-small
                     class-style="mx-1"
@@ -43,7 +43,7 @@
                     tip-color="primary"
                     color="primary"
                     tip-text="Next Step"
-                    :disabled="simulationRunning || simulationFinished"
+                    :disabled="simulationRunning || simulationFinished || simulationRunningFast"
                     @click="nextStep"
                     outlined
                     fab
@@ -56,7 +56,7 @@
                     tip-color="primary"
                     color="primary"
                     tip-text="Fast Forward"
-                    :disabled="simulationRunning || simulationFinished"
+                    :disabled="simulationRunning || simulationFinished || simulationRunningFast"
                     outlined
                     fab
                     x-small
@@ -70,7 +70,7 @@
                     color="red"
                     tip-text="Pause"
                     outlined
-                    :disabled="!simulationRunning || simulationFinished"
+                    :disabled="!simulationRunning || simulationFinished || simulationRunningFast"
                     fab
                     x-small
                     class-style="mx-1"
@@ -83,7 +83,7 @@
                     color="red"
                     tip-text="Stop"
                     outlined
-                    :disabled="!simulationRunning && !simulationPaused && !simulationFinished"
+                    :disabled="(!simulationRunning && !simulationRunningFast) && !simulationPaused && !simulationFinished"
                     fab
                     x-small
                     class-style="mx-1"
@@ -117,7 +117,12 @@ export default class SimulationBar extends Vue {
         return SimulationStatus.RUNNING == this.status;
     }
 
-    get simulationPaused(): boolean {
+    get simulationRunningFast(): boolean {
+      return SimulationStatus.RUNNING_FAST_FORWARD == this.status;
+    }
+
+
+  get simulationPaused(): boolean {
         return SimulationStatus.PAUSED == this.status;
     }
 

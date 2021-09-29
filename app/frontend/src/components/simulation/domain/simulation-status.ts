@@ -3,4 +3,5 @@ export enum SimulationStatus {
     PAUSED = "PAUSED",
     STOPPED = "STOPPED",
     FINISHED = "FINISHED",
+    RUNNING_FAST_FORWARD = "RUNNING_FAST_FORWARD"
 }

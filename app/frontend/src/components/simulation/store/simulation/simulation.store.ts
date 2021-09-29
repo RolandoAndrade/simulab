@@ -6,7 +6,6 @@ import { SimulationStats } from "@/components/simulation/domain/simulation-stats
 import { SimulationParams } from "@/components/simulation/domain/simulation-params";
 import { socketConnection } from "@/main";
 import { millisConverter } from "@/components/shared/domain/millis-converter";
-import { simulation } from "@/components/simulation/store/namespaces";
 import {BuilderMethods} from "@/components/simulation/store/builder/builder.methods";
 import {Board, CanvasBoard, CanvasNode, CanvasServerNode, GraphLabel} from "modeler"
 export const simulationStore: Module<SimulationState, undefined> = {
@@ -55,7 +54,7 @@ export const simulationStore: Module<SimulationState, undefined> = {
             const endingTime = millisConverter(params.endingTime, startTime);
             const stopTime = Math.max(endingTime - startTime, 0) / 1000;
             const step = state.simulationParams.speed * 1000;
-            const waitTime = 2 - state.simulationParams.speed;
+            const waitTime = (2.1 - state.simulationParams.speed)/5;
             const init = SimulationStatus.STOPPED == state.simulatorStatus;
             commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
             socketConnection.emit("start_simulation", {
@@ -91,7 +90,13 @@ export const simulationStore: Module<SimulationState, undefined> = {
             const stopTime = Math.max(endingTime - startTime, 0) / 1000;
             const init = SimulationStatus.STOPPED == state.simulatorStatus;
 
-            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING);
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.RUNNING_FAST_FORWARD);
+            commit(SimulationMethods.MUTATIONS.SET_SIMULATION_STATS, {
+                time: 0,
+                stopTime: stopTime,
+                isPaused: true,
+                frequency: 1000,
+            });
             socketConnection.emit("fast_forward", {
                 stopTime,
                 init
