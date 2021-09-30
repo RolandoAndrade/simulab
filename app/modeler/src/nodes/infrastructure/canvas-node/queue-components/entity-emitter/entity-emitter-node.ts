@@ -1,5 +1,6 @@
 import { CanvasNode } from "../../canvas-node";
 import { QueueCanvasComponentProperties } from "../../queue-canvas-component-properties";
+import {getColor} from "../../../../../shared/functions/colors";
 
 export class CanvasEntityEmitterNode extends CanvasNode {
     constructor(properties: QueueCanvasComponentProperties) {
@@ -13,8 +14,8 @@ export class CanvasEntityEmitterNode extends CanvasNode {
 
     draw() {
         this.ctx.save();
-        this.ctx.fillStyle = this.properties.color || "#000";
-        this.ctx.strokeStyle = this.isSelected ? 'purple': this.properties.color || "#000";
+        this.ctx.fillStyle = this.properties.color || getColor(this.getEntity().properties[1].propertyValue) ||"#000";
+        this.ctx.strokeStyle = this.isSelected ? 'purple': getColor(this.getEntity().properties[1].propertyValue) || "#000";
         this.ctx.beginPath();
         this.ctx.lineJoin = "round";
         this.ctx.lineWidth = 8;

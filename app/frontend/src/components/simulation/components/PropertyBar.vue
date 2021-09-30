@@ -76,7 +76,17 @@
                   <v-icon x-small>mdi-minus</v-icon>
                 </v-btn>
               </div>
-
+              <v-combobox
+                  v-else-if="item.propertyType === 'COLOR'"
+                  class="my-1"
+                  :readonly="isSimulationRunning"
+                  @change="() => propertyChanged(item)"
+                  v-model="item.propertyValue"
+                  outlined
+                  dense
+                  hide-details
+                  :items="['Teal', 'Yellow', 'Cyan', 'Green','Blue','Red']"
+              ></v-combobox>
                 <v-select
                     class="my-1"
                     :readonly="isSimulationRunning"
@@ -88,7 +98,6 @@
                     v-if="!!item.unit"
                     :items="timeUnits"
                 ></v-select>
-
             </template>
         </v-data-table>
     </v-navigation-drawer>
