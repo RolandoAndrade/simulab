@@ -158,7 +158,6 @@ export default class PropertyBar extends Vue {
     onSelectedNodeChanged() {
         if (!!this.selectedNode) {
             this.properties = this.selectedNode.getEntity().properties.map((e) => ({...e}));
-            console.log(this.properties)
         } else {
             this.properties = [];
         }

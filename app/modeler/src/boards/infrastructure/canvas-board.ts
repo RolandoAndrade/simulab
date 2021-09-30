@@ -155,6 +155,8 @@ export class CanvasBoard extends Board {
                         onDeleted: () => {
                             this.paths = this.paths.filter((path)=>path!=this.selectedPath)
                             this.selectedPath.getEntity().properties = [];
+                            this.selectedPath.unselect();
+                            this.selectedPath = undefined;
                             this.emit(ModelerEvents.SELECTED_NODE, {
                                 node: undefined
                             })
@@ -168,6 +170,7 @@ export class CanvasBoard extends Board {
                     onDeleted: () => {
                         this.nodes = this.nodes.filter((node)=>node!=this.selectedNode);
                         this.paths = this.paths.filter((path)=>path.fromNode!=this.selectedNode && path.toNode!=this.selectedNode)
+                        this.selectedNode.unselect();
                         this.selectedNode = undefined;
                         this.emit(ModelerEvents.SELECTED_NODE, {
                             node: undefined
@@ -218,7 +221,6 @@ export class CanvasBoard extends Board {
             } else {
                 this.moveNode(new Point(event.offsetX, event.offsetY))
             }
-
             this.draw();
         }
     }

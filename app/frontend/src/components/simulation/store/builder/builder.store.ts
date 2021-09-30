@@ -198,7 +198,6 @@ export const builderStore: Module<BuilderState, undefined> = {
                     },
                     (result: { data: RecoveredBoard
                     }) => {
-                        console.log({result})
                         state.board!.importModel({})
                         const models = result.data.dynamicSystem.models;
                         const paths = result.data.dynamicSystem.paths;

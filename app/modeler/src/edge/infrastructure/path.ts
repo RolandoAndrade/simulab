@@ -20,15 +20,19 @@ export class Path extends Edge{
     }
 
     private drawSameNode(){
+        this.ctx.beginPath();
         const portRight = this.portStart.position;
         const portLeft = (this.portEnd as GraphNode).position;
         this.ctx.strokeStyle = Edge.COLOR;
-        this.ctx.lineWidth = 2;
-        const h = portRight.y - this.from.dimensions.height / 2 - CanvasPort.MARGIN * 2
-        this.ctx.moveTo(portRight.x,portRight.y);
+        this.ctx.lineWidth = this.isSelected ? 4 : 2;
+        const h = portRight.y + this.from.dimensions.height
+        this.ctx.moveTo(portLeft.x,portLeft.y);
+        this.ctx.lineTo(portLeft.x, h);
+        this.ctx.moveTo(portLeft.x, h);
         this.ctx.lineTo(portRight.x, h);
-        this.ctx.lineTo(portLeft.x,h);
-        this.ctx.lineTo(portLeft.x,portLeft.y);
+        this.ctx.moveTo(portRight.x, h);
+        this.ctx.lineTo(portRight.x,portRight.y);
+        this.ctx.closePath();
         this.ctx.stroke();
         this.from.draw();
     }
@@ -51,14 +55,32 @@ export class Path extends Edge{
      * @param y Coordinate y inside the container
      * */
     public contains(x: number, y: number): boolean {
-        const port = this.portStart.position;
-        this.ctx.beginPath();
-        this.ctx.lineWidth = 10;
-        this.ctx.moveTo(port.x,port.y);
-        this.ctx.lineTo(this.toPosition.x,this.toPosition.y);
-        const contained = this.ctx.isPointInStroke(x, y)
-        this.ctx.closePath();
-        return contained;
+        if (!this.isSameNode()){
+            const port = this.portStart.position;
+            this.ctx.beginPath();
+            this.ctx.lineWidth = 10;
+            this.ctx.moveTo(port.x,port.y);
+            this.ctx.lineTo(this.toPosition.x,this.toPosition.y);
+            const contained = this.ctx.isPointInStroke(x, y)
+            this.ctx.closePath();
+            return contained;
+        } else {
+            const portRight = this.portStart.position;
+            const portLeft = (this.portEnd as GraphNode).position;
+            this.ctx.beginPath();
+            this.ctx.lineWidth = 10;
+            const h = portRight.y + this.from.dimensions.height
+            this.ctx.moveTo(portLeft.x,portLeft.y);
+            this.ctx.lineTo(portLeft.x, h);
+            this.ctx.moveTo(portLeft.x, h);
+            this.ctx.lineTo(portRight.x, h);
+            this.ctx.moveTo(portRight.x, h);
+            this.ctx.lineTo(portRight.x,portRight.y);
+            const contained = this.ctx.isPointInStroke(x, y)
+            this.ctx.closePath();
+            return contained;
+        }
+
     }
 
     draw(): void {
