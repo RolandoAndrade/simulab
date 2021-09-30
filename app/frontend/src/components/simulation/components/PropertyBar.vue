@@ -17,6 +17,7 @@
         >
             <template v-slot:item.propertyValue="{ item }">
                 <v-text-field
+                    class="my-1"
                     :readonly="isSimulationRunning"
                     @change="() => propertyChanged(item)"
                     v-model="item.propertyValue"
@@ -27,6 +28,7 @@
                     v-if="item.propertyType === 'STRING' || item.propertyType === 'ANY' || item.propertyType === 'NUMBER'"
                 ></v-text-field>
                 <v-combobox
+                    class="my-1"
                     :readonly="isSimulationRunning"
                     @change="() => propertyChanged(item)"
                     v-model="item.propertyValue"
@@ -41,6 +43,7 @@
                     :return-object="false"
                 ></v-combobox>
                 <v-select
+                    class="my-1"
                     :readonly="isSimulationRunning"
                     @change="() => propertyChanged(item)"
                     v-model="item.propertyValue"
@@ -51,19 +54,31 @@
                     v-else-if="item.propertyType === 'BOOLEAN'"
                     :items="['True', 'False']"
                 ></v-select>
-              <v-select
-                  :readonly="isSimulationRunning"
-                  @change="() => propertyChanged(item)"
-                  v-model="item.propertyValue[k]"
-                  outlined
-                  dense
-                  hide-details
-                  v-else-if="item.propertyType === 'EMITTER'"
-                  :items="emitters"
-                  v-for="(emitter, k) in item.propertyValue"
-                  :key="emitter+k"
-              ></v-select>
+
+              <div v-else-if="item.propertyType === 'EMITTER'" class="text-center">
                 <v-select
+                    class="my-1"
+                    :readonly="isSimulationRunning"
+                    @change="() => propertyChanged(item)"
+                    v-model="item.propertyValue[k]"
+                    outlined
+                    dense
+                    hide-details
+                    :items="emitters"
+                    v-for="(emitter, k) in item.propertyValue"
+                    :key="emitter+k"
+                >
+                </v-select>
+                <v-btn icon x-small @click="()=>addEmitter(item)">
+                  <v-icon x-small>mdi-plus</v-icon>
+                </v-btn>
+                <v-btn icon x-small @click="()=>removeEmitter(item)">
+                  <v-icon x-small>mdi-minus</v-icon>
+                </v-btn>
+              </div>
+
+                <v-select
+                    class="my-1"
                     :readonly="isSimulationRunning"
                     @change="() => propertyChanged(item)"
                     v-model="item.unit"
@@ -183,6 +198,18 @@ export default class PropertyBar extends Vue {
 
     propertyChanged(property: EntityProperty) {
         this.changeProperty({ component: this.selectedNode!, property });
+    }
+
+    addEmitter(property: EntityProperty) {
+      property.propertyValue.push("DefaultEmitter")
+      this.changeProperty({ component: this.selectedNode!, property });
+    }
+
+    removeEmitter(property: EntityProperty, item:number) {
+      if (property.propertyValue.length > 1) {
+        property.propertyValue.pop()
+        this.changeProperty({ component: this.selectedNode!, property });
+      }
     }
 
     getValues(object: {[key: string]: any}) {
