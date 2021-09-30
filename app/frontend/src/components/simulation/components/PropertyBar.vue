@@ -54,13 +54,26 @@
               <v-select
                   :readonly="isSimulationRunning"
                   @change="() => propertyChanged(item)"
-                  v-model="item.unit"
+                  v-model="item.propertyValue[k]"
                   outlined
                   dense
                   hide-details
-                  v-if="!!item.unit"
-                  :items="timeUnits"
+                  v-else-if="item.propertyType === 'EMITTER'"
+                  :items="emitters"
+                  v-for="(emitter, k) in item.propertyValue"
+                  :key="emitter+k"
               ></v-select>
+                <v-select
+                    :readonly="isSimulationRunning"
+                    @change="() => propertyChanged(item)"
+                    v-model="item.unit"
+                    outlined
+                    dense
+                    hide-details
+                    v-if="!!item.unit"
+                    :items="timeUnits"
+                ></v-select>
+
             </template>
         </v-data-table>
     </v-navigation-drawer>
@@ -218,6 +231,9 @@ export default class PropertyBar extends Vue {
 
     @builder.Getter(BuilderMethods.GETTERS.GET_AVAILABLE_EXPRESSIONS)
     expressions!: ExpressionManager;
+
+    @builder.Getter(BuilderMethods.GETTERS.GET_EMITTERS)
+    emitters!: string[];
 
     @builder.Action(BuilderMethods.ACTIONS.CHANGE_PROPERTY)
     changeProperty!: (data: { component: Edge | GraphNode; property: EntityProperty }) => void;

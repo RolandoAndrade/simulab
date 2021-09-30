@@ -5,5 +5,6 @@ export interface BuilderState {
     boardContainer?: HTMLCanvasElement;
     board?: Board;
     selected?: Path | CanvasNode;
-    expressionManager: ExpressionManager
+    expressionManager: ExpressionManager;
+    emitters: string[]
 }

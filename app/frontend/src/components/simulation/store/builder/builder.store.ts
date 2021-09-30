@@ -30,7 +30,8 @@ export const builderStore: Module<BuilderState, undefined> = {
         board: undefined,
         boardContainer: undefined,
         selected: undefined,
-        expressionManager: {}
+        expressionManager: {},
+        emitters: []
     },
     getters: {
         [BuilderMethods.GETTERS.GET_BOARD](state): Board {
@@ -48,6 +49,9 @@ export const builderStore: Module<BuilderState, undefined> = {
         },
         [BuilderMethods.GETTERS.GET_AVAILABLE_EXPRESSIONS](state): ExpressionManager {
             return state.expressionManager;
+        },
+        [BuilderMethods.GETTERS.GET_EMITTERS](state): string[] {
+            return state.emitters;
         },
     },
     mutations: {
@@ -70,6 +74,9 @@ export const builderStore: Module<BuilderState, undefined> = {
         [BuilderMethods.MUTATIONS.SET_AVAILABLE_EXPRESSIONS](state, manager: ExpressionManager) {
             state.expressionManager = manager;
         },
+        [BuilderMethods.MUTATIONS.SET_EMITTERS](state, manager: string[]) {
+            state.emitters = manager;
+        },
     },
     actions: {
         [BuilderMethods.ACTIONS.SELECT_NODE]({ state, commit }, event: SelectedNodeEvent) {
@@ -77,6 +84,9 @@ export const builderStore: Module<BuilderState, undefined> = {
             if (!!event.node) {
                 socketConnection.emit("get_expressions", {}, (expressions: {data: string }) => {
                     commit(BuilderMethods.MUTATIONS.SET_AVAILABLE_EXPRESSIONS, JSON.parse(expressions.data));
+                });
+                socketConnection.emit("get_emitters", {}, (res: {data: string[] }) => {
+                    commit(BuilderMethods.MUTATIONS.SET_EMITTERS, res.data);
                 });
             }
         },
