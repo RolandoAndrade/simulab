@@ -135,38 +135,65 @@ export const simulationStore: Module<SimulationState, undefined> = {
         },
         [SimulationMethods.ACTIONS.SOCKET_STATE_CHANGED]({rootGetters}, data: {
             name: string, state: {
-                inputBuffer: string,
-                processBuffer: string,
-                outputBuffer: string
+                inputBuffer: {[key: string]: number},
+                processBuffer: {[key: string]: number},
+                outputBuffer: {[key: string]: number}
             }
         }): void {
             const board: CanvasBoard = rootGetters["simulationModule/builderStore/"+BuilderMethods.GETTERS.GET_BOARD];
             const node = board.getNode(data.name) as CanvasNode;
             if (!!node) {
-                const entitiesInsideInputBuffer = parseInt(data.state.inputBuffer);
-                const entitiesInsideOutputBuffer = parseInt(data.state.outputBuffer);
-                const entitiesInsideProcessBuffer = parseInt(data.state.processBuffer);
+                const inputBuffer = data.state.inputBuffer;
+                const outputBuffer = data.state.outputBuffer;
+                const processBuffer = data.state.processBuffer;
 
                 // input buffer
                 if(node.portManager.destinationPorts.length){
                     node.portManager.destinationPorts[0].queue.clear();
-                    for (let i = 0; i < entitiesInsideInputBuffer; i++) {
-                        node.portManager.destinationPorts[0].queue.addEntity({name: "", properties: []})
+                    if (inputBuffer) {
+                        for (const color in inputBuffer) {
+                            for (let i = 0; i < inputBuffer[color]; i ++) {
+                                node.portManager.destinationPorts[0].queue.addEntity({name: "", properties: [{
+                                    propertyValue: color,
+                                        propertyName: 'Color',
+                                        propertyType: 'COLOR',
+                                    }]
+                                })
+                            }
+                        }
                     }
                 }
                 // output buffer
                 if(node.portManager.sourcePorts.length){
                     node.portManager.sourcePorts[0].queue.clear();
-                    for (let i = 0; i < entitiesInsideOutputBuffer; i++) {
-                        node.portManager.sourcePorts[0].queue.addEntity({name: "", properties: []})
+                    if (outputBuffer) {
+                        for (const color in outputBuffer) {
+                            for (let i = 0; i < outputBuffer[color]; i ++) {
+                                node.portManager.sourcePorts[0].queue.addEntity({name: "", properties: [{
+                                        propertyValue: color,
+                                        propertyName: 'Color',
+                                        propertyType: 'COLOR',
+                                    }]
+                                })
+                            }
+                        }
                     }
                 }
 
-                // output buffer
+                // process buffer
                 if(node instanceof CanvasServerNode && node.processBuffer){
                     node.processBuffer.clear();
-                    for (let i = 0; i < entitiesInsideProcessBuffer; i++) {
-                        node.processBuffer.addEntity({name: "", properties: []})
+                    if (processBuffer) {
+                        for (const color in processBuffer) {
+                            for (let i = 0; i < processBuffer[color]; i ++) {
+                                node.processBuffer.addEntity({name: "", properties: [{
+                                        propertyValue: color,
+                                        propertyName: 'Color',
+                                        propertyType: 'COLOR',
+                                    }]
+                                })
+                            }
+                        }
                     }
                 }
             }

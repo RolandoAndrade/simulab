@@ -1,6 +1,7 @@
 import {Entity, Point} from "../../../../../shared";
 import {CanvasNode} from "../../canvas-node";
 import {CanvasQueue} from "../../queues";
+import {getColor} from "../../../../../shared/functions/colors";
 
 export class CanvasEntity extends CanvasNode {
     private offset: Point;
@@ -14,7 +15,7 @@ export class CanvasEntity extends CanvasNode {
             x: queue.position.x,
             y: queue.position.y,
             ctx: queue.ctx,
-            color: "#6df5bc"
+            color: getColor(entity.properties[0].propertyValue) || "#6df5bc"
         });
         this.offset = {
             x: 0,
@@ -38,8 +39,8 @@ export class CanvasEntity extends CanvasNode {
 
     draw(): void {
         this.ctx.save();
-        this.ctx.fillStyle = this.properties.color || "#000";
-        this.ctx.strokeStyle = this.properties.color || "#000"
+        this.ctx.fillStyle = this.properties.color || getColor(this.getEntity().properties[0].propertyValue) || "#000";
+        this.ctx.strokeStyle = this.properties.color || getColor(this.getEntity().properties[0].propertyValue) || "#000"
         this.ctx.beginPath();
         this.ctx.lineJoin = "round";
         this.ctx.lineWidth = 8;
