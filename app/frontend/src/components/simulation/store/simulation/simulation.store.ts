@@ -24,6 +24,7 @@ export const simulationStore: Module<SimulationState, undefined> = {
             startingTime: new Date().toISOString().slice(0, 11) + "12:00:00",
             endingTime: new Date().toISOString().slice(0, 11) + "12:00:00",
         },
+        seed: null
     },
 
     getters: {
@@ -45,6 +46,9 @@ export const simulationStore: Module<SimulationState, undefined> = {
         [SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS](state, simulationStatus: SimulationStatus): void {
             state.simulatorStatus = simulationStatus;
         },
+        [SimulationMethods.MUTATIONS.SET_SEED](state, seed: number): void {
+            state.seed = seed;
+        },
     },
 
     actions: {
@@ -61,7 +65,8 @@ export const simulationStore: Module<SimulationState, undefined> = {
                 stopTime,
                 step,
                 waitTime,
-                init
+                init,
+                seed: state.seed
             });
         },
         [SimulationMethods.ACTIONS.NEXT_STEP]({ state, commit }): void {
@@ -75,7 +80,8 @@ export const simulationStore: Module<SimulationState, undefined> = {
             socketConnection.emit("next_step", {
                 stopTime,
                 step,
-                init
+                init,
+                seed: state.seed
             }, ()=>{
                 if (state.simulationStats.time < state.simulationStats.stopTime) {
                     commit(SimulationMethods.MUTATIONS.SET_SIMULATOR_STATUS, SimulationStatus.PAUSED);
@@ -99,7 +105,8 @@ export const simulationStore: Module<SimulationState, undefined> = {
             });
             socketConnection.emit("fast_forward", {
                 stopTime,
-                init
+                init,
+                seed: state.seed
             });
         },
         [SimulationMethods.ACTIONS.PAUSE_SIMULATION]({ state, commit }): void {
@@ -123,6 +130,9 @@ export const simulationStore: Module<SimulationState, undefined> = {
                 isPaused: true,
                 frequency: state.simulationStats.frequency,
             });
+        },
+        [SimulationMethods.ACTIONS.CHANGE_SEED]({ commit }, seed): void {
+            commit(SimulationMethods.MUTATIONS.SET_SEED, seed);
         },
         [SimulationMethods.ACTIONS.SOCKET_LABEL_CHANGED]({rootGetters}, new_labels: {[key: string]: number}): void {
             for (const key in new_labels) {

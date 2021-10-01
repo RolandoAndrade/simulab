@@ -6,4 +6,5 @@ export interface SimulationState {
     simulatorStatus: SimulationStatus;
     simulationStats: SimulationStats;
     simulationParams: SimulationParams;
+    seed: number | null;
 }

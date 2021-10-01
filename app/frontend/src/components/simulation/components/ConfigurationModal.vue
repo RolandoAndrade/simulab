@@ -10,7 +10,7 @@
           <v-row align="center" class="my-2">
             <v-switch label="Use seed" v-model="useSeed">
             </v-switch>
-            <v-text-field class="ml-10" label="Seed" :disabled="!useSeed" v-model="seed"></v-text-field>
+            <v-text-field class="ml-10" label="Seed" :disabled="!useSeed" v-model="seed" type="number" :min="0"></v-text-field>
           </v-row>
 
         </v-form>
@@ -48,6 +48,25 @@ export default class ConfigurationModal extends Vue {
   openModal() {
     this.opened = true;
   }
+
+  @Watch("useSeed")
+  onUseSeedChanged(value: boolean){
+    if (value) {
+      this.setSeed(this.seed);
+    } else {
+      this.setSeed(null!)
+    }
+  }
+
+  @Watch("seed")
+  onSeedChanged(value: number){
+    if (value) {
+      this.setSeed(this.seed);
+    }
+  }
+
+  @simulation.Action(SimulationMethods.ACTIONS.CHANGE_SEED)
+  setSeed!:(seed: number)=>void;
 }
 </script>
 
