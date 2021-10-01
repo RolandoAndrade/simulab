@@ -68,7 +68,7 @@
                 <v-icon color="white" small class="mx-auto" @click="selectFile">mdi-upload</v-icon>
             </hint-button>
             <input ref="uploader" class="d-none" type="file" accept=".sim" @change="onFileChanged" />
-            <hint-button tip-text="Settings" tip-color="primary" icon color="white">
+            <hint-button tip-text="Settings" tip-color="primary" icon color="white" @click="$refs.modal.openModal()">
                 <v-icon color="white" small class="mx-auto">mdi-cog</v-icon>
             </hint-button>
         </v-system-bar>
@@ -89,6 +89,7 @@
                 </div>
             </v-tab-item>
         </v-tabs-items>
+      <configuration-modal ref="modal"></configuration-modal>
     </div>
 </template>
 
@@ -99,10 +100,11 @@ import { Prop } from "vue-property-decorator";
 import HintButton from "@/components/shared/components/buttons/HintButton.vue";
 import { builder } from "@/components/simulation/store/namespaces";
 import { BuilderMethods } from "@/components/simulation/store/builder/builder.methods";
+import ConfigurationModal from "@/components/simulation/components/ConfigurationModal.vue";
 
 @Component({
     name: "system-bar",
-    components: { HintButton },
+    components: {ConfigurationModal, HintButton },
 })
 export default class SystemBar extends Vue {
     private selectedView: number = 0;
@@ -122,6 +124,7 @@ export default class SystemBar extends Vue {
 
     $refs!: {
         uploader: any;
+        modal: any;
     };
 
     selectFile() {
