@@ -135,9 +135,9 @@ export const simulationStore: Module<SimulationState, undefined> = {
         },
         [SimulationMethods.ACTIONS.SOCKET_STATE_CHANGED]({rootGetters}, data: {
             name: string, state: {
-                inputBuffer: {[key: string]: number},
-                processBuffer: {[key: string]: number},
-                outputBuffer: {[key: string]: number}
+                inputBuffer: string[],
+                processBuffer: string[],
+                outputBuffer: string[]
             }
         }): void {
             const board: CanvasBoard = rootGetters["simulationModule/builderStore/"+BuilderMethods.GETTERS.GET_BOARD];
@@ -151,15 +151,13 @@ export const simulationStore: Module<SimulationState, undefined> = {
                 if(node.portManager.destinationPorts.length){
                     node.portManager.destinationPorts[0].queue.clear();
                     if (inputBuffer) {
-                        for (const color in inputBuffer) {
-                            for (let i = 0; i < inputBuffer[color]; i ++) {
-                                node.portManager.destinationPorts[0].queue.addEntity({name: "", properties: [{
+                        for (const color of inputBuffer) {
+                            node.portManager.destinationPorts[0].queue.addEntity({name: "", properties: [{
                                     propertyValue: color,
-                                        propertyName: 'Color',
-                                        propertyType: 'COLOR',
-                                    }]
-                                })
-                            }
+                                    propertyName: 'Color',
+                                    propertyType: 'COLOR',
+                                }]
+                            })
                         }
                     }
                 }
@@ -167,15 +165,13 @@ export const simulationStore: Module<SimulationState, undefined> = {
                 if(node.portManager.sourcePorts.length){
                     node.portManager.sourcePorts[0].queue.clear();
                     if (outputBuffer) {
-                        for (const color in outputBuffer) {
-                            for (let i = 0; i < outputBuffer[color]; i ++) {
-                                node.portManager.sourcePorts[0].queue.addEntity({name: "", properties: [{
-                                        propertyValue: color,
-                                        propertyName: 'Color',
-                                        propertyType: 'COLOR',
-                                    }]
-                                })
-                            }
+                        for (const color of outputBuffer) {
+                            node.portManager.sourcePorts[0].queue.addEntity({name: "", properties: [{
+                                    propertyValue: color,
+                                    propertyName: 'Color',
+                                    propertyType: 'COLOR',
+                                }]
+                            })
                         }
                     }
                 }
@@ -184,15 +180,13 @@ export const simulationStore: Module<SimulationState, undefined> = {
                 if(node instanceof CanvasServerNode && node.processBuffer){
                     node.processBuffer.clear();
                     if (processBuffer) {
-                        for (const color in processBuffer) {
-                            for (let i = 0; i < processBuffer[color]; i ++) {
-                                node.processBuffer.addEntity({name: "", properties: [{
-                                        propertyValue: color,
-                                        propertyName: 'Color',
-                                        propertyType: 'COLOR',
-                                    }]
-                                })
-                            }
+                        for (const color of processBuffer) {
+                            node.processBuffer.addEntity({name: "", properties: [{
+                                    propertyValue: color,
+                                    propertyName: 'Color',
+                                    propertyType: 'COLOR',
+                                }]
+                            })
                         }
                     }
                 }
