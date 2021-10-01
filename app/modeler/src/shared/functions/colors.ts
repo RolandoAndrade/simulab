@@ -2,9 +2,9 @@ export function getColor(color: string) {
     const colors = {
         "Teal": "#6df5bc",
         "Cyan": "#6fbfda",
-        "Blue": "#2340ce",
-        "Yellow": "#e8de6b",
-        "Red": "#ea3636",
+        "Blue": "#00247D",
+        "Yellow": "#FFCC00",
+        "Red": "#CF142B",
         "Green": "green"
     }
     return colors[color] || color

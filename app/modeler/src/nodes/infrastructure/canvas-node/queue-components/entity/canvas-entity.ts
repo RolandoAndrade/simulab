@@ -43,7 +43,7 @@ export class CanvasEntity extends CanvasNode {
         this.ctx.strokeStyle = this.properties.color || getColor(this.getEntity().properties[0].propertyValue) || "#000"
         this.ctx.beginPath();
         this.ctx.lineJoin = "round";
-        this.ctx.lineWidth = 8;
+        this.ctx.lineWidth = 5;
         this.ctx.moveTo(this.position.x, this.position.y);
         this.ctx.lineTo(this.position.x, this.position.y + this.dimensions.height);
         this.ctx.lineTo(this.position.x + this.dimensions.width , this.position.y + this.dimensions.height / 2);
