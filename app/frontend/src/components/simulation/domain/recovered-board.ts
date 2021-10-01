@@ -19,5 +19,10 @@ export interface RecoveredBoard{
         type: string,
         properties: EntityProperty[],
         position: Point
+    }[],
+    emitters: {
+        type: string,
+        properties: EntityProperty[],
+        position: Point
     }[]
 }

@@ -211,7 +211,8 @@ export const builderStore: Module<BuilderState, undefined> = {
                         state.board!.importModel({})
                         const models = result.data.dynamicSystem.models;
                         const paths = result.data.dynamicSystem.paths;
-                        const labels = result.data.labels
+                        const labels = result.data.labels;
+                        const emitters = result.data.emitters;
                         for (const model of models){
                             let node = null
                             const lowerType = model.type.substring(model.type.indexOf('.') + 1).toLowerCase();
@@ -247,6 +248,19 @@ export const builderStore: Module<BuilderState, undefined> = {
                                 label.position.x,
                                 label.position.y
                             )
+                        }
+                        for (const emitter of emitters) {
+                            if (!!emitter.position) {
+                                state.board!.createNode(
+                                    graphFactory.createNodeCreator(NodeCreatorType.ENTITY_EMITTER, {
+                                        name: emitter.properties[0].propertyValue,
+                                        properties: emitter.properties,
+                                    }),
+                                    emitter.position.x,
+                                    emitter.position.y
+                                )
+                            }
+
                         }
                     }
                 );
