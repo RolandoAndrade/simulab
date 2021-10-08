@@ -199,6 +199,12 @@ export const builderStore: Module<BuilderState, undefined> = {
                 fileLink.remove();
             });
         },
+        [BuilderMethods.ACTIONS.NEW_MODEL]({ state }) {
+            socketConnection.emit("new_model", {}, (response: { data: boolean }) => {
+                state.board!.importModel({});
+                (state.board as any).draw()
+            });
+        },
         [BuilderMethods.ACTIONS.LOAD_EXPERIMENT]({ state, dispatch }, file: File) {
             readFile(file, (result) => {
                 socketConnection.emit(

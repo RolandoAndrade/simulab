@@ -61,6 +61,9 @@
 
             <v-spacer></v-spacer>
             <v-divider vertical dark class="mr-2"></v-divider>
+            <hint-button tip-text="New Model" tip-color="primary" icon color="white">
+              <v-icon color="white" small class="mx-auto" @click="newModel">mdi-file-plus-outline</v-icon>
+            </hint-button>
             <hint-button tip-text="Save Model" tip-color="primary" icon color="white">
                 <v-icon color="white" small class="mx-auto" @click="save">mdi-floppy</v-icon>
             </hint-button>
@@ -118,6 +121,9 @@ export default class SystemBar extends Vue {
 
     @builder.Action(BuilderMethods.ACTIONS.LOAD_EXPERIMENT)
     load!: (file: File) => void;
+
+    @builder.Action(BuilderMethods.ACTIONS.NEW_MODEL)
+    newModel!: () => void;
 
     selectedFile: File | null = null;
     isSelecting = false;

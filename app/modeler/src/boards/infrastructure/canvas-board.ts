@@ -88,8 +88,8 @@ export class CanvasBoard extends Board {
         }
         if (this.selectedNode) {
             this.selectedNode.unselect();
-            this.draw();
             this.selectedNode = undefined;
+            this.draw();
         }
         this.emit(ModelerEvents.SELECTED_NODE, {
             node: {
@@ -293,7 +293,12 @@ export class CanvasBoard extends Board {
             y: this.origin.y + y
         }) as CanvasNode;
         this.nodes.push(node);
+        if (!!this.selectedNode) {
+            this.selectedNode.unselect()
+        }
         this.selectedNode = node;
+        this.emit(ModelerEvents.SELECTED_NODE, {node: this.selectedNode})
+        this.selectedNode.select()
         this.emit(ModelerEvents.NODE_MOVED, {node: this.selectedNode})
         this.draw();
     }

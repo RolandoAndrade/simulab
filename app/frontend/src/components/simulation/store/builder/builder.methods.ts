@@ -26,5 +26,6 @@ export const BuilderMethods = {
         CREATE_PATH: "CREATE_PATH",
         SAVE_EXPERIMENT: "SAVE_EXPERIMENT",
         LOAD_EXPERIMENT: "LOAD_EXPERIMENT",
+        NEW_MODEL: "NEW_MODEL"
     },
 };
