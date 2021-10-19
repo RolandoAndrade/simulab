@@ -30,9 +30,9 @@ export default Vue.extend({
             console.log("socket connected");
         },
         error(message: string) {
-          this.color = "error";
-          this.message = message;
-          this.showMessage = true;
+          //this.color = "error";
+          //this.message = message;
+          //this.showMessage = true;
         }
     } as any,
 } as any);
