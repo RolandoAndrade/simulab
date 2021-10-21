@@ -182,7 +182,8 @@ export const builderStore: Module<BuilderState, undefined> = {
                 },
                 (res: {properties: EntityProperty[]}) => {
                     data.component.getEntity().properties = res.properties;
-                    data.component.getEntity().name = res.properties[0].propertyValue
+                    data.component.getEntity().name = res.properties[0].propertyValue;
+                    (state.board as CanvasBoard).draw()
                 }
             );
         },
